@@ -1,0 +1,59 @@
+
+
+/* ====== FONT VARIABLES ====== */
+:root {
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  --font-accent: 'Merriweather', serif;
+}
+
+/* ====== GLOBAL BASE ====== */
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* ====== FONT CLASSES ====== */
+
+/* Page Headings / Main Titles */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Section Titles / Subheadings */
+.font-title {
+  font-family: var(--font-heading);
+}
+
+/* Smaller Titles / Card Titles */
+.font-subtitle {
+  font-family: var(--font-heading);
+}
+
+/* Paragraphs / Normal Text */
+.font-body {
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* Small Text / Footer / Captions */
+.font-small {
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+/* Quotes / Taglines / Italic Text */
+.font-accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+}
+
+/* Buttons / Navigation / Labels */
+.font-button {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
