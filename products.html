@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products - Agri Mart</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital@0;1&family=Poppins&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="font-heading">Agri Mart</h1>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search any product..."
+        class="search-bar font-body"
+      />
+      <span id="mobileFilterBtn" class="mobile-filter-icon">&#9776;</span>
+    </header>
+
+    <div class="main-container">
+      <aside id="mobileFilterDrawer" class="mobile-filter-drawer">
+        <div class="drawer-header">
+          <h3>Filters</h3>
+          <span id="closeDrawer" class="close-drawer">&times;</span>
+        </div>
+
+        <div class="filter-group">
+          <label for="categorySelectMobile">Categories</label>
+          <select id="categorySelectMobile" class="custom-select">
+            <option value="all">All</option>
+            <option value="fruits">Fruits</option>
+            <option value="vegetables">Vegetables</option>
+            <option value="grains">Grains</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="priceRangeMobile">Price</label>
+          <input
+            type="range"
+            id="priceRangeMobile"
+            class="custom-range"
+            min="0"
+            max="500"
+            step="10"
+          />
+          <span id="priceValueMobile">$0 - $500</span>
+        </div>
+      </aside>
+
+      <!-- Sidebar Filters -->
+      <aside class="sidebar">
+        <h3 class="font-title">Filters</h3>
+
+        <div class="filter-group">
+          <label class="font-subtitle" for="categorySelect">Categories</label>
+          <select id="categorySelect" class="custom-select">
+            <option value="all">All</option>
+            <option value="fruits">Fruits</option>
+            <option value="vegetables">Vegetables</option>
+            <option value="grains">Grains</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="font-subtitle" for="priceRange">Price</label>
+          <input
+            type="range"
+            id="priceRange"
+            class="custom-range"
+            min="0"
+            max="500"
+            step="10"
+          />
+          <span id="priceValue">$0 - $500</span>
+        </div>
+      </aside>
+
+      <!-- Products Grid -->
+      <main class="products-grid">
+        <!-- JS will inject product cards here -->
+      </main>
+    </div>
+
+    <script src="js/products.js"></script>
+  </body>
+</html>
