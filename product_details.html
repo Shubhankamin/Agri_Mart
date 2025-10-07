@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details - Agri Mart</title>
+
+    <link rel="stylesheet" href="css/product_details.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header class="header">
+      <h1 class="font-heading">Agri Mart</h1>
+    </header>
+
+    <main class="product-detail-container">
+      <!-- Left Section: Images -->
+      <div class="image-section">
+        <div class="thumbnails" id="thumbnails"></div>
+        <img id="mainImage" class="main-image" src="" alt="Product Image" />
+      </div>
+
+      <!-- Right Section: Details -->
+      <div class="details-section">
+        <h2 id="productName"></h2>
+        <div class="ratings" id="productRating"></div>
+
+        <div class="price-section">
+          <p class="current-price" id="productPrice"></p>
+          <p class="old-price" id="oldPrice"></p>
+          <span class="discount" id="discount"></span>
+        </div>
+
+        <p id="productDescription" class="description"></p>
+
+        <div class="size-section">
+          <label>Size:</label>
+          <div class="size-options" id="sizeOptions"></div>
+        </div>
+
+        <div class="quantity-section">
+          <button id="decreaseQty">−</button>
+          <span id="quantity">1</span>
+          <button id="increaseQty">+</button>
+        </div>
+
+        <button class="add-to-cart" id="addToCart">Add to Cart</button>
+
+        <div class="features" id="features"></div>
+
+        <section class="details-info">
+          <h3>Details</h3>
+          <p id="detailsInfo"></p>
+        </section>
+
+        <!-- Similar Products Section -->
+      </div>
+    </main>
+
+    <section
+      class="delivery-features"
+      style="
+        margin: 40px auto;
+        max-width: 1200px;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 10px;
+      "
+    >
+      <h2 style="margin-bottom: 20px; color: #2e7d32">
+        Delivery & Product Features
+      </h2>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 20px">
+        <div
+          style="
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+          "
+        >
+          <img
+            src="https://img.icons8.com/color/48/shipped--v1.png"
+            alt="Fast Delivery"
+            style="width: 40px; height: 40px"
+          />
+          <div>
+            <h4 style="margin: 0; font-size: 16px; color: #333">
+              Fast & Reliable Delivery
+            </h4>
+            <p style="margin: 5px 0 0; font-size: 14px; color: #555">
+              Get your order delivered to your doorstep within 2-4 business
+              days.
+            </p>
+          </div>
+        </div>
+
+        <div
+          style="
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+          "
+        >
+          <img
+            src="https://img.icons8.com/color/48/temperature.png"
+            alt="Freshness"
+            style="width: 40px; height: 40px"
+          />
+          <div>
+            <h4 style="margin: 0; font-size: 16px; color: #333">
+              100% Fresh Products
+            </h4>
+            <p style="margin: 5px 0 0; font-size: 14px; color: #555">
+              All products are freshly harvested and carefully packed to ensure
+              quality.
+            </p>
+          </div>
+        </div>
+
+        <div
+          style="
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+          "
+        >
+          <img
+            src="https://img.icons8.com/color/48/eco-friendly.png"
+            alt="Eco Friendly"
+            style="width: 40px; height: 40px"
+          />
+          <div>
+            <h4 style="margin: 0; font-size: 16px; color: #333">
+              Eco-Friendly Packaging
+            </h4>
+            <p style="margin: 5px 0 0; font-size: 14px; color: #555">
+              We use biodegradable and recyclable materials to reduce
+              environmental impact.
+            </p>
+          </div>
+        </div>
+
+        <div
+          style="
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+          "
+        >
+          <img
+            src="https://img.icons8.com/color/48/money-back.png"
+            alt="Money Back"
+            style="width: 40px; height: 40px"
+          />
+          <div>
+            <h4 style="margin: 0; font-size: 16px; color: #333">
+              Easy Returns & Refunds
+            </h4>
+            <p style="margin: 5px 0 0; font-size: 14px; color: #555">
+              Not satisfied with your product? Get hassle-free returns and a
+              full refund within 7 days.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <h1 style="margin-left: 40px; margin-bottom: 40px">Similar Products</h1>
+
+    <div class="slider">
+      <section class="similar-products">
+        <div class="carousel-wrapper">
+          <button id="prevBtn" class="carousel-btn">‹</button>
+          <div class="carousel" id="similarProductsCarousel"></div>
+          <button id="nextBtn" class="carousel-btn">›</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="data/data.js"></script>
+    <script src="js/product_detail.js"></script>
+  </body>
+</html>
