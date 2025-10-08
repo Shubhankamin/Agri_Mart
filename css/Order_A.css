@@ -1,0 +1,172 @@
+/* Palette:
+Soft Beige: #F5F5DC
+Light Mint Green: #C8E6C9
+Forest Green: #2E7D32
+Cream White: #FFFDF0
+Olive Green: #8E9775
+Dark Beige: #D2B48C
+*/
+
+:root{
+  --bg: #F5F5DC;
+  --muted: #8E9775;
+  --accent: #2E7D32;
+  --card: #FFFDF0;
+  --highlight: #C8E6C9;
+  --accent-2: #D2B48C;
+  --text: #213124;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{ max-width:1100px; margin:0 auto; padding:0 1rem; }
+
+.site-header{
+  background: var(--muted);
+  color: var(--card);
+  padding:1.25rem 0;
+  text-align:center;
+}
+.site-header h1{ margin:0; font-size:1.6rem; letter-spacing:0.6px;}
+.subtitle{ margin:0.35rem 0 0; opacity:0.95; font-size:0.95rem; }
+
+/* layout */
+.main-grid{
+  display:grid;
+  grid-template-columns: 320px 1fr;
+  gap:1.5rem;
+  padding:1.5rem 0 3rem;
+}
+
+/* controls (left) */
+.controls{
+  background: var(--card);
+  border-radius:10px;
+  padding:1rem;
+  box-shadow:0 6px 18px rgba(0,0,0,0.06);
+}
+.control-group{ margin-bottom:1rem; }
+.control-group label{ display:block; margin-bottom:0.4rem; font-weight:600; color:var(--accent); }
+input[type="search"], select {
+  width:100%;
+  padding:0.6rem 0.75rem;
+  border-radius:8px;
+  border:1px solid #ddd;
+  background:#fff;
+  font-size:0.95rem;
+}
+.small-note p{ font-size:0.9rem; color:#5a5a5a; margin:0; }
+
+/* buttons */
+.btn{
+  display:inline-block;
+  background:var(--accent);
+  color:var(--card);
+  border:none;
+  padding:0.6rem 0.9rem;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  margin-right:0.5rem;
+}
+.btn.outline{
+  background:transparent;
+  color:var(--accent);
+  border:1px solid var(--accent);
+}
+.btn:active{ transform:translateY(1px); }
+
+/* orders column */
+.orders{
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+
+/* order card */
+.order-card{
+  background:var(--card);
+  padding:1rem;
+  border-radius:10px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.06);
+  display:flex;
+  gap:1rem;
+  align-items:flex-start;
+  border-left:6px solid transparent;
+  transition: transform .18s ease, box-shadow .18s ease, border-left-color .18s ease;
+}
+.order-card:hover{
+  transform: translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.08);
+}
+
+/* left meta */
+.order-meta{
+  min-width:140px;
+  max-width:170px;
+  font-size:0.95rem;
+}
+.order-meta .oid{ font-weight:700; color:var(--accent); margin-bottom:0.25rem; }
+.order-meta .date{ color:#6b6b6b; font-size:0.85rem; margin-bottom:0.6rem; display:block; }
+.status{
+  display:inline-block;
+  padding:0.25rem 0.5rem;
+  border-radius:999px;
+  font-weight:700;
+  text-transform:capitalize;
+  font-size:0.8rem;
+  color:#fff;
+}
+
+/* status colors */
+.status.delivered{ background:var(--accent); }
+.status.shipped{ background:#3b8a5b; }
+.status.processing{ background:#b48a35; }
+.status.cancelled{ background:#c94b3a; }
+
+/* items */
+.order-details{
+  flex:1;
+}
+.order-title{ font-weight:700; margin:0 0 0.35rem 0; color:var(--accent); }
+.items-list{ list-style:none; margin:0; padding:0; color:#444; font-size:0.95rem; }
+.items-list li{ padding:0.25rem 0; border-bottom:1px dashed #eee; display:flex; justify-content:space-between; gap:1rem; }
+.total-row{ margin-top:0.6rem; font-weight:700; color:var(--text); }
+
+/* actions */
+.card-actions{ margin-top:0.6rem; display:flex; gap:0.6rem; flex-wrap:wrap; }
+.action-btn{
+  background:transparent;
+  border:1px solid #ddd;
+  padding:0.35rem 0.6rem;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:0.9rem;
+}
+.action-btn.primary{ background:var(--highlight); border-color:transparent; color:var(--accent); font-weight:700; }
+
+/* empty */
+.empty{
+  text-align:center;
+  padding:2rem;
+  color:#666;
+  background:transparent;
+  border-radius:8px;
+}
+
+/* small screens */
+@media (max-width: 900px){
+  .main-grid{ grid-template-columns: 1fr; }
+  .controls{ order:2; }
+  .orders{ order:1; }
+  .order-card{ flex-direction:column; }
+  .order-meta{ display:flex; gap:1rem; width:100%; max-width:none; }
+  .order-meta .date{ margin-bottom:0; }
+}
