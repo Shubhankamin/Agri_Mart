@@ -1,1 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agrimart — Order History</title>
+  <link rel="stylesheet" href="orderhist.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>Agrimart — Order History</h1>
+      <p class="subtitle">All your past orders, fetched from localStorage</p>
+    </div>
+  </header>
+
+  <main class="wrap main-grid">
+    <aside class="controls">
+      <div class="control-group">
+        <input id="search-input" type="search" placeholder="Search by Order ID or item..." />
+      </div>
+
+      <div class="control-group">
+        <label for="status-filter">Filter by status</label>
+        <select id="status-filter">
+          <option value="all">All</option>
+          <option value="delivered">Delivered</option>
+          <option value="shipped">Shipped</option>
+          <option value="processing">Processing</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <button id="clear-btn" class="btn outline">Clear all orders</button>
+        <button id="export-btn" class="btn">Export JSON</button>
+      </div>
+
+      <div class="control-group small-note">
+        <p>If there are no orders yet, sample orders are created automatically for demo/testing.</p>
+      </div>
+    </aside>
+
+    <section class="orders" id="orders-container" aria-live="polite">
+      <!-- Orders injected here -->
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2025 Agrimart — Your agricultural marketplace</p>
+    </div>
+  </footer>
+
+  <script src="orderhist.js"></script>
+</body>
+</html>
