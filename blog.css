@@ -27,7 +27,6 @@ header h1 {
   border-radius: 2px;
 }
 
-/* === Blog Container === */
 .blog-container {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -37,7 +36,6 @@ header h1 {
   padding: 0 1.5rem;
 }
 
-/* === Featured Post === */
 .featured {
   background: #FFFDF0;
   border-radius: 10px;
@@ -80,7 +78,6 @@ header h1 {
   color: #D2B48C;
 }
 
-/* === Sidebar Posts === */
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -121,7 +118,6 @@ header h1 {
   color: #555;
 }
 
-/* === Footer === */
 footer {
   text-align: center;
   background: #8E9775;
@@ -130,7 +126,6 @@ footer {
   font-size: 0.9rem;
 }
 
-/* === Responsive Design === */
 @media (max-width: 900px) {
   .blog-container {
     grid-template-columns: 1fr;
