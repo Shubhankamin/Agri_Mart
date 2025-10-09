@@ -66,8 +66,9 @@ function isValidPassword(password) {
   return password.length >= 6;
 }
 function isValidFarmerId(id) {
-  return /^[A-Z0-9]{6,12}$/.test(id); // same format as signup
+  return /^[A-Z0-9-]{6,15}$/.test(id);
 }
+
 
 // Enable/disable login button
 const loginBtn = document.querySelector(".signup-btn");

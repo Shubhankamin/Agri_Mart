@@ -50,7 +50,7 @@ function isValidName(name) {
 }
 
 function isValidFarmerId(id) {
-  return /^[A-Z0-9]{6,12}$/.test(id);
+  return /^[A-Z0-9-]{6,15}$/.test(id);
 }
 
 function validateForm() {
@@ -116,7 +116,7 @@ signupForm.addEventListener("submit", (e) => {
   console.log("Registered Users:", users);
 
   showSnackbar("Signup successful! Redirecting to login page...", "success");
-  // window.location.href = "login.html"; // Uncomment to actually redirect
+  window.location.href = "login.html"; // Uncomment to actually redirect
 });
 
 validateForm();
