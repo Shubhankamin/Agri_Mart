@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - AgriMart | Fresh from Farm to Table</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <h1>AgriMart</h1>
+                </div>
+                <p class="tagline">Fresh from farm to table</p>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#" class="nav-link">Products</a>
+                <a href="#" class="nav-link">Farmers</a>
+                <a href="#" class="nav-link">Deals</a>
+                <a href="#" class="nav-link active">Checkout</a>
+            </nav>
+            
+            <div class="user-actions">
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">3</span>
+                </div>
+                <div class="user-profile">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="checkout-container">
+        <div class="checkout-content">
+            <!-- Left Column - Delivery Information -->
+            <div class="delivery-column">
+                <div class="delivery-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-truck"></i> Delivery Address</h2>
+                        <button class="edit-btn" id="edit-address-btn">Edit</button>
+                    </div>
+                    
+                    <div class="address-section">
+                        <div class="address-options">
+                            <h3>Select Delivery Address</h3>
+                            <p class="subtitle">Choose from your saved addresses or add a new one</p>
+                            
+                            <div class="saved-addresses" id="saved-addresses">
+                                <!-- Address cards will be populated by JavaScript -->
+                            </div>
+                            
+                            <div class="add-new-address">
+                                <button class="add-address-btn" id="add-address-btn">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add New Address</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="billing-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-file-invoice-dollar"></i> Billing Address</h2>
+                    </div>
+                    
+                    <div class="billing-options">
+                        <div class="option-group">
+                            <input type="radio" id="same-as-shipping" name="billing-option" checked>
+                            <label for="same-as-shipping">Same as shipping address</label>
+                        </div>
+                        
+                        <div class="option-group">
+                            <input type="radio" id="different-billing" name="billing-option">
+                            <label for="different-billing">Use a different billing address</label>
+                        </div>
+                        
+                        <div class="billing-address-selection" id="billing-address-selection" style="display: none;">
+                            <div class="saved-addresses" id="billing-saved-addresses">
+                                <!-- Billing address cards will be populated by JavaScript -->
+                            </div>
+                            
+                            <div class="add-new-address">
+                                <button class="add-address-btn" id="add-billing-address-btn">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add New Billing Address</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Order Summary -->
+            <div class="order-column">
+                <div class="order-summary">
+                    <div class="summary-header">
+                        <h2>Order Summary</h2>
+                    </div>
+                    
+                    <div class="cart-items">
+                        <div class="cart-item">
+                            <div class="item-image">
+                                <img src="https://via.placeholder.com/60x60/10B981/FFFFFF?text=TM" alt="Organic Tomatoes">
+                            </div>
+                            <div class="item-details">
+                                <h3>Fresh Organic Tomatoes</h3>
+                                <p class="item-seller">Sold by: Green Valley Farms</p>
+                                <div class="item-quantity">
+                                    <span>Quantity: 2kg</span>
+                                </div>
+                            </div>
+                            <div class="item-price">₹180</div>
+                        </div>
+                        
+                        <div class="cart-item">
+                            <div class="item-image">
+                                <img src="https://via.placeholder.com/60x60/F59E0B/FFFFFF?text=EG" alt="Farm Eggs">
+                            </div>
+                            <div class="item-details">
+                                <h3>Farm Fresh Eggs</h3>
+                                <p class="item-seller">Sold by: Happy Hens Farm</p>
+                                <div class="item-quantity">
+                                    <span>Quantity: 1 dozen</span>
+                                </div>
+                            </div>
+                            <div class="item-price">₹120</div>
+                        </div>
+                        
+                        <div class="cart-item">
+                            <div class="item-image">
+                                <img src="https://via.placeholder.com/60x60/047857/FFFFFF?text=AV" alt="Organic Avocados">
+                            </div>
+                            <div class="item-details">
+                                <h3>Organic Avocados</h3>
+                                <p class="item-seller">Sold by: Tropical Orchards</p>
+                                <div class="item-quantity">
+                                    <span>Quantity: 4 pieces</span>
+                                </div>
+                            </div>
+                            <div class="item-price">₹240</div>
+                        </div>
+                    </div>
+                    
+                    <div class="delivery-info">
+                        <div class="delivery-option">
+                            <i class="fas fa-shipping-fast"></i>
+                            <div class="delivery-details">
+                                <h4>Standard Delivery</h4>
+                                <p>Delivery by Tomorrow, 10 AM - 2 PM</p>
+                            </div>
+                            <div class="delivery-price">FREE</div>
+                        </div>
+                    </div>
+                    
+                    <div class="price-breakdown">
+                        <div class="price-line">
+                            <span>Subtotal (3 items)</span>
+                            <span>₹540</span>
+                        </div>
+                        <div class="price-line">
+                            <span>Delivery Fee</span>
+                            <span>FREE</span>
+                        </div>
+                        <div class="price-line">
+                            <span>Discount</span>
+                            <span class="discount">-₹50</span>
+                        </div>
+                        <div class="price-line">
+                            <span>Taxes & Charges</span>
+                            <span>₹25</span>
+                        </div>
+                        <div class="price-line total">
+                            <span>Total Amount</span>
+                            <span>₹515</span>
+                        </div>
+                    </div>
+                    
+                    <div class="savings-info">
+                        <i class="fas fa-piggy-bank"></i>
+                        <span>You save ₹50 on this order</span>
+                    </div>
+                    
+                    <button class="pay-now-btn" id="pay-now-btn">
+                        <i class="fab fa-google-pay"></i>
+                        Pay Now
+                    </button>
+                    
+                    <div class="secure-checkout">
+                        <i class="fas fa-lock"></i>
+                        <span>Secure checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Address Modal -->
+    <div class="edit-address-modal" id="edit-address-modal">
+        <div class="edit-address-content">
+            <div class="edit-address-header">
+                <h2 id="edit-modal-title">Edit Address</h2>
+                <button class="close-edit-modal" id="close-edit-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="edit-address-body">
+                <form id="edit-address-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-full-name">Full Name *</label>
+                            <input type="text" id="edit-full-name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-phone">Mobile Number *</label>
+                            <input type="tel" id="edit-phone" placeholder="10-digit mobile number" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-address">Address *</label>
+                        <textarea id="edit-address" placeholder="House/Flat No., Building, Street, Area" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-city">City *</label>
+                            <input type="text" id="edit-city" placeholder="Enter your city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-state">State *</label>
+                            <select id="edit-state" required>
+                                <option value="">Select State</option>
+                                <option value="KA">Karnataka</option>
+                                <option value="MH">Maharashtra</option>
+                                <option value="TN">Tamil Nadu</option>
+                                <option value="DL">Delhi</option>
+                                <option value="UP">Uttar Pradesh</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-pincode">PIN Code *</label>
+                            <input type="text" id="edit-pincode" placeholder="6-digit PIN code" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-landmark">Landmark (Optional)</label>
+                        <input type="text" id="edit-landmark" placeholder="Nearby landmark">
+                    </div>
+                    
+                    <div class="address-type">
+                        <label>Address Type</label>
+                        <div class="type-options">
+                            <div class="type-option">
+                                <input type="radio" id="edit-home" name="edit-address-type" value="home" checked>
+                                <label for="edit-home">
+                                    <i class="fas fa-home"></i>
+                                    <span>Home</span>
+                                </label>
+                            </div>
+                            <div class="type-option">
+                                <input type="radio" id="edit-work" name="edit-address-type" value="work">
+                                <label for="edit-work">
+                                    <i class="fas fa-building"></i>
+                                    <span>Work</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" id="cancel-edit-btn">Cancel</button>
+                        <button type="submit" class="save-btn" id="edit-modal-submit">
+                            <i class="fas fa-save"></i>
+                            Update Address
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Billing Address Modal -->
+    <div class="edit-address-modal" id="billing-address-modal">
+        <div class="edit-address-content">
+            <div class="edit-address-header">
+                <h2 id="billing-modal-title">Add Billing Address</h2>
+                <button class="close-edit-modal" id="close-billing-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="edit-address-body">
+                <form id="billing-address-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="billing-full-name">Full Name *</label>
+                            <input type="text" id="billing-full-name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="billing-phone">Mobile Number *</label>
+                            <input type="tel" id="billing-phone" placeholder="10-digit mobile number" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="billing-address">Address *</label>
+                        <textarea id="billing-address" placeholder="House/Flat No., Building, Street, Area" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="billing-city">City *</label>
+                            <input type="text" id="billing-city" placeholder="Enter your city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="billing-state">State *</label>
+                            <select id="billing-state" required>
+                                <option value="">Select State</option>
+                                <option value="KA">Karnataka</option>
+                                <option value="MH">Maharashtra</option>
+                                <option value="TN">Tamil Nadu</option>
+                                <option value="DL">Delhi</option>
+                                <option value="UP">Uttar Pradesh</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="billing-pincode">PIN Code *</label>
+                            <input type="text" id="billing-pincode" placeholder="6-digit PIN code" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="billing-landmark">Landmark (Optional)</label>
+                        <input type="text" id="billing-landmark" placeholder="Nearby landmark">
+                    </div>
+                    
+                    <div class="address-type">
+                        <label>Address Type</label>
+                        <div class="type-options">
+                            <div class="type-option">
+                                <input type="radio" id="billing-home" name="billing-address-type" value="home" checked>
+                                <label for="billing-home">
+                                    <i class="fas fa-home"></i>
+                                    <span>Home</span>
+                                </label>
+                            </div>
+                            <div class="type-option">
+                                <input type="radio" id="billing-work" name="billing-address-type" value="work">
+                                <label for="billing-work">
+                                    <i class="fas fa-building"></i>
+                                    <span>Work</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" id="cancel-billing-btn">Cancel</button>
+                        <button type="submit" class="save-btn" id="billing-modal-submit">
+                            <i class="fas fa-save"></i>
+                            Save Billing Address
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div class="order-modal" id="order-modal">
+        <div class="order-content">
+            <div class="order-header">
+                <h2>Order Details</h2>
+                <button class="close-order-modal" id="close-order-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="order-body">
+                <div class="order-info-section">
+                    <h3>Order Information</h3>
+                    <div class="order-info-grid">
+                        <div class="info-item">
+                            <span>Order ID:</span>
+                            <span id="modal-order-id">AGRI-2023-789456</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Order Date:</span>
+                            <span id="modal-order-date">October 15, 2023</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Order Status:</span>
+                            <span class="status confirmed">Confirmed</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Total Amount:</span>
+                            <span id="modal-order-total">₹515</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-items-section">
+                    <h3>Order Items</h3>
+                    <div class="order-items-list" id="modal-order-items">
+                        <!-- Order items will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="delivery-address-section">
+                    <h3>Delivery Address</h3>
+                    <div class="address-details" id="modal-delivery-address">
+                        <!-- Address will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="billing-address-section">
+                    <h3>Billing Address</h3>
+                    <div class="address-details" id="modal-billing-address">
+                        <!-- Billing address will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            <div class="order-footer">
+                <button class="print-order-btn" id="print-order-btn">
+                    <i class="fas fa-print"></i>
+                    Print Order
+                </button>
+                <button class="close-modal-btn" id="close-modal-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Processing Modal -->
+    <div class="payment-modal" id="payment-modal">
+        <div class="payment-content">
+            <div class="payment-header">
+                <h2>Processing Payment</h2>
+            </div>
+            <div class="payment-body">
+                <div class="payment-loader">
+                    <div class="loader-circle"></div>
+                    <div class="loader-text">Processing your payment...</div>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-amount">
+                        <span>Amount to pay:</span>
+                        <span class="amount">₹515</span>
+                    </div>
+                    <div class="payment-method">
+                        <i class="fab fa-google-pay"></i>
+                        <span>Google Pay</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal -->
+    <div class="success-modal" id="success-modal">
+        <div class="success-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="success-text">
+                <h2>Payment Successful!</h2>
+                <p>Your payment of ₹515 has been processed successfully.</p>
+                <div class="order-details">
+                    <div class="order-info">
+                        <span>Order ID:</span>
+                        <span id="success-order-id">AGRI-2023-789456</span>
+                    </div>
+                    <div class="order-info">
+                        <span>Order Date:</span>
+                        <span id="success-order-date">October 15, 2023</span>
+                    </div>
+                </div>
+            </div>
+            <div class="success-actions">
+                <button class="view-order-btn" id="view-order-btn">View Order Details</button>
+                <button class="continue-shopping-btn" id="continue-shopping-btn">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>AgriMart</h3>
+                <p>Fresh from farm to table</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Service</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Returns & Refunds</a>
+                <a href="#">Shipping Policy</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="footer-section">
+                <h4>About AgriMart</h4>
+                <a href="#">About Us</a>
+                <a href="#">Careers</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h4>Farmers</h4>
+                <a href="#">Sell on AgriMart</a>
+                <a href="#">Farmer Support</a>
+                <a href="#">Training & Resources</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 AgriMart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="checkout.js"></script>
+</body>
+</html>

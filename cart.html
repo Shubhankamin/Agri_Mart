@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshMarket - Your Shopping Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🌱</span>
+                    AgriMarket
+                </div>
+                <div class="nav-links">
+                    <a href="cart.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link">Products</a>
+                    <a href="#" class="nav-link active">Cart</a>
+                </div>
+                <div class="cart-info">
+                    Your Cart <span class="cart-count" id="cart-count">4</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <h1 class="page-title">Your Shopping Cart</h1>
+            <p class="items-count" id="items-count">4 items in your cart</p>
+            
+            <div class="cart-content">
+                <!-- Cart Items Section -->
+                <section class="cart-items" id="cart-items-section">
+                    <!-- Cart items will be dynamically generated here -->
+                </section>
+                
+                <!-- Order Summary -->
+                <section class="order-summary">
+                    <h2>Order Summary</h2>
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+                        <span id="subtotal">₹78.82</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Shipping</span>
+                        <span>FREE</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Tax (5%)</span>
+                        <span id="tax">₹3.94</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span>Total</span>
+                        <span id="total">₹82.76</span>
+                    </div>
+                  <div class="checkout-container">
+                    <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+                  </div>
+                </section>
+            </div>
+            
+            <!-- Empty Cart Message (Hidden by default) -->
+            <div class="empty-cart" id="empty-cart" style="display: none;">
+                <h3>Your cart is empty</h3>
+                <p>Looks like you haven't added any items to your cart yet.</p>
+                <a href="products.html" class="continue-shopping">Browse Products</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmation-modal">
+        <div class="modal-content">
+            <h3>Remove Item</h3>
+            <p>Are you sure you want to remove this item from your cart?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-confirm" id="confirm-remove">Yes, Remove</button>
+                <button class="modal-btn modal-cancel" id="cancel-remove">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
+</body>
+</html>
