@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Agri Mart</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital@0;1&family=Poppins&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/signup.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="font-heading">Agri Mart</h1>
+    </header>
+
+    <!-- Theme Toggle Switch -->
+   <div class="tog">
+     <button
+      id="themeToggle"
+      class="theme-toggle"
+      title="Toggle Light/Dark Theme"
+    >
+      🌙
+    </button>
+   </div>
+
+    <div class="signup-container">
+      <div class="signup-card">
+        <h2 class="font-title">Login</h2>
+
+        <!-- Tabs -->
+        <div class="tab-container">
+          <button class="tab-btn active" id="customerTab">Customer</button>
+          <button class="tab-btn" id="farmerTab">Farmer</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="signup-form">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input
+              type="email"
+              id="loginEmail"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input
+              type="password"
+              id="loginPassword"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <!-- Optional Farmer ID for Farmer login -->
+          <div class="form-group farmer-field hidden">
+            <label for="loginFarmerId">Farmer ID</label>
+            <input
+              type="text"
+              id="loginFarmerId"
+              placeholder="Enter Farmer ID (e.g., F12345)"
+            />
+          </div>
+
+          <button type="submit" class="signup-btn font-button">Login</button>
+        </form>
+
+        <p class="login-text font-small">
+          Don't have an account? <a href="signup.html">Sign up here</a>
+        </p>
+      </div>
+    </div>
+    <div id="snackbar"></div>
+
+    <!-- JS -->
+    <script src="js/login.js"></script>
+  </body>
+</html>

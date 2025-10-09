@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Agri Mart</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital@0;1&family=Poppins&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/signup.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="font-heading">Agri Mart</h1>
+    </header>
+
+    <div class="signup-container">
+      <div class="signup-card">
+        <h2 class="font-title">Create an Account</h2>
+
+        <!-- Tabs -->
+        <div class="tab-container">
+          <button class="tab-btn active" id="customerTab">Customer</button>
+          <button class="tab-btn" id="farmerTab">Farmer</button>
+        </div>
+
+        <!-- Signup Form -->
+        <form id="signupForm" class="signup-form">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your full name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required />
+          </div>
+
+          <!-- Unique field for Farmer -->
+          <div class="form-group farmer-field hidden">
+            <label for="farmerId">Farmer ID / License Number</label>
+            <input
+              type="text"
+              id="farmerId"
+              placeholder="e.g., KA-FARM-12345"
+              pattern="[A-Z]{2}-FARM-[0-9]{5}"
+              title="Format: KA-FARM-12345 (2-letter state code, FARM, and 5 digits)"
+            />
+          </div>
+
+          <button type="submit" class="signup-btn font-button">Sign Up</button>
+        </form>
+
+        <p class="login-text font-small">
+          Already have an account? <a href="login.html">Login here</a>
+        </p>
+      </div>
+    </div>
+<div id="snackbar"></div>
+
+    <!-- JS -->
+    <script src="js/signup.js"></script>
+  </body>
+</html>
