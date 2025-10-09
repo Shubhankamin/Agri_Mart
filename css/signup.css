@@ -1,0 +1,251 @@
+/* ========================== */
+/* ==== THEME VARIABLES ==== */
+/* ========================== */
+
+/* Light theme (default) */
+:root {
+  --bg-color: #f8f8f8;
+  --card-bg: #fff;
+  --text-color: #333;
+  --header-bg: #66bb6a;
+  --header-text: #fff;
+  --btn-bg: #66bb6a;
+  --btn-text: #fff;
+  --input-bg: #fff;
+  --input-border: #ccc;
+  --input-focus-border: #66bb6a;
+  --snackbar-bg-success: #66bb6a;
+  --snackbar-bg-error: #e74c3c;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --bg-color: #1e1e1e;
+  --card-bg: #2c2c2c;
+  --text-color: #f0f0f0;
+  --header-bg: #333;
+  --header-text: #fff;
+  --btn-bg: #388e3c;
+  --btn-text: #fff;
+  --input-bg: #3a3a3a;
+  --input-border: #555;
+  --input-focus-border: #66bb6a;
+  --snackbar-bg-success: #66bb6a;
+  --snackbar-bg-error: #e74c3c;
+}
+
+/* ========================== */
+/* ==== GLOBAL STYLES ======= */
+/* ========================== */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.tog {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+}
+
+.theme-toggle {
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  color: var(--header-text);
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.2);
+}
+
+.header {
+  text-align: center;
+  padding: 30px 0;
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  font-family: "Merriweather", serif;
+}
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 85vh;
+  padding: 20px;
+}
+
+.signup-card {
+  background-color: var(--card-bg);
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.signup-card h2 {
+  margin-bottom: 25px;
+  color: var(--text-color);
+}
+
+/* ========================== */
+/* ==== Tabs ======= */
+/* ========================== */
+.tab-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 0;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  color: var(--text-color);
+}
+
+.tab-btn.active {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: var(--btn-bg);
+}
+
+/* ========================== */
+/* ==== Form ======= */
+/* ========================== */
+.signup-form {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--input-border);
+  font-size: 14px;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  transition: border 0.2s ease, box-shadow 0.2s ease, background 0.3s ease,
+    color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.2);
+}
+
+.hidden {
+  display: none;
+}
+
+/* ========================== */
+/* ==== Button ======= */
+/* ========================== */
+.signup-btn {
+  width: 100%;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+.signup-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.signup-btn:hover:not(:disabled) {
+  background-color: #388e3c;
+}
+
+/* ========================== */
+/* ==== Login link ======= */
+/* ========================== */
+.login-text {
+  margin-top: 20px;
+  color: var(--text-color);
+  font-size: 14px;
+  text-align: center;
+}
+
+.login-text a {
+  color: var(--btn-bg);
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
+
+/* ========================== */
+/* ==== Snackbar ======= */
+/* ========================== */
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: var(--snackbar-bg-success);
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 12px;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 14px;
+  transition: visibility 0s, opacity 0.3s ease, background 0.3s ease;
+  opacity: 0;
+}
+
+#snackbar.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ========================== */
+/* ==== Responsive ======= */
+/* ========================== */
+@media (max-width: 480px) {
+  .signup-card {
+    padding: 30px 20px;
+  }
+
+  .tab-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
