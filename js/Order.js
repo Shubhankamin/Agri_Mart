@@ -1,13 +1,10 @@
-// Key used in localStorage
 const STORAGE_KEY = "agrimart_orders";
 
-// Simple utility to format dates (human-readable)
 function formatDate(iso) {
   const d = new Date(iso);
   return d.toLocaleString();
 }
 
-// Sample orders inserted if none exist (demo)
 const sampleOrders = [
   {
     id: "ORD-20251008-001",
@@ -163,19 +160,5 @@ clearBtn.addEventListener("click", () => {
   saveOrders(orders);
   runFilters();
 });
-
-exportBtn.addEventListener("click", () => {
-  const data = JSON.stringify(orders, null, 2);
-  const blob = new Blob([data], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "agrimart_orders.json";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-});
-
 // initial render
 runFilters();
