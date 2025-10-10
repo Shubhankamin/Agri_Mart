@@ -33,17 +33,21 @@ const blogs = [
 
 const container = document.getElementById('blog-container');
 
-blogs.forEach(blog => {
-  const card = document.createElement('div');
+blogs.forEach((blog, index) => {
+  const card = document.createElement('article');
   card.className = 'blog-card';
   
+  if(index % 2 !== 0) card.classList.add('alt');
+
   card.innerHTML = `
-    <img src="${blog.image}" alt="${blog.title}">
+    <div class="blog-image">
+      <img src="${blog.image}" alt="${blog.title}">
+    </div>
     <div class="blog-content">
-      <h2>${blog.title}</h2>
+      <h3>${blog.title}</h3>
       <p>${blog.content}</p>
     </div>
   `;
-  
+
   container.appendChild(card);
 });

@@ -4,48 +4,47 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Agrimart — Order History</title>
-  <link rel="stylesheet" href="css\Order_A.css" />
+  <link rel="stylesheet" href="css/Order_A.css" />
 </head>
 <body>
   <header class="site-header">
     <h1>Agrimart — Order History</h1>
-    <div class="wrap"></div>
   </header>
 
-  <main class="wrap main-grid">
-    <aside class="controls">
-      <div class="control-group">
-        <input id="search-input" type="search" placeholder="Search by Order ID or item..." />
+  <main class="wrap">
+    <!-- CONTROLS -->
+    <section class="controls">
+      <!-- Search full width -->
+      <div class="control-group full">
+        <input id="search-input" type="search" placeholder="🔍 Search by Order ID or item..." />
       </div>
 
-      <div class="control-group">
-        <label for="status-filter">Filter by status</label>
-        <select id="status-filter">
-          <option value="all">All</option>
-          <option value="delivered">Delivered</option>
-          <option value="shipped">Shipped</option>
-          <option value="processing">Processing</option>
-          <option value="cancelled">Cancelled</option>
-        </select>
-      </div>
-
-      <div class="control-group">
+      <!-- Filter + Button row -->
+      <div class="control-row">
+        <div class="control-group">
+          <label for="status-filter">📦 Filter by status</label>
+          <select id="status-filter">
+            <option value="all">All</option>
+            <option value="delivered">Delivered</option>
+            <option value="shipped">Shipped</option>
+            <option value="processing">Processing</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
         <button id="clear-btn" class="btn outline">Clear all orders</button>
       </div>
+    </section>
 
-      <div class="control-group small-note">
-      </div>
-    </aside>
-
+    <!-- ORDERS -->
     <section class="orders" id="orders-container" aria-live="polite">
-      <!-- Orders injected here -->
+      <!-- Orders injected by JS -->
     </section>
   </main>
 
   <footer class="site-footer">
-      <p>© 2025 Agrimart. All Rights Reserved.</p>
+    <p>© 2025 Agrimart. All Rights Reserved.</p>
   </footer>
 
-  <script src="js\Order.js"></script>
+  <script src="js/Order.js"></script>
 </body>
 </html>

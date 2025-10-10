@@ -4,47 +4,48 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("search-input");
   const clearBtn = document.getElementById("clear-btn");
 
-  // Default sample orders
-  const sampleOrders = [
-    {
-      id: "ORD-001",
-      date: "2025-10-01",
-      status: "delivered",
-      items: [
-        { name: "Organic Fertilizer", qty: 2, price: "₹1200" },
-        { name: "Tractor Engine Oil", qty: 1, price: "₹850" },
-      ],
-      total: "₹3,250",
-    },
-    {
-      id: "ORD-002",
-      date: "2025-09-27",
-      status: "processing",
-      items: [
-        { name: "Hybrid Seeds Pack", qty: 4, price: "₹1,000" },
-        { name: "Pesticide Spray", qty: 1, price: "₹480" },
-      ],
-      total: "₹2,480",
-    },
-    {
-      id: "ORD-003",
-      date: "2025-09-20",
-      status: "shipped",
-      items: [
-        { name: "Drip Irrigation Kit", qty: 1, price: "₹3,200" },
-      ],
-      total: "₹3,200",
-    },
-    {
-      id: "ORD-004",
-      date: "2025-08-29",
-      status: "cancelled",
-      items: [
-        { name: "Solar Water Pump", qty: 1, price: "₹12,500" },
-      ],
-      total: "₹12,500",
-    },
-  ];
+  // Default sample orders (farm products)
+const sampleOrders = [
+  {
+    id: "ORD-001",
+    date: "2025-10-01",
+    status: "delivered",
+    items: [
+      { name: "Organic Apples", qty: 3, price: "₹300" },
+      { name: "Fresh Spinach Bunch", qty: 2, price: "₹80" },
+    ],
+    total: "₹460",
+  },
+  {
+    id: "ORD-002",
+    date: "2025-09-27",
+    status: "processing",
+    items: [
+      { name: "Wheat Flour (1kg)", qty: 5, price: "₹200" },
+      { name: "Tomatoes (1kg)", qty: 2, price: "₹120" },
+    ],
+    total: "₹320",
+  },
+  {
+    id: "ORD-003",
+    date: "2025-09-20",
+    status: "shipped",
+    items: [
+      { name: "Organic Bananas (1 dozen)", qty: 2, price: "₹150" },
+    ],
+    total: "₹300",
+  },
+  {
+    id: "ORD-004",
+    date: "2025-08-29",
+    status: "cancelled",
+    items: [
+      { name: "Rice (5kg)", qty: 1, price: "₹350" },
+      { name: "Carrots (1kg)", qty: 3, price: "₹180" },
+    ],
+    total: "₹530",
+  },
+];
 
   // Load from localStorage or use sample
   let orders = JSON.parse(localStorage.getItem("orders")) || sampleOrders;
@@ -61,14 +62,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const matchesStatus = filter === "all" ? true : order.status === filter;
       const matchesSearch = search
         ? order.id.toLowerCase().includes(search.toLowerCase()) ||
-          order.items.some(item => item.name.toLowerCase().includes(search.toLowerCase()))
+          order.items.some(item =>
+            item.name.toLowerCase().includes(search.toLowerCase())
+          )
         : true;
       return matchesStatus && matchesSearch;
     });
 
     if (filteredOrders.length === 0) {
-      ordersContainer.innerHTML = `
-        <div class="empty"><p>No orders found.</p></div>`;
+      ordersContainer.innerHTML = `<div class="empty"><p>No orders found.</p></div>`;
       return;
     }
 
@@ -80,20 +82,22 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="oid">${order.id}</div>
           <span class="date">${order.date}</span>
           <span class="status ${order.status}">${order.status}</span>
+          <div class="card-actions-inline">
+            <button class="view-btn">View</button>
+          </div>
         </div>
 
         <div class="order-details">
           <div class="order-title">Order Details</div>
           <ul class="items-list">
-            ${order.items.map(item => `
-              <li><span>${item.name} (x${item.qty})</span><span>${item.price}</span></li>
-            `).join("")}
+            ${order.items
+              .map(
+                item =>
+                  `<li><span>${item.name} (x${item.qty})</span><span>${item.price}</span></li>`
+              )
+              .join("")}
           </ul>
           <div class="total-row">Total: ${order.total}</div>
-
-          <div class="card-actions">
-            <button class="action-btn primary">View</button>
-          </div>
         </div>
       `;
       ordersContainer.appendChild(orderEl);
@@ -155,8 +159,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // View button click -> show modal
   ordersContainer.addEventListener("click", e => {
-    if (e.target.classList.contains("primary")) {
-      const orderId = e.target.closest(".order-card").querySelector(".oid").textContent;
+    if (e.target.classList.contains("view-btn")) {
+      const orderId = e.target.closest(".order-card").querySelector(".oid")
+        .textContent;
       const order = orders.find(o => o.id === orderId);
       modalContent.innerHTML = `
         <h3>Order ${order.id}</h3>
@@ -164,7 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>Status:</strong> ${order.status}</p>
         <p><strong>Items:</strong></p>
         <ul>
-          ${order.items.map(i => `<li>${i.name} x${i.qty} - ${i.price}</li>`).join("")}
+          ${order.items
+            .map(i => `<li>${i.name} x${i.qty} - ${i.price}</li>`)
+            .join("")}
         </ul>
         <p><strong>Total:</strong> ${order.total}</p>
       `;
