@@ -121,6 +121,25 @@ body {
     width: 100%;
 }
 
+.profile-link {
+    display: inline-block;
+    margin-left: 2rem;
+    text-decoration: none;
+}
+
+.profile-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc; /* Optional: adds a subtle border */
+    transition: border-color 0.3s ease;
+}
+
+.profile-icon:hover {
+    border-color: #4CAF50; /* Optional: adds hover effect */
+}
+
 /* Dropdown */
 .dropdown {
     position: relative;
@@ -478,6 +497,13 @@ body {
     background-color: var(--light-green);
     transform: scale(1.05);
 }
+.centered-footer {
+    display: flex;
+    justify-content: center;
+    margin: 2rem auto; /* Adjust as needed */
+    padding: 1rem 0;
+}
+
 
 /* Features Section */
 .features-section {

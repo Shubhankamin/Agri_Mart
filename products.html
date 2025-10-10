@@ -57,34 +57,122 @@
           />
           <span id="priceValueMobile">$0 - $500</span>
         </div>
+        <div class="filter-group">
+          <label class="font-subtitle">Rating</label>
+          <div class="rating-filter">
+            <label><input type="radio" name="rating" value="5" /> ★★★★★</label>
+            <label
+              ><input type="radio" name="rating" value="4" /> ★★★★☆ & up</label
+            >
+            <label
+              ><input type="radio" name="rating" value="3" /> ★★★☆☆ & up</label
+            >
+            <label
+              ><input type="radio" name="rating" value="2" /> ★★☆☆☆ & up</label
+            >
+            <label
+              ><input type="radio" name="rating" value="1" /> ★☆☆☆☆ & up</label
+            >
+          </div>
+        </div>
+
+        <!-- Availability Filter -->
+        <div class="filter-group">
+          <label class="font-subtitle">Availability</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="inStock" /> In Stock</label>
+            <label><input type="checkbox" id="onSale" /> On Sale</label>
+          </div>
+        </div>
+
+        <!-- Sort By -->
+        <div class="filter-group">
+          <label class="font-subtitle" for="sortSelect">Sort By</label>
+          <select id="sortSelect" class="custom-select">
+            <option value="default">Default</option>
+            <option value="lowToHigh">Price: Low to High</option>
+            <option value="highToLow">Price: High to Low</option>
+            <option value="aToZ">Name: A to Z</option>
+            <option value="zToA">Name: Z to A</option>
+          </select>
+        </div>
       </aside>
 
+      <!-- Sidebar Filters -->
       <!-- Sidebar Filters -->
       <aside class="sidebar">
         <h3 class="font-title">Filters</h3>
 
+        <!-- Category Filter -->
         <div class="filter-group">
-          <label class="font-subtitle" for="categorySelect">Categories</label>
+          <label class="font-subtitle" for="categorySelect">Category</label>
           <select id="categorySelect" class="custom-select">
             <option value="all">All</option>
             <option value="fruits">Fruits</option>
             <option value="vegetables">Vegetables</option>
             <option value="grains">Grains</option>
+            <option value="dairy">Dairy</option>
+            <option value="herbs">Herbs</option>
           </select>
         </div>
 
+        <!-- Price Filter -->
         <div class="filter-group">
-          <label class="font-subtitle" for="priceRange">Price</label>
+          <label class="font-subtitle" for="priceRange">Price Range</label>
           <input
             type="range"
             id="priceRange"
             class="custom-range"
             min="0"
-            max="500"
+            max="1000"
             step="10"
           />
-          <span id="priceValue">$0 - $500</span>
+          <span id="priceValue">₹0 - ₹1000</span>
         </div>
+
+        <!-- Rating Filter -->
+        <div class="filter-group">
+          <label class="font-subtitle">Rating</label>
+          <div class="rating-filter">
+            <label><input type="radio" name="rating" value="5" /> ★★★★★</label>
+            <label
+              ><input type="radio" name="rating" value="4" /> ★★★★☆ & up</label
+            >
+            <label
+              ><input type="radio" name="rating" value="3" /> ★★★☆☆ & up</label
+            >
+            <label
+              ><input type="radio" name="rating" value="2" /> ★★☆☆☆ & up</label
+            >
+            <label
+              ><input type="radio" name="rating" value="1" /> ★☆☆☆☆ & up</label
+            >
+          </div>
+        </div>
+
+        <!-- Availability Filter -->
+        <div class="filter-group">
+          <label class="font-subtitle">Availability</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="inStock" /> In Stock</label>
+            <label><input type="checkbox" id="onSale" /> On Sale</label>
+          </div>
+        </div>
+
+        <!-- Sort By -->
+        <div class="filter-group">
+          <label class="font-subtitle" for="sortSelect">Sort By</label>
+          <select id="sortSelectMobile" class="custom-select">
+            <option value="default">Default</option>
+            <option value="lowToHigh">Price: Low to High</option>
+            <option value="highToLow">Price: High to Low</option>
+            <option value="aToZ">Name: A to Z</option>
+            <option value="zToA">Name: Z to A</option>
+          </select>
+        </div>
+
+        <!-- Apply Filters -->
+        <!-- <button class="apply-btn font-button">Apply Filters</button> -->
       </aside>
 
       <!-- Products Grid -->

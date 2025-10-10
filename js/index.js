@@ -4,7 +4,7 @@ const products = [
         id: 1,
         name: 'Fresh Strawberries',
         category: 'fruits',
-        price: 4.99,
+        price: 279,
         image: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&q=80',
         description: 'Sweet, juicy organic strawberries'
     },
@@ -12,7 +12,7 @@ const products = [
         id: 2,
         name: 'Organic Bananas',
         category: 'fruits',
-        price: 2.49,
+        price: 39,
         image: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400&q=80',
         description: 'Ripe organic bananas, perfect for snacking'
     },
@@ -20,7 +20,7 @@ const products = [
         id: 3,
         name: 'Red Apples',
         category: 'fruits',
-        price: 3.99,
+        price: 199,
         image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&q=80',
         description: 'Crisp and sweet red apples'
     },
@@ -28,7 +28,7 @@ const products = [
         id: 4,
         name: 'Fresh Oranges',
         category: 'fruits',
-        price: 3.49,
+        price: 189,
         image: 'https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=400&q=80',
         description: 'Juicy oranges packed with vitamin C'
     },
@@ -36,7 +36,7 @@ const products = [
         id: 5,
         name: 'Organic Tomatoes',
         category: 'vegetables',
-        price: 3.29,
+        price: 69,
         image: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400&q=80',
         description: 'Vine-ripened organic tomatoes'
     },
@@ -44,7 +44,7 @@ const products = [
         id: 6,
         name: 'Fresh Carrots',
         category: 'vegetables',
-        price: 2.19,
+        price: 79,
         image: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400&q=80',
         description: 'Crunchy organic carrots, farm fresh'
     },
@@ -52,7 +52,7 @@ const products = [
         id: 7,
         name: 'Green Broccoli',
         category: 'vegetables',
-        price: 2.99,
+        price: 169,
         image: 'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&q=80',
         description: 'Fresh organic broccoli crowns'
     },
@@ -60,7 +60,7 @@ const products = [
         id: 8,
         name: 'Bell Peppers',
         category: 'vegetables',
-        price: 4.49,
+        price: 79,
         image: 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400&q=80',
         description: 'Colorful mix of fresh bell peppers'
     },
@@ -68,7 +68,7 @@ const products = [
         id: 9,
         name: 'Organic Oats',
         category: 'cereals',
-        price: 5.99,
+        price: 326,
         image: 'https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?w=400&q=80',
         description: 'Whole grain organic rolled oats'
     },
@@ -76,7 +76,7 @@ const products = [
         id: 10,
         name: 'Brown Rice',
         category: 'cereals',
-        price: 6.49,
+        price: 199,
         image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80',
         description: 'Premium organic brown rice'
     },
@@ -84,7 +84,7 @@ const products = [
         id: 11,
         name: 'Quinoa',
         category: 'cereals',
-        price: 7.99,
+        price: 169,
         image: 'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=400&q=80',
         description: 'Protein-rich organic quinoa'
     },
@@ -92,7 +92,7 @@ const products = [
         id: 12,
         name: 'Whole Wheat',
         category: 'cereals',
-        price: 4.99,
+        price: 89,
         image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&q=80',
         description: 'Stone-ground whole wheat flour'
     }
@@ -193,7 +193,7 @@ function renderProducts(filter = 'all') {
                 <h3 class="product-name">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
                 <div class="product-footer">
-                    <span class="product-price">$${product.price.toFixed(2)}</span>
+                    <span class="product-price">₹${product.price.toFixed(2)}</span>
                     <button class="add-to-cart-btn" onclick="addToCart(${product.id})" aria-label="Add ${product.name} to cart">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="9" cy="21" r="1"></circle>
