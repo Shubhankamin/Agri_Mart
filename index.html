@@ -1,221 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Fresh organic fruits, vegetables, and cereals delivered to your doorstep">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Fresh organic fruits, vegetables, and cereals delivered to your doorstep"
+    />
     <title>AgriMart - Fresh Organic Produce</title>
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!-- Navigation -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
-        <div class="container">
-            <div class="nav-content">
-                <a href="index.html" class="logo" aria-label="AgriMart Home">
-                    <span class="logo-icon">🌾</span>
-                    <span class="logo-text">AgriMart</span>
-                </a>
-                
-                <div class="nav-links">
-                    <a href="index.html" class="nav-link active" aria-current="page">Home</a>
-                    
-                    <div class="dropdown">
-                        <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" id="categoryDropdown">
-                            Categories
-                            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                        <div class="dropdown-menu" role="menu" aria-labelledby="categoryDropdown">
-                            <a href="#" class="dropdown-item" role="menuitem" data-category="all">All Products</a>
-                            <a href="#" class="dropdown-item" role="menuitem" data-category="fruits">Fruits</a>
-                            <a href="#" class="dropdown-item" role="menuitem" data-category="vegetables">Vegetables</a>
-                            <a href="#" class="dropdown-item" role="menuitem" data-category="cereals">Cereals</a>
-                        </div>
-                    </div>
-                    
-                    <a href="contact.html" class="nav-link">Contact</a>
+      <div class="container">
+        <div class="nav-content">
+          <a href="index.html" class="logo" aria-label="AgriMart Home">
+            <span class="logo-icon">🌾</span>
+            <span class="logo-text">AgriMart</span>
+          </a>
 
-                    
-                    <button class="cart-button" aria-label="Shopping cart">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="9" cy="21" r="1"></circle>
-                            <circle cx="20" cy="21" r="1"></circle>
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                        </svg>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </button>
-                    
-                    <a href="profile.html" class="profile-link" aria-label="Profile page">
-                     <img src="\Images\Profile.png" alt="Profile" class="profile-icon">
-                    </a>
+          <div class="nav-links">
+            <a href="index.html" class="nav-link active" aria-current="page"
+              >Home</a
+            >
 
-                </div>
-                
-                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+            <div class="dropdown">
+              <button
+                class="nav-link dropdown-toggle"
+                aria-haspopup="true"
+                aria-expanded="false"
+                id="categoryDropdown"
+              >
+                Categories
+                <svg
+                  class="dropdown-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div
+                class="dropdown-menu"
+                role="menu"
+                aria-labelledby="categoryDropdown"
+              >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="all"
+                  >All Products</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="fruits"
+                  >Fruits</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="vegetables"
+                  >Vegetables</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="cereals"
+                  >Cereals</a
+                >
+              </div>
             </div>
+
+            <a href="contact.html" class="nav-link">Contact</a>
+
+            <button class="cart-button" aria-label="Shopping cart">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path
+                  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                ></path>
+              </svg>
+              <span class="cart-count" id="cartCount">0</span>
+            </button>
+
+            <a
+              href="profile.html"
+              class="profile-link"
+              aria-label="Profile page"
+            >
+              <img
+                src="\Images\Profile.png"
+                alt="Profile"
+                class="profile-icon"
+              />
+            </a>
+          </div>
+
+          <button
+            class="mobile-menu-toggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" role="banner">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Fresh Organic Produce<br>Delivered to Your Door</h1>
-                <p class="hero-description">Experience the finest selection of farm-fresh fruits, vegetables, and cereals. Quality you can taste, freshness you can trust.</p>
-                <div class="hero-actions">
-                    <button class="btn btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
-                        Shop Now
-                    </button>
-                    <a href="about_us.html" class="btn btn-secondary">Learn More</a>
-                </div>
-            </div>
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Fresh Organic Produce<br />Delivered to Your Door
+          </h1>
+          <p class="hero-description">
+            Experience the finest selection of farm-fresh fruits, vegetables,
+            and cereals. Quality you can taste, freshness you can trust.
+          </p>
+          <div class="hero-actions">
+            <button
+              class="btn btn-primary"
+              onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})"
+            >
+              Shop Now
+            </button>
+            <a href="about_us.html" class="btn btn-secondary">Learn More</a>
+          </div>
         </div>
-        <div class="hero-decoration"></div>
+      </div>
+      <div class="hero-decoration"></div>
     </section>
 
     <!-- Category Filter -->
     <section class="category-filter">
-        <div class="container">
-            <div class="filter-buttons" role="group" aria-label="Product category filters">
-                <button class="filter-btn active" data-filter="all">All Products</button>
-                <button class="filter-btn" data-filter="fruits">Fruits</button>
-                <button class="filter-btn" data-filter="vegetables">Vegetables</button>
-                <button class="filter-btn" data-filter="cereals">Cereals</button>
-            </div>
+      <div class="container">
+        <div
+          class="filter-buttons"
+          role="group"
+          aria-label="Product category filters"
+        >
+          <button class="filter-btn active" data-filter="all">
+            All Products
+          </button>
+          <button class="filter-btn" data-filter="fruits">Fruits</button>
+          <button class="filter-btn" data-filter="vegetables">
+            Vegetables
+          </button>
+          <button class="filter-btn" data-filter="cereals">Cereals</button>
         </div>
+      </div>
     </section>
 
     <!-- Products Section -->
     <section class="products-section" id="products">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Our Fresh Products</h2>
-                <p class="section-subtitle">Handpicked with care, delivered with love</p>
-            </div>
-            
-            <div class="products-grid" id="productsGrid">
-                <!-- Products will be dynamically loaded here -->
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Our Fresh Products</h2>
+          <p class="section-subtitle">
+            Handpicked with care, delivered with love
+          </p>
         </div>
+
+        <div class="products-grid" id="productsGrid">
+          <!-- Products will be dynamically loaded here -->
+        </div>
+      </div>
     </section>
 
-   <div class="section-footer centered-footer">
-    <a href="/products" class="btn btn-secondary">View All Products</a>
-   </div>
-
-
-
+    <div class="section-footer centered-footer">
+      <a href="/products.html" class="btn btn-secondary">View All Products</a>
+    </div>
 
     <!-- Features Section -->
     <section class="features-section">
-        <div class="container">
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">100% Organic</h3>
-                    <p class="feature-description">All our products are certified organic and pesticide-free</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="1" y="3" width="15" height="13"></rect>
-                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Fast Delivery</h3>
-                    <p class="feature-description">Get your order delivered fresh within 24 hours</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Quality Assured</h3>
-                    <p class="feature-description">Every product is handpicked and quality checked</p>
-                </div>
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+              </svg>
             </div>
+            <h3 class="feature-title">100% Organic</h3>
+            <p class="feature-description">
+              All our products are certified organic and pesticide-free
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="1" y="3" width="15" height="13"></rect>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+              </svg>
+            </div>
+            <h3 class="feature-title">Fast Delivery</h3>
+            <p class="feature-description">
+              Get your order delivered fresh within 24 hours
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <h3 class="feature-title">Quality Assured</h3>
+            <p class="feature-description">
+              Every product is handpicked and quality checked
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <span class="logo-icon">🌾</span>
-                    <h3 class="footer-title">AgriMart</h3>
-                    <p class="footer-description">Your trusted source for fresh, organic produce. Farm to table, quality to your doorstep.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-heading">Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#products">Products</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Blog</a></li>
-                         <li><a href="terms_conditions.html">Terms & Conditions</a></li>
-                        <li><a href="policy.html">Privacy Policy</a></li>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <span class="logo-icon">🌾</span>
+            <h3 class="footer-title">AgriMart</h3>
+            <p class="footer-description">
+              Your trusted source for fresh, organic produce. Farm to table,
+              quality to your doorstep.
+            </p>
+          </div>
 
+          <div class="footer-section">
+            <h4 class="footer-heading">Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="#products">Products</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="terms_conditions.html">Terms & Conditions</a></li>
+              <li><a href="policy.html">Privacy Policy</a></li>
+            </ul>
+          </div>
 
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-heading">Categories</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" data-category="fruits">Fruits</a></li>
-                        <li><a href="#" data-category="vegetables">Vegetables</a></li>
-                        <li><a href="#" data-category="cereals">Cereals</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-heading">Contact Info</h4>
-                    <ul class="footer-contact">
-                        <li>Email: info@agrimart.com</li>
-                        <li>Phone: +1 (555) 123-4567</li>
-                        <li>Address: 123 Farm Road, Green Valley</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 AgriMart. All rights reserved.</p>
-            </div>
+          <div class="footer-section">
+            <h4 class="footer-heading">Categories</h4>
+            <ul class="footer-links">
+              <li><a href="#" data-category="fruits">Fruits</a></li>
+              <li><a href="#" data-category="vegetables">Vegetables</a></li>
+              <li><a href="#" data-category="cereals">Cereals</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-heading">Contact Info</h4>
+            <ul class="footer-contact">
+              <li>Email: info@agrimart.com</li>
+              <li>Phone: +1 (555) 123-4567</li>
+              <li>Address: 123 Farm Road, Green Valley</li>
+            </ul>
+          </div>
         </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 AgriMart. All rights reserved.</p>
+        </div>
+      </div>
     </footer>
 
     <!-- Cart Notification -->
     <div class="cart-notification" id="cartNotification">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-        </svg>
-        <span>Added to cart!</span>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <span>Added to cart!</span>
     </div>
 
     <script src="/js/index.js"></script>
-</body>
+    <script src="/data/data.js"></script>
+  </body>
 </html>
