@@ -1,0 +1,529 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fdf7e1;
+  color: #2e3d2f;
+  overflow-x: hidden;
+}
+
+header {
+  background: linear-gradient(135deg, #2e8b57, #3ca36b);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* Form Group for labels and inputs */
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #2e8b57;
+  font-size: 0.95em;
+}
+
+.add-product {
+  background-color: #e6f4e7;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.add-product h2 {
+  color: #2e8b57;
+}
+
+.add-product input[type="text"],
+.add-product input[type="number"],
+.add-product textarea,
+.add-product select,
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content textarea,
+.modal-content select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.add-product input:focus,
+.modal-content input:focus,
+.add-product textarea:focus,
+.add-product select:focus,
+.modal-content textarea:focus,
+.modal-content select:focus {
+  border-color: #2e8b57;
+  box-shadow: 0 0 5px rgba(46,139,87,0.4);
+  outline: none;
+}
+
+.add-product button[type="submit"],
+.modal-content button[type="submit"] {
+  background-color: #2e8b57;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto 10px auto;
+  padding: 12px;
+  width: 85%;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-product button[type="submit"]:hover,
+.modal-content button[type="submit"]:hover {
+  background-color: #256f45;
+  transform: translateY(-2px);
+}
+
+.file-label {
+  font-size: 14px;
+  color: #2e8b57;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.info-icon {
+  margin-left: 8px;
+  color: #555;
+  cursor: help;
+  font-size: 0.9em;
+}
+
+/* Image Upload Boxes for Add New Product */
+.image-upload-group {
+  margin-top: 20px;
+}
+
+.image-upload-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.image-upload-box {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.image-upload-box:hover {
+  border-color: #2e8b57;
+}
+
+.image-upload-box .plus-icon {
+  font-size: 3em;
+  color: #ccc;
+}
+
+.image-upload-box .hidden-file-input {
+  display: none;
+}
+
+.image-upload-box .uploaded-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.image-upload-box .remove-new-image {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(204, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0;
+}
+
+.remove-new-image:hover {
+  background-color: rgba(204, 0, 0, 1);
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* Product Card Styles */
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  gap: 25px;
+}
+
+.product-card {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  overflow: hidden;
+  width: 270px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+}
+
+.image-slider {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image-slider img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: none;
+}
+
+.image-slider img.active {
+  display: block;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255,255,255,0.7);
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 50%;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.product-info {
+  padding: 15px;
+  text-align: left;
+}
+
+.product-info h3 {
+  margin: 5px 0;
+  color: #2e8b57;
+}
+
+.product-info p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.edit-btns {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.edit-btns button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 6px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-btns .edit { background-color: #f5f5dc; color: #2e8b57; }
+.edit-btns .delete { background-color: #c0392b; color: white; }
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #2e8b57;
+  color: white;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal.hidden { display: none; }
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  text-align: center;
+  
+  /* CRITICAL CHANGE 1: Enable Flexbox and disable overflow here */
+  display: flex;
+  flex-direction: column;
+  max-height: 95vh; 
+  overflow-y: hidden; 
+  padding-bottom: 0; /* Ensures the height calculation is clean */
+}
+
+/* Green Header for Edit Product Modal */
+.modal-header-green {
+  /* CRITICAL CHANGE 2: Ensure header size is fixed and doesn't scroll/shrink */
+  flex-shrink: 0;
+  background-color: #2e8b57;
+  color: white;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0; /* Crucial: Remove margin gap */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.modal-header-green .modal-title {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.close-modal-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 0;
+}
+
+.close-modal-btn:hover {
+  color: #f0f0f0;
+}
+
+/* CRITICAL CHANGE 3: The form takes up the rest of the space and handles the scroll */
+#editForm {
+  flex-grow: 1; /* Take up all available vertical space */
+  overflow-y: auto; /* This is the scrollable area */
+  padding: 20px 25px 20px; /* Re-add the necessary padding inside the scrollable area */
+}
+
+/* Make form groups slightly more compact in the modal */
+.modal-content .form-group {
+    margin-bottom: 10px; 
+}
+
+.edit-images-section h4 {
+  color: #2e8b57;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.edit-image-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px; 
+  margin: 10px 0 20px;
+}
+
+.edit-image-box {
+  width: 100px;
+  position: relative; 
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-image-box img {
+  width: 100px; 
+  height: 100px; 
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.edit-image-box .delete-btn {
+  position: absolute; 
+  top: -5px; 
+  right: -5px; 
+  background-color: rgba(204, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%; 
+  width: 24px;
+  height: 24px;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2; 
+  padding: 0; 
+}
+
+.edit-image-box .delete-btn:hover {
+  background-color: rgba(204, 0, 0, 1);
+}
+
+/* Reapply styles for main form buttons, excluding the close button */
+.modal-content button:not(.close-modal-btn) { 
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2e8b57;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  width: 85%;
+}
+
+/* Animations (omitted for brevity) */
+/* ... */
+
+
+/* --- RESPONSIVENESS (Mobile devices up to 600px) --- */
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .add-product {
+        margin: 15px auto;
+        padding: 15px;
+    }
+
+    .product-container {
+        padding: 15px;
+        gap: 20px;
+    }
+    .product-card {
+        width: 95%; 
+        max-width: 400px; 
+    }
+
+    /* Form Adjustments - Maximize use of screen space */
+    .form-group {
+        width: 95%; 
+    }
+    .add-product button[type="submit"],
+    .modal-content button[type="submit"],
+    .modal-content button:not(.close-modal-btn) {
+        width: 95%; 
+    }
+
+    /* Image Upload for Add Product - Make boxes smaller for compactness */
+    .image-upload-boxes {
+        gap: 8px;
+    }
+    .image-upload-box {
+        width: 70px;
+        height: 70px;
+    }
+    .image-upload-box .plus-icon {
+        font-size: 2em;
+    }
+    .image-upload-box .remove-new-image {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7em;
+        top: 2px;
+        right: 2px;
+    }
+
+
+    /* Edit Modal Adjustments */
+    .modal-content {
+        width: 95%; 
+        max-width: none; 
+    }
+    .modal-header-green {
+        padding: 10px 15px;
+    }
+    
+    /* Ensure form padding is slightly adjusted for mobile inside the scrollable area */
+    #editForm {
+      padding: 15px; 
+    }
+
+    /* Edit Modal Images - Adjust size to fit three images comfortably */
+    .edit-image-container {
+        gap: 10px;
+    }
+    .edit-image-box {
+        width: 80px; 
+    }
+    .edit-image-box img {
+        width: 80px; 
+        height: 80px; 
+    }
+    .edit-image-box .delete-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7em;
+        top: -2px;
+        right: -2px;
+    }
+}
