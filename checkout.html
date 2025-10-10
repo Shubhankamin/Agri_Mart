@@ -11,155 +11,141 @@
     <link rel="stylesheet" href="checkout.css">
 </head>
 <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Header -->
-    <header class="main-header">
+    <header class="main-header" role="banner">
         <div class="header-container">
             <div class="logo-section">
                 <div class="logo">
-                    <i class="fas fa-seedling"></i>
+                    <i class="fas fa-seedling" aria-hidden="true"></i>
                     <h1>AgriMart</h1>
                 </div>
                 <p class="tagline">Fresh from farm to table</p>
             </div>
             
-            <nav class="nav-links">
-                <a href="#" class="nav-link">Home</a>
-                <a href="#" class="nav-link">Products</a>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="products.html" class="nav-link">Products</a>
                 <a href="#" class="nav-link">Farmers</a>
                 <a href="#" class="nav-link">Deals</a>
-                <a href="#" class="nav-link active">Checkout</a>
+                <a href="checkout.html" class="nav-link active" aria-current="page">Checkout</a>
             </nav>
             
             <div class="user-actions">
-                <div class="cart-icon">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">3</span>
-                </div>
-                <div class="user-profile">
-                    <i class="fas fa-user-circle"></i>
-                </div>
+                <a href="cart.html" class="cart-icon" aria-label="Shopping cart">
+                    <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                    <span class="cart-count" id="header-cart-count">0</span>
+                </a>
+                <button class="user-profile" aria-label="User profile">
+                    <i class="fas fa-user-circle" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="checkout-container">
+    <main class="checkout-container" id="main-content">
+        <!-- Live region for screen reader announcements -->
+        <div class="visually-hidden" aria-live="polite" aria-atomic="true" id="checkout-status"></div>
+
         <div class="checkout-content">
             <!-- Left Column - Delivery Information -->
             <div class="delivery-column">
-                <div class="delivery-card">
+                <section class="delivery-card" aria-labelledby="delivery-heading">
+                    <!-- FIX #4: Removed edit button from header -->
                     <div class="card-header">
-                        <h2><i class="fas fa-truck"></i> Delivery Address</h2>
-                        <button class="edit-btn" id="edit-address-btn">Edit</button>
+                        <h2 id="delivery-heading">
+                            <i class="fas fa-truck" aria-hidden="true"></i> Delivery Address
+                        </h2>
                     </div>
                     
                     <div class="address-section">
                         <div class="address-options">
-                            <h3>Select Delivery Address</h3>
+                            <h3 id="address-selection-heading">Select Delivery Address</h3>
                             <p class="subtitle">Choose from your saved addresses or add a new one</p>
                             
-                            <div class="saved-addresses" id="saved-addresses">
+                            <div class="saved-addresses" id="saved-addresses" role="radiogroup" aria-labelledby="address-selection-heading">
                                 <!-- Address cards will be populated by JavaScript -->
                             </div>
                             
                             <div class="add-new-address">
-                                <button class="add-address-btn" id="add-address-btn">
-                                    <i class="fas fa-plus"></i>
+                                <button class="add-address-btn" id="add-address-btn" type="button">
+                                    <i class="fas fa-plus" aria-hidden="true"></i>
                                     <span>Add New Address</span>
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
                 
-                <div class="billing-card">
+                <section class="billing-card" aria-labelledby="billing-heading">
                     <div class="card-header">
-                        <h2><i class="fas fa-file-invoice-dollar"></i> Billing Address</h2>
+                        <h2 id="billing-heading">
+                            <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Billing Address
+                        </h2>
                     </div>
                     
                     <div class="billing-options">
-                        <div class="option-group">
-                            <input type="radio" id="same-as-shipping" name="billing-option" checked>
-                            <label for="same-as-shipping">Same as shipping address</label>
-                        </div>
+                        <fieldset>
+                            <legend class="visually-hidden">Billing address options</legend>
+                            
+                            <div class="option-group">
+                                <input type="radio" id="same-as-shipping" name="billing-option" checked>
+                                <label for="same-as-shipping">Same as delivery address</label>
+                            </div>
+                            
+                            <div class="option-group">
+                                <input type="radio" id="different-billing" name="billing-option">
+                                <label for="different-billing">Use a different billing address</label>
+                            </div>
+                        </fieldset>
                         
-                        <div class="option-group">
-                            <input type="radio" id="different-billing" name="billing-option">
-                            <label for="different-billing">Use a different billing address</label>
+                        <!-- FIX #5: Container to show selected delivery address -->
+                        <div class="same-address-display" id="same-address-display">
+                            <div class="same-address-message">
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                <span>Billing address same as delivery address</span>
+                            </div>
+                            <div class="selected-address-preview" id="selected-delivery-preview">
+                                <!-- Will be populated when delivery address is selected -->
+                            </div>
                         </div>
                         
                         <div class="billing-address-selection" id="billing-address-selection" style="display: none;">
-                            <div class="saved-addresses" id="billing-saved-addresses">
+                            <div class="saved-addresses" id="billing-saved-addresses" role="radiogroup" aria-labelledby="billing-selection-heading">
+                                <h3 id="billing-selection-heading" class="visually-hidden">Select billing address</h3>
                                 <!-- Billing address cards will be populated by JavaScript -->
                             </div>
                             
                             <div class="add-new-address">
-                                <button class="add-address-btn" id="add-billing-address-btn">
-                                    <i class="fas fa-plus"></i>
+                                <button class="add-address-btn" id="add-billing-address-btn" type="button">
+                                    <i class="fas fa-plus" aria-hidden="true"></i>
                                     <span>Add New Billing Address</span>
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
             
             <!-- Right Column - Order Summary -->
-            <div class="order-column">
+            <aside class="order-column" aria-labelledby="order-summary-heading">
                 <div class="order-summary">
                     <div class="summary-header">
-                        <h2>Order Summary</h2>
+                        <h2 id="order-summary-heading">Order Summary</h2>
                     </div>
                     
-                    <div class="cart-items">
-                        <div class="cart-item">
-                            <div class="item-image">
-                                <img src="https://via.placeholder.com/60x60/10B981/FFFFFF?text=TM" alt="Organic Tomatoes">
-                            </div>
-                            <div class="item-details">
-                                <h3>Fresh Organic Tomatoes</h3>
-                                <p class="item-seller">Sold by: Green Valley Farms</p>
-                                <div class="item-quantity">
-                                    <span>Quantity: 2kg</span>
-                                </div>
-                            </div>
-                            <div class="item-price">₹180</div>
-                        </div>
-                        
-                        <div class="cart-item">
-                            <div class="item-image">
-                                <img src="https://via.placeholder.com/60x60/F59E0B/FFFFFF?text=EG" alt="Farm Eggs">
-                            </div>
-                            <div class="item-details">
-                                <h3>Farm Fresh Eggs</h3>
-                                <p class="item-seller">Sold by: Happy Hens Farm</p>
-                                <div class="item-quantity">
-                                    <span>Quantity: 1 dozen</span>
-                                </div>
-                            </div>
-                            <div class="item-price">₹120</div>
-                        </div>
-                        
-                        <div class="cart-item">
-                            <div class="item-image">
-                                <img src="https://via.placeholder.com/60x60/047857/FFFFFF?text=AV" alt="Organic Avocados">
-                            </div>
-                            <div class="item-details">
-                                <h3>Organic Avocados</h3>
-                                <p class="item-seller">Sold by: Tropical Orchards</p>
-                                <div class="item-quantity">
-                                    <span>Quantity: 4 pieces</span>
-                                </div>
-                            </div>
-                            <div class="item-price">₹240</div>
-                        </div>
+                    <div class="cart-items" id="checkout-cart-items">
+                        <!-- Cart items will be populated by JavaScript from localStorage -->
                     </div>
                     
                     <div class="delivery-info">
                         <div class="delivery-option">
-                            <i class="fas fa-shipping-fast"></i>
+                            <i class="fas fa-shipping-fast" aria-hidden="true"></i>
                             <div class="delivery-details">
-                                <h4>Standard Delivery</h4>
+                                <h3>Standard Delivery</h3>
                                 <p>Delivery by Tomorrow, 10 AM - 2 PM</p>
                             </div>
                             <div class="delivery-price">FREE</div>
@@ -168,124 +154,187 @@
                     
                     <div class="price-breakdown">
                         <div class="price-line">
-                            <span>Subtotal (3 items)</span>
-                            <span>₹540</span>
+                            <span>Subtotal (<span id="summary-item-count">0</span> items)</span>
+                            <span id="summary-subtotal">₹0.00</span>
                         </div>
                         <div class="price-line">
                             <span>Delivery Fee</span>
                             <span>FREE</span>
                         </div>
+                        <!-- FIX #9: Removed discount section -->
                         <div class="price-line">
-                            <span>Discount</span>
-                            <span class="discount">-₹50</span>
-                        </div>
-                        <div class="price-line">
-                            <span>Taxes & Charges</span>
-                            <span>₹25</span>
+                            <span>Taxes & Charges (5%)</span>
+                            <span id="summary-tax">₹0.00</span>
                         </div>
                         <div class="price-line total">
                             <span>Total Amount</span>
-                            <span>₹515</span>
+                            <span id="summary-total">₹0.00</span>
                         </div>
                     </div>
                     
-                    <div class="savings-info">
-                        <i class="fas fa-piggy-bank"></i>
-                        <span>You save ₹50 on this order</span>
-                    </div>
+                    <!-- FIX #9: Removed savings info -->
                     
-                    <button class="pay-now-btn" id="pay-now-btn">
-                        <i class="fab fa-google-pay"></i>
+                    <button class="pay-now-btn" id="pay-now-btn" type="button">
+                        <i class="fab fa-google-pay" aria-hidden="true"></i>
                         Pay Now
                     </button>
                     
                     <div class="secure-checkout">
-                        <i class="fas fa-lock"></i>
+                        <i class="fas fa-lock" aria-hidden="true"></i>
                         <span>Secure checkout</span>
                     </div>
                 </div>
-            </div>
+            </aside>
         </div>
     </main>
 
     <!-- Edit Address Modal -->
-    <div class="edit-address-modal" id="edit-address-modal">
+    <div class="edit-address-modal" id="edit-address-modal" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
         <div class="edit-address-content">
             <div class="edit-address-header">
                 <h2 id="edit-modal-title">Edit Address</h2>
-                <button class="close-edit-modal" id="close-edit-modal">
-                    <i class="fas fa-times"></i>
+                <button class="close-edit-modal" id="close-edit-modal" type="button" aria-label="Close address form">
+                    <i class="fas fa-times" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="edit-address-body">
-                <form id="edit-address-form">
+                <!-- FIX #7: Added validation attributes -->
+                <form id="edit-address-form" novalidate>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="edit-full-name">Full Name *</label>
-                            <input type="text" id="edit-full-name" placeholder="Enter your full name" required>
+                            <label for="edit-full-name">
+                                Full Name <span class="required" aria-label="required">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="edit-full-name" 
+                                   name="fullName"
+                                   placeholder="Enter your full name" 
+                                   required 
+                                   aria-required="true"
+                                   aria-describedby="edit-name-error"
+                                   minlength="2"
+                                   maxlength="50">
+                            <span class="error-message" id="edit-name-error" role="alert"></span>
                         </div>
                         <div class="form-group">
-                            <label for="edit-phone">Mobile Number *</label>
-                            <input type="tel" id="edit-phone" placeholder="10-digit mobile number" required>
+                            <label for="edit-phone">
+                                Mobile Number <span class="required" aria-label="required">*</span>
+                            </label>
+                            <input type="tel" 
+                                   id="edit-phone" 
+                                   name="phone"
+                                   placeholder="10-digit mobile number" 
+                                   required 
+                                   aria-required="true"
+                                   aria-describedby="edit-phone-error"
+                                   pattern="[0-9]{10}"
+                                   maxlength="10">
+                            <span class="error-message" id="edit-phone-error" role="alert"></span>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="edit-address">Address *</label>
-                        <textarea id="edit-address" placeholder="House/Flat No., Building, Street, Area" required></textarea>
+                        <label for="edit-address">
+                            Address <span class="required" aria-label="required">*</span>
+                        </label>
+                        <textarea id="edit-address" 
+                                  name="address"
+                                  placeholder="House/Flat No., Building, Street, Area" 
+                                  required 
+                                  aria-required="true"
+                                  aria-describedby="edit-address-error"
+                                  minlength="10"
+                                  maxlength="200"></textarea>
+                        <span class="error-message" id="edit-address-error" role="alert"></span>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="edit-city">City *</label>
-                            <input type="text" id="edit-city" placeholder="Enter your city" required>
+                            <label for="edit-city">
+                                City <span class="required" aria-label="required">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="edit-city" 
+                                   name="city"
+                                   placeholder="Enter your city" 
+                                   required 
+                                   aria-required="true"
+                                   aria-describedby="edit-city-error"
+                                   minlength="2"
+                                   maxlength="50">
+                            <span class="error-message" id="edit-city-error" role="alert"></span>
                         </div>
                         <div class="form-group">
-                            <label for="edit-state">State *</label>
-                            <select id="edit-state" required>
+                            <label for="edit-state">
+                                State <span class="required" aria-label="required">*</span>
+                            </label>
+                            <select id="edit-state" 
+                                    name="state"
+                                    required 
+                                    aria-required="true"
+                                    aria-describedby="edit-state-error">
                                 <option value="">Select State</option>
                                 <option value="KA">Karnataka</option>
                                 <option value="MH">Maharashtra</option>
                                 <option value="TN">Tamil Nadu</option>
                                 <option value="DL">Delhi</option>
                                 <option value="UP">Uttar Pradesh</option>
+                                <option value="RJ">Rajasthan</option>
+                                <option value="GJ">Gujarat</option>
+                                <option value="WB">West Bengal</option>
                             </select>
+                            <span class="error-message" id="edit-state-error" role="alert"></span>
                         </div>
                         <div class="form-group">
-                            <label for="edit-pincode">PIN Code *</label>
-                            <input type="text" id="edit-pincode" placeholder="6-digit PIN code" required>
+                            <label for="edit-pincode">
+                                PIN Code <span class="required" aria-label="required">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="edit-pincode" 
+                                   name="pincode"
+                                   placeholder="6-digit PIN code" 
+                                   required 
+                                   aria-required="true"
+                                   aria-describedby="edit-pincode-error"
+                                   pattern="[0-9]{6}"
+                                   maxlength="6">
+                            <span class="error-message" id="edit-pincode-error" role="alert"></span>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="edit-landmark">Landmark (Optional)</label>
-                        <input type="text" id="edit-landmark" placeholder="Nearby landmark">
+                        <input type="text" 
+                               id="edit-landmark" 
+                               name="landmark"
+                               placeholder="Nearby landmark"
+                               maxlength="100">
                     </div>
                     
-                    <div class="address-type">
-                        <label>Address Type</label>
+                    <fieldset class="address-type">
+                        <legend>Address Type</legend>
                         <div class="type-options">
                             <div class="type-option">
                                 <input type="radio" id="edit-home" name="edit-address-type" value="home" checked>
                                 <label for="edit-home">
-                                    <i class="fas fa-home"></i>
+                                    <i class="fas fa-home" aria-hidden="true"></i>
                                     <span>Home</span>
                                 </label>
                             </div>
                             <div class="type-option">
                                 <input type="radio" id="edit-work" name="edit-address-type" value="work">
                                 <label for="edit-work">
-                                    <i class="fas fa-building"></i>
+                                    <i class="fas fa-building" aria-hidden="true"></i>
                                     <span>Work</span>
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                     
                     <div class="form-actions">
                         <button type="button" class="cancel-btn" id="cancel-edit-btn">Cancel</button>
                         <button type="submit" class="save-btn" id="edit-modal-submit">
-                            <i class="fas fa-save"></i>
+                            <i class="fas fa-save" aria-hidden="true"></i>
                             Update Address
                         </button>
                     </div>
@@ -295,83 +344,152 @@
     </div>
 
     <!-- Billing Address Modal -->
-    <div class="edit-address-modal" id="billing-address-modal">
+    <div class="edit-address-modal" id="billing-address-modal" role="dialog" aria-modal="true" aria-labelledby="billing-modal-title">
         <div class="edit-address-content">
             <div class="edit-address-header">
                 <h2 id="billing-modal-title">Add Billing Address</h2>
-                <button class="close-edit-modal" id="close-billing-modal">
-                    <i class="fas fa-times"></i>
+                <button class="close-edit-modal" id="close-billing-modal" type="button" aria-label="Close billing address form">
+                    <i class="fas fa-times" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="edit-address-body">
-                <form id="billing-address-form">
+                <!-- FIX #7: Added validation attributes -->
+                <form id="billing-address-form" novalidate>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="billing-full-name">Full Name *</label>
-                            <input type="text" id="billing-full-name" placeholder="Enter your full name" required>
+                            <label for="billing-full-name">
+                                Full Name <span class="required" aria-label="required">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="billing-full-name" 
+                                   name="fullName"
+                                   placeholder="Enter your full name" 
+                                   required 
+                                   aria-required="true"
+                                   aria-describedby="billing-name-error"
+                                   minlength="2"
+                                   maxlength="50">
+                            <span class="error-message" id="billing-name-error" role="alert"></span>
                         </div>
                         <div class="form-group">
-                            <label for="billing-phone">Mobile Number *</label>
-                            <input type="tel" id="billing-phone" placeholder="10-digit mobile number" required>
+                            <label for="billing-phone">
+                                Mobile Number <span class="required" aria-label="required">*</span>
+                            </label>
+                            <input type="tel" 
+                                   id="billing-phone" 
+                                   name="phone"
+                                   placeholder="10-digit mobile number" 
+                                   required 
+                                   aria-required="true"
+                                   aria-describedby="billing-phone-error"
+                                   pattern="[0-9]{10}"
+                                   maxlength="10">
+                            <span class="error-message" id="billing-phone-error" role="alert"></span>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="billing-address">Address *</label>
-                        <textarea id="billing-address" placeholder="House/Flat No., Building, Street, Area" required></textarea>
+                        <label for="billing-address">
+                            Address <span class="required" aria-label="required">*</span>
+                        </label>
+                        <textarea id="billing-address" 
+                                  name="address"
+                                  placeholder="House/Flat No., Building, Street, Area" 
+                                  required 
+                                  aria-required="true"
+                                  aria-describedby="billing-address-error"
+                                  minlength="10"
+                                  maxlength="200"></textarea>
+                        <span class="error-message" id="billing-address-error" role="alert"></span>
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="billing-city">City *</label>
-                            <input type="text" id="billing-city" placeholder="Enter your city" required>
+                            <label for="billing-city">
+                                City <span class="required" aria-label="required">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="billing-city" 
+                                   name="city"
+                                   placeholder="Enter your city" 
+                                   required 
+                                   aria-required="true"
+                                   aria-describedby="billing-city-error"
+                                   minlength="2"
+                                   maxlength="50">
+                            <span class="error-message" id="billing-city-error" role="alert"></span>
                         </div>
                         <div class="form-group">
-                            <label for="billing-state">State *</label>
-                            <select id="billing-state" required>
+                            <label for="billing-state">
+                                State <span class="required" aria-label="required">*</span>
+                            </label>
+                            <select id="billing-state" 
+                                    name="state"
+                                    required 
+                                    aria-required="true"
+                                    aria-describedby="billing-state-error">
                                 <option value="">Select State</option>
                                 <option value="KA">Karnataka</option>
                                 <option value="MH">Maharashtra</option>
                                 <option value="TN">Tamil Nadu</option>
                                 <option value="DL">Delhi</option>
                                 <option value="UP">Uttar Pradesh</option>
+                                <option value="RJ">Rajasthan</option>
+                                <option value="GJ">Gujarat</option>
+                                <option value="WB">West Bengal</option>
                             </select>
+                            <span class="error-message" id="billing-state-error" role="alert"></span>
                         </div>
                         <div class="form-group">
-                            <label for="billing-pincode">PIN Code *</label>
-                            <input type="text" id="billing-pincode" placeholder="6-digit PIN code" required>
+                            <label for="billing-pincode">
+                                PIN Code <span class="required" aria-label="required">*</span>
+                            </label>
+                            <input type="text" 
+                                   id="billing-pincode" 
+                                   name="pincode"
+                                   placeholder="6-digit PIN code" 
+                                   required 
+                                   aria-required="true"
+                                   aria-describedby="billing-pincode-error"
+                                   pattern="[0-9]{6}"
+                                   maxlength="6">
+                            <span class="error-message" id="billing-pincode-error" role="alert"></span>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="billing-landmark">Landmark (Optional)</label>
-                        <input type="text" id="billing-landmark" placeholder="Nearby landmark">
+                        <input type="text" 
+                               id="billing-landmark" 
+                               name="landmark"
+                               placeholder="Nearby landmark"
+                               maxlength="100">
                     </div>
                     
-                    <div class="address-type">
-                        <label>Address Type</label>
+                    <fieldset class="address-type">
+                        <legend>Address Type</legend>
                         <div class="type-options">
                             <div class="type-option">
                                 <input type="radio" id="billing-home" name="billing-address-type" value="home" checked>
                                 <label for="billing-home">
-                                    <i class="fas fa-home"></i>
+                                    <i class="fas fa-home" aria-hidden="true"></i>
                                     <span>Home</span>
                                 </label>
                             </div>
                             <div class="type-option">
                                 <input type="radio" id="billing-work" name="billing-address-type" value="work">
                                 <label for="billing-work">
-                                    <i class="fas fa-building"></i>
+                                    <i class="fas fa-building" aria-hidden="true"></i>
                                     <span>Work</span>
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                     
                     <div class="form-actions">
                         <button type="button" class="cancel-btn" id="cancel-billing-btn">Cancel</button>
                         <button type="submit" class="save-btn" id="billing-modal-submit">
-                            <i class="fas fa-save"></i>
+                            <i class="fas fa-save" aria-hidden="true"></i>
                             Save Billing Address
                         </button>
                     </div>
@@ -381,17 +499,17 @@
     </div>
 
     <!-- Order Details Modal -->
-    <div class="order-modal" id="order-modal">
+    <div class="order-modal" id="order-modal" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
         <div class="order-content">
             <div class="order-header">
-                <h2>Order Details</h2>
-                <button class="close-order-modal" id="close-order-modal">
-                    <i class="fas fa-times"></i>
+                <h2 id="order-modal-title">Order Details</h2>
+                <button class="close-order-modal" id="close-order-modal" type="button" aria-label="Close order details">
+                    <i class="fas fa-times" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="order-body">
-                <div class="order-info-section">
-                    <h3>Order Information</h3>
+                <section class="order-info-section" aria-labelledby="order-info-heading">
+                    <h3 id="order-info-heading">Order Information</h3>
                     <div class="order-info-grid">
                         <div class="info-item">
                             <span>Order ID:</span>
@@ -410,57 +528,57 @@
                             <span id="modal-order-total">₹515</span>
                         </div>
                     </div>
-                </div>
+                </section>
                 
-                <div class="order-items-section">
-                    <h3>Order Items</h3>
+                <section class="order-items-section" aria-labelledby="order-items-heading">
+                    <h3 id="order-items-heading">Order Items</h3>
                     <div class="order-items-list" id="modal-order-items">
                         <!-- Order items will be populated by JavaScript -->
                     </div>
-                </div>
+                </section>
                 
-                <div class="delivery-address-section">
-                    <h3>Delivery Address</h3>
+                <section class="delivery-address-section" aria-labelledby="delivery-address-heading">
+                    <h3 id="delivery-address-heading">Delivery Address</h3>
                     <div class="address-details" id="modal-delivery-address">
                         <!-- Address will be populated by JavaScript -->
                     </div>
-                </div>
+                </section>
 
-                <div class="billing-address-section">
-                    <h3>Billing Address</h3>
+                <section class="billing-address-section" aria-labelledby="billing-address-heading">
+                    <h3 id="billing-address-heading">Billing Address</h3>
                     <div class="address-details" id="modal-billing-address">
                         <!-- Billing address will be populated by JavaScript -->
                     </div>
-                </div>
+                </section>
             </div>
             <div class="order-footer">
-                <button class="print-order-btn" id="print-order-btn">
-                    <i class="fas fa-print"></i>
+                <button class="print-order-btn" id="print-order-btn" type="button">
+                    <i class="fas fa-print" aria-hidden="true"></i>
                     Print Order
                 </button>
-                <button class="close-modal-btn" id="close-modal-btn">Close</button>
+                <button class="close-modal-btn" id="close-modal-btn" type="button">Close</button>
             </div>
         </div>
     </div>
 
     <!-- Payment Processing Modal -->
-    <div class="payment-modal" id="payment-modal">
+    <div class="payment-modal" id="payment-modal" role="dialog" aria-modal="true" aria-labelledby="payment-modal-title">
         <div class="payment-content">
             <div class="payment-header">
-                <h2>Processing Payment</h2>
+                <h2 id="payment-modal-title">Processing Payment</h2>
             </div>
             <div class="payment-body">
                 <div class="payment-loader">
-                    <div class="loader-circle"></div>
+                    <div class="loader-circle" role="status" aria-label="Processing payment"></div>
                     <div class="loader-text">Processing your payment...</div>
                 </div>
                 <div class="payment-details">
                     <div class="payment-amount">
                         <span>Amount to pay:</span>
-                        <span class="amount">₹515</span>
+                        <span class="amount" id="payment-amount">₹515</span>
                     </div>
                     <div class="payment-method">
-                        <i class="fab fa-google-pay"></i>
+                        <i class="fab fa-google-pay" aria-hidden="true"></i>
                         <span>Google Pay</span>
                     </div>
                 </div>
@@ -469,14 +587,14 @@
     </div>
 
     <!-- Payment Success Modal -->
-    <div class="success-modal" id="success-modal">
+    <div class="success-modal" id="success-modal" role="dialog" aria-modal="true" aria-labelledby="success-modal-title">
         <div class="success-content">
             <div class="success-icon">
-                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-check-circle" aria-hidden="true"></i>
             </div>
             <div class="success-text">
-                <h2>Payment Successful!</h2>
-                <p>Your payment of ₹515 has been processed successfully.</p>
+                <h2 id="success-modal-title">Payment Successful!</h2>
+                <p id="success-message">Your payment has been processed successfully.</p>
                 <div class="order-details">
                     <div class="order-info">
                         <span>Order ID:</span>
@@ -489,44 +607,44 @@
                 </div>
             </div>
             <div class="success-actions">
-                <button class="view-order-btn" id="view-order-btn">View Order Details</button>
-                <button class="continue-shopping-btn" id="continue-shopping-btn">Continue Shopping</button>
+                <button class="view-order-btn" id="view-order-btn" type="button">View Order Details</button>
+                <button class="continue-shopping-btn" id="continue-shopping-btn" type="button">Continue Shopping</button>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="main-footer">
+    <footer class="main-footer" role="contentinfo">
         <div class="footer-container">
             <div class="footer-section">
                 <h3>AgriMart</h3>
                 <p>Fresh from farm to table</p>
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
                 </div>
             </div>
-            <div class="footer-section">
-                <h4>Customer Service</h4>
+            <nav class="footer-section" aria-labelledby="customer-service-heading">
+                <h4 id="customer-service-heading">Customer Service</h4>
                 <a href="#">Help Center</a>
                 <a href="#">Returns & Refunds</a>
                 <a href="#">Shipping Policy</a>
                 <a href="#">Contact Us</a>
-            </div>
-            <div class="footer-section">
-                <h4>About AgriMart</h4>
+            </nav>
+            <nav class="footer-section" aria-labelledby="about-heading">
+                <h4 id="about-heading">About AgriMart</h4>
                 <a href="#">About Us</a>
                 <a href="#">Careers</a>
                 <a href="#">Terms & Conditions</a>
                 <a href="#">Privacy Policy</a>
-            </div>
-            <div class="footer-section">
-                <h4>Farmers</h4>
+            </nav>
+            <nav class="footer-section" aria-labelledby="farmers-heading">
+                <h4 id="farmers-heading">Farmers</h4>
                 <a href="#">Sell on AgriMart</a>
                 <a href="#">Farmer Support</a>
                 <a href="#">Training & Resources</a>
-            </div>
+            </nav>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2023 AgriMart. All rights reserved.</p>
