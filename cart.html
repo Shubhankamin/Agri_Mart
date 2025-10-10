@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshMarket - Your Shopping Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header role="banner">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon" role="img" aria-label="Plant icon">🌱</span>
+                    AgriMarket
+                </div>
+                <nav class="nav-links" aria-label="Main navigation">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link">Products</a>
+                    <a href="cart.html" class="nav-link active" aria-current="page">Cart</a>
+                </nav>
+                <div class="cart-info" aria-label="Shopping cart summary">
+                    <span>Your Cart</span>
+                    <span class="cart-count" id="cart-count" aria-label="4 items in cart">4</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <div class="container">
+            <h1 class="page-title">Your Shopping Cart</h1>
+            <p class="items-count" id="items-count" aria-live="polite" aria-atomic="true">4 items in your cart</p>
+            
+            <!-- Live region for cart updates -->
+            <div class="visually-hidden" aria-live="polite" aria-atomic="true" id="cart-status"></div>
+            
+            <div class="cart-content">
+                <!-- Cart Items Section -->
+                <section class="cart-items" id="cart-items-section" aria-labelledby="cart-items-heading">
+                    <h2 id="cart-items-heading" class="visually-hidden">Shopping Cart Items</h2>
+                    <!-- Cart items will be dynamically generated here -->
+                </section>
+                
+                <!-- Order Summary -->
+                <aside class="order-summary" aria-labelledby="order-summary-heading">
+                    <h2 id="order-summary-heading">Order Summary</h2>
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+                        <span id="subtotal" aria-label="Subtotal amount">₹78.82</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Shipping</span>
+                        <span aria-label="Shipping cost">FREE</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Tax (5%)</span>
+                        <span id="tax" aria-label="Tax amount">₹3.94</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span>Total</span>
+                        <span id="total" aria-label="Total amount">₹82.76</span>
+                    </div>
+                    <div class="checkout-container">
+                        <a href="checkout.html" class="checkout-btn" id="checkout-btn" aria-label="Proceed to checkout">Proceed to Checkout</a>
+                    </div>
+                </aside>
+            </div>
+            
+            <!-- Empty Cart Message (Hidden by default) -->
+            <div class="empty-cart" id="empty-cart" style="display: none;" role="status" aria-live="polite">
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added any items to your cart yet.</p>
+                <a href="products.html" class="continue-shopping">Browse Products</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmation-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description">
+        <div class="modal-content">
+            <h3 id="modal-title">Remove Item</h3>
+            <p id="modal-description">Are you sure you want to remove this item from your cart?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-confirm" id="confirm-remove">Yes, Remove</button>
+                <button class="modal-btn modal-cancel" id="cancel-remove">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
+</body>
+</html>
