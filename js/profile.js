@@ -1,3 +1,63 @@
+// ----------------------------
+// Navbar setup (dynamic links + category dropdown)
+// ----------------------------
+function setupNavbar() {
+  const container = document.querySelector(".dynamic-links");
+  if (!container) return; // stop if navbar container not present
+
+  // Clear existing links
+  container.innerHTML = "";
+
+  // Always show "Products"
+  const productsLink = document.createElement("a");
+  productsLink.href = "/products.html";
+  productsLink.className = "nav-link";
+  productsLink.textContent = "Products";
+  container.appendChild(productsLink);
+
+  // Show "Sell" only if user is a farmer
+  if (user && user.role === "farmer") {
+    const sellLink = document.createElement("a");
+    sellLink.href = "/sell.html";
+    sellLink.className = "nav-link";
+    sellLink.textContent = "Sell";
+    container.appendChild(sellLink);
+  }
+
+  // Setup dropdown toggle and items (categories)
+  const dropdownToggle = document.querySelector(".dropdown-toggle");
+  const dropdownMenu = document.querySelector(".dropdown-menu");
+
+  if (dropdownToggle && dropdownMenu) {
+    // Toggle dropdown
+    dropdownToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle("active");
+    });
+
+    // Close when clicking outside
+    document.addEventListener("click", () => {
+      dropdownMenu.classList.remove("active");
+    });
+
+    // Handle category clicks → redirect to products page with category
+    dropdownMenu.querySelectorAll(".dropdown-item").forEach((item) => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        const category = item.getAttribute("data-category");
+        window.location.href = `products.html?category=${category}`;
+      });
+    });
+  }
+}
+
+// ----------------------------
+// Call navbar setup safely
+// ----------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  setupNavbar();
+});
+
 const sidebarMenu = document.getElementById("sidebarMenu");
 const snackbar = document.getElementById("snackbar");
 
@@ -597,64 +657,3 @@ function showSnackbar(message, type = "info") {
   snackbar.classList.add("show");
   setTimeout(() => snackbar.classList.remove("show"), 3000);
 }
-
-
-
-// Get current user from localStorage
-const currentUser = localStorage.getItem("currentUser");
-const user = currentUser ? JSON.parse(currentUser) : null;
-
-// Function to setup dynamic navbar links and category dropdown
-function setupNavbar() {
-  const container = document.querySelector(".dynamic-links");
-  if (!container) return; // stop if no container exists
-
-  // Clear existing links
-  container.innerHTML = "";
-
-  // Always show "Products"
-  const productsLink = document.createElement("a");
-  productsLink.href = "/products.html";
-  productsLink.className = "nav-link";
-  productsLink.textContent = "Products";
-  container.appendChild(productsLink);
-
-  // Show "Sell" only if user is a farmer
-  if (user && user.role === "farmer") {
-    const sellLink = document.createElement("a");
-    sellLink.href = "/sell.html";
-    sellLink.className = "nav-link";
-    sellLink.textContent = "Sell";
-    container.appendChild(sellLink);
-  }
-
-  // Setup category dropdown
-  const dropdownToggle = document.querySelector(".dropdown-toggle");
-  const dropdownMenu = document.querySelector(".dropdown-menu");
-
-  if (dropdownToggle && dropdownMenu) {
-    dropdownToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle("active");
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener("click", () => {
-      dropdownMenu.classList.remove("active");
-    });
-
-    // Redirect to products page on category click
-    dropdownMenu.querySelectorAll(".dropdown-item").forEach((item) => {
-      item.addEventListener("click", (e) => {
-        e.preventDefault();
-        const category = item.getAttribute("data-category");
-        window.location.href = `products.html?category=${category}`;
-      });
-    });
-  }
-}
-
-// Initialize navbar on page load
-document.addEventListener("DOMContentLoaded", () => {
-  setupNavbar();
-});
