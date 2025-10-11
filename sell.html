@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agrikart | Sell Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/sell.css">
+</head>
+<body>
+  <header>
+    <h1>AgriKart</h1>
+    <button id="backToProfile">← Back to Profile</button>
+  </header>
+
+  <section id="addProductSection" class="add-product">
+    <h2>Add New Product</h2>
+    <p class="intro-text">
+      List your farm-fresh goods for buyers across the region. Upload product images, set prices, and start selling instantly!
+    </p>
+
+    <form id="addProductForm">
+      <div class="form-group">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" placeholder="e.g., Organic Tomatoes" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="productPrice">Price (₹ per kg):</label>
+        <input type="number" id="productPrice" placeholder="e.g., 40" required min="0.01" step="0.01">
+      </div>
+      
+      <div class="form-group">
+        <label for="productQuantity">Total Quantity (kg):</label>
+        <input type="number" id="productQuantity" placeholder="e.g., 25" required min="1" step="1">
+      </div>
+
+      <div class="form-group">
+        <label for="productDescription">Description:</label>
+        <textarea id="productDescription" placeholder="A brief description of your product..." rows="3" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="availableQuantity">Available Quantity (kg):</label>
+        <input type="number" id="availableQuantity" placeholder="e.g., 20" required min="0" step="1">
+      </div>
+
+      <div class="form-group">
+        <label for="freshness">Freshness:</label>
+        <select id="freshness" required>
+          <option value="">Select Freshness Level</option>
+          <option value="Excellent">Excellent</option>
+          <option value="Very Good">Very Good</option>
+          <option value="Good">Good</option>
+          <option value="Fair">Fair</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="productCategory">Category:</label>
+        <select id="productCategory" required>
+          <option value="">Select Category</option>
+          <option value="Fruit">Fruit</option>
+          <option value="Vegetable">Vegetable</option>
+          <option value="Cereals/Grains">Cereals/Grains</option>
+        </select>
+      </div>
+
+      <div class="form-group image-upload-group">
+        <label>
+          Add Images:
+          <i class="fas fa-info-circle info-icon" title="Images must be less than 200KB. Max 3 images."></i>
+        </label>
+        <div class="image-upload-boxes" id="newProductImagesContainer">
+          <div class="image-upload-box" data-index="0">
+            <span class="plus-icon">+</span>
+            <input type="file" class="hidden-file-input" accept="image/*">
+            <img src="" alt="Product Image" class="uploaded-img hidden">
+            <button type="button" class="remove-new-image hidden"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="image-upload-box" data-index="1">
+            <span class="plus-icon">+</span>
+            <input type="file" class="hidden-file-input" accept="image/*">
+            <img src="" alt="Product Image" class="uploaded-img hidden">
+            <button type="button" class="remove-new-image hidden"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="image-upload-box" data-index="2">
+            <span class="plus-icon">+</span>
+            <input type="file" class="hidden-file-input" accept="image/*">
+            <img src="" alt="Product Image" class="uploaded-img hidden">
+            <button type="button" class="remove-new-image hidden"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+      </div>
+      
+      <button type="submit">+ Add Product</button>
+    </form>
+  </section>
+
+  <main id="productContainer" class="product-container"></main>
+
+  <div id="editModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header-green">
+        <h3 class="modal-title">Edit Product</h3>
+        <button type="button" id="closeModal" class="close-modal-btn"><i class="fas fa-times"></i></button>
+      </div>
+
+      <form id="editForm">
+        <div class="form-group">
+          <label for="editName">Product Name:</label>
+          <input type="text" id="editName" placeholder="Product Name" required>
+        </div>
+        <div class="form-group">
+          <label for="editPrice">Price (₹ per kg):</label>
+          <input type="number" id="editPrice" placeholder="Price (₹)" required min="0.01" step="0.01">
+        </div>
+        <div class="form-group">
+          <label for="editQuantity">Total Quantity (kg):</label>
+          <input type="number" id="editQuantity" placeholder="Quantity (kg)" required min="1" step="1">
+        </div>
+        <div class="form-group">
+          <label for="editDescription">Description:</label>
+          <textarea id="editDescription" placeholder="A brief description of your product..." rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="editAvailableQuantity">Available Quantity (kg):</label>
+          <input type="number" id="editAvailableQuantity" placeholder="Available Quantity (kg)" required min="0" step="1">
+        </div>
+        <div class="form-group">
+          <label for="editFreshness">Freshness:</label>
+          <select id="editFreshness" required>
+            <option value="">Select Freshness Level</option>
+            <option value="Excellent">Excellent</option>
+            <option value="Very Good">Very Good</option>
+            <option value="Good">Good</option>
+            <option value="Fair">Fair</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="editCategory">Category:</label>
+          <select id="editCategory" required>
+            <option value="">Select Category</option>
+            <option value="Fruit">Fruit</option>
+            <option value="Vegetable">Vegetable</option>
+            <option value="Cereals/Grains">Cereals/Grains</option>
+          </select>
+        </div>
+
+        <div class="edit-images-section">
+          <h4>Manage Images</h4>
+          <div id="editImageContainer" class="edit-image-container"></div>
+          <label class="file-label">
+            Add New Image (max 3):
+            <i class="fas fa-info-circle info-icon" title="Images must be less than 200KB."></i>
+          </label>
+          <input type="file" id="addNewImage" accept="image/*">
+        </div>
+
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Agrikart | Empowering Farmers Through Technology 🌿</p>
+  </footer>
+
+  <script src="js/sell.js"></script>
+</body>
+</html>

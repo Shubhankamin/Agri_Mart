@@ -1,0 +1,229 @@
+/* Reset & basics */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  color: #333;
+  background-color: #f5f0e8; /* light beige */
+  line-height: 1.6;
+}
+a {
+  color: #2a6b35;
+  text-decoration: none;
+  position: relative;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  background: linear-gradient(135deg, #2e8b57, #3ca36b);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center title */
+  position: relative; /* for absolute nav */
+}
+
+/* Site Title */
+.site-title {
+  font-size: 1.8rem;
+  color: white;
+  text-align: center;
+  pointer-events: none; /* clicks pass through */
+}
+
+/* Navigation */
+.site-nav {
+  display: flex;
+  gap: 20px;
+  position: absolute; /* prevents pushing title */
+  right: 20px;
+}
+.site-nav a {
+  font-weight: 500;
+  color: white;
+}
+.site-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Back to Profile Button */
+#backToProfile {
+  position: fixed; /* stays in top-left corner */
+  top: 16px;
+  left: 16px;
+  background: transparent;
+  color: white;
+  font-weight: bold;
+  border: 2px solid white;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+#backToProfile:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Page layout */
+.page-wrapper {
+  display: flex;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+  gap: 30px;
+}
+
+/* Table of contents (sidebar) */
+.toc {
+  width: 200px;
+  flex-shrink: 0;
+  font-size: 0.95rem;
+}
+.toc nav h2 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: #2e8b57;
+}
+.toc nav ul {
+  list-style: none;
+}
+.toc nav ul li {
+  margin-bottom: 8px;
+}
+.toc nav ul li a {
+  color: #555;
+}
+.toc nav ul li a:hover {
+  color: #2e8b57;
+}
+
+/* Main content area */
+.content {
+  flex-grow: 1;
+}
+.content .section {
+  margin-bottom: 50px;
+}
+.content h2 {
+  font-size: 1.8rem;
+  color: #2e8b57;
+  margin-bottom: 16px;
+}
+.content h3 {
+  font-size: 1.3rem;
+  color: #2e8b57;
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+.content p, .content ul {
+  margin-bottom: 16px;
+}
+.content ul {
+  padding-left: 20px;
+}
+.content li {
+  margin-bottom: 8px;
+}
+
+/* Animations: hidden initial state */
+.section-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.section-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.animate-heading {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.animate-heading.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Footer */
+.footer {
+  border-top: none;
+  background-color: #2e8b57;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 60px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .page-wrapper {
+    flex-direction: column;
+  }
+  .toc {
+    display: none;
+  }
+  .site-nav {
+    display: none;
+  }
+  #backToProfile {
+    padding: 5px 12px;
+    font-size: 13px;
+    top: 14px;
+    left: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    padding: 12px 10px;
+  }
+  .site-title {
+    font-size: 1.5rem;
+  }
+  #backToProfile {
+    padding: 0;          /* remove extra padding */
+    font-size: 0;        /* hide text */
+    width: 32px;         /* small square button */
+    height: 32px;
+    border-radius: 50%;  /* circular button */
+  }
+  #backToProfile::before {
+    content: '←';        /* arrow icon */
+    font-size: 18px;
+    color: white;
+  }
+}
+
+@media (max-width: 400px) {
+  #backToProfile {
+    width: 28px;
+    height: 28px;
+  }
+  #backToProfile::before {
+    font-size: 16px;
+  }
+}
