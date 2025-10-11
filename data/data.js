@@ -4,7 +4,7 @@ const products = [
     name: "Fresh Mangoes",
     price: 80,
     category: "fruits",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/Bananas.jpeg",
     description:
       "Juicy, ripe mangoes sourced fresh from organic farms. Perfect for smoothies and desserts.",
     weight: "1 kg",
@@ -20,7 +20,7 @@ const products = [
     name: "Organic Tomatoes",
     price: 40,
     category: "vegetables",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/tomato.jpeg",
     description:
       "Fresh, juicy, and pesticide-free tomatoes directly from local organic farms.",
     weight: "1 kg",
@@ -36,7 +36,7 @@ const products = [
     name: "Rice",
     price: 60,
     category: "grains",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/lemon.jpeg",
     description:
       "Premium quality white rice with long grains and soft texture after cooking.",
     weight: "5 kg",
@@ -52,7 +52,7 @@ const products = [
     name: "Strawberries",
     price: 150,
     category: "fruits",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/tomato.jpeg",
     description:
       "Bright red, sweet, and tangy strawberries freshly picked from the hills.",
     weight: "500 g",
@@ -68,7 +68,7 @@ const products = [
     name: "Carrots",
     price: 50,
     category: "vegetables",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/blue.jpeg",
     description:
       "Crunchy and sweet organic carrots, rich in vitamin A and great for salads.",
     weight: "1 kg",
@@ -84,7 +84,7 @@ const products = [
     name: "Bananas",
     price: 30,
     category: "fruits",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/Bananas.jpeg",
     description:
       "Fresh Cavendish bananas packed with nutrients and natural sweetness.",
     weight: "1 dozen",
@@ -100,7 +100,7 @@ const products = [
     name: "Broccoli",
     price: 70,
     category: "vegetables",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/carot.jpeg",
     description:
       "Green, crisp, and nutrient-rich broccoli perfect for salads and stir-fry dishes.",
     weight: "500 g",
@@ -116,7 +116,7 @@ const products = [
     name: "Wheat Flour",
     price: 45,
     category: "grains",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/tomato.jpeg",
     description:
       "Stone-ground whole wheat flour with natural fiber and nutrients preserved.",
     weight: "5 kg",
@@ -132,7 +132,7 @@ const products = [
     name: "Blueberries",
     price: 200,
     category: "fruits",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/blue.jpeg",
     description:
       "Premium imported blueberries rich in antioxidants and bursting with flavor.",
     weight: "250 g",
@@ -148,7 +148,7 @@ const products = [
     name: "Spinach",
     price: 35,
     category: "vegetables",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/Bananas.jpeg",
     description:
       "Fresh and tender spinach leaves, perfect for soups, curries, and smoothies.",
     weight: "500 g",
@@ -164,7 +164,7 @@ const products = [
     name: "Fresh Mangoes 3",
     price: 90,
     category: "fruits",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/tomato.jpeg",
     description:
       "Juicy, ripe mangoes sourced fresh from organic farms. Perfect for smoothies and desserts.",
     weight: "1 kg",
@@ -180,7 +180,7 @@ const products = [
     name: "Fresh Mangoes 2",
     price: 120,
     category: "fruits",
-    img: "https://dummyimage.com/600x400/a877a8/fff.png",
+    img: "/images/carot.jpeg",
     description:
       "Juicy, ripe mangoes sourced fresh from organic farms. Perfect for smoothies and desserts.",
     weight: "1 kg",
