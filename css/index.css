@@ -693,6 +693,31 @@ body {
     box-shadow: var(--shadow-sm);
 }
 
+.form-submitted-notification {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background-color: var(--primary-green);
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: var(--transition);
+    z-index: 1000;
+}
+
+.form-submitted-notification.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+
+
 .form-title,
 .info-title {
     font-family: 'Playfair Display', serif;
@@ -761,6 +786,7 @@ body {
 .form-group.error .form-error {
     display: block;
 }
+
 
 .info-items {
     display: flex;
