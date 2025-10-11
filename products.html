@@ -16,7 +16,6 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/index.css" />
-
   </head>
   <body>
     <nav class="navbar" role="navigation" aria-label="Main navigation">
@@ -137,7 +136,14 @@
         </div>
       </div>
     </nav>
-    <div style="display: flex; justify-content: center; padding-top: 30px; padding-bottom: 30px;">
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
+      "
+    >
       <input
         type="text"
         id="searchInput"
@@ -298,6 +304,22 @@
       <main class="products-grid">
         <!-- JS will inject product cards here -->
       </main>
+      <!-- Quantity Dialog -->
+      <div id="quantityModal" class="modal">
+        <div class="modal-content">
+          <h3 id="modalTitle">Add to Cart</h3>
+          <p>Select Quantity:</p>
+          <div class="quantity-controls">
+            <button id="decreaseQty" aria-label="Decrease quantity">−</button>
+            <span id="modalQty">1</span>
+            <button id="increaseQty" aria-label="Increase quantity">+</button>
+          </div>
+          <div class="modal-actions">
+            <button id="confirmAddToCart">Add to Cart</button>
+            <button id="cancelModal">Cancel</button>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="data/data.js"></script>
     <script src="js/products.js"></script>

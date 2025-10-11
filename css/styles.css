@@ -373,3 +373,124 @@ body {
     display: none;
   }
 }
+/* Overlay */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Modal Box */
+.modal-content {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 600px;
+  min-width: 280px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Title */
+.modal-content h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+/* Text */
+.modal-content p {
+  margin-bottom: 15px;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* Quantity Controls */
+.quantity-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.quantity-controls button {
+  padding: 10px 16px;
+  font-size: 20px;
+  background-color: #f3f3f3;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quantity-controls button:hover {
+  background-color: #e0e0e0;
+}
+
+#modalQty {
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 30px;
+  text-align: center;
+}
+
+/* Actions */
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  gap: 12px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Add to Cart Button */
+#confirmAddToCart {
+  background-color: #66bb6a;
+  color: white;
+}
+
+#confirmAddToCart:hover {
+  background-color: #0056d2;
+}
+
+/* Cancel Button */
+#cancelModal {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+#cancelModal:hover {
+  background-color: #e2e2e2;
+}
+
+/* Animation */
+@keyframes slideIn {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
