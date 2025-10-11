@@ -46,7 +46,7 @@ function displayProducts(list) {
       <div class="info">
         <h3>${product.name}</h3>
         <p>₹${product.price}</p>
-        <button class="add-cart-btn">Add to Cart</button>
+        <button class="add-cart-btn" data-id="${product.id}">Add to Cart</button>
       </div>
     `;
 
@@ -58,11 +58,11 @@ function displayProducts(list) {
     });
 
     // Add to cart button
-    const btn = card.querySelector(".add-cart-btn");
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      alert(`"${product.name}" added to cart!`);
-    });
+    // const btn = card.querySelector(".add-cart-btn");
+    // btn.addEventListener("click", (e) => {
+    //   e.stopPropagation();
+    //   alert(`"${product.name}" added to cart!`);
+    // });
 
     productGrid.appendChild(card);
   });
@@ -203,4 +203,63 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Display products initially
   filterProducts();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("quantityModal");
+  const modalQty = document.getElementById("modalQty");
+  const increaseBtn = document.getElementById("increaseQty");
+  const decreaseBtn = document.getElementById("decreaseQty");
+  const confirmBtn = document.getElementById("confirmAddToCart");
+  const cancelBtn = document.getElementById("cancelModal");
+
+  let selectedProductId = null;
+  let quantity = 1;
+
+  // 🛒 Listen for Add to Cart clicks
+  document.body.addEventListener("click", (e) => {
+    if (e.target.classList.contains("add-cart-btn")) {
+      console.log("Add to Cart clicked");
+      selectedProductId = e.target.dataset.id;
+      quantity = 1;
+      modalQty.textContent = quantity;
+      modal.style.display = "flex"; // show modal
+    }
+  });
+
+  // ➕ Increment
+  increaseBtn.addEventListener("click", () => {
+    if (quantity < 99) {
+      quantity++;
+      modalQty.textContent = quantity;
+    }
+  });
+
+  // ➖ Decrement
+  decreaseBtn.addEventListener("click", () => {
+    if (quantity > 1) {
+      quantity--;
+      modalQty.textContent = quantity;
+    }
+  });
+
+  // ✅ Confirm add to cart → redirect
+  confirmBtn.addEventListener("click", () => {
+    if (selectedProductId) {
+      const url = `cart.html?id=${selectedProductId}&qty=${quantity}`;
+      window.location.href = url;
+    }
+  });
+
+  // ❌ Cancel / close modal
+  cancelBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // Close modal if clicking outside
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
 });

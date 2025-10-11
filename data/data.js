@@ -14,6 +14,9 @@ const products = [
     origin: "Ratnagiri, India",
     freshness: "100% Natural",
     deliveryTime: "2-3 days",
+    farmerEmail: "testfarm@gmail.com",
+    inStock: true,
+    onSale: true,
   },
   {
     id: 2,
@@ -30,6 +33,9 @@ const products = [
     origin: "Nashik, India",
     freshness: "Farm Fresh",
     deliveryTime: "1-2 days",
+    farmerEmail: "farmer2@example.com",
+    inStock: true,
+    onSale: false,
   },
   {
     id: 3,
@@ -46,6 +52,9 @@ const products = [
     origin: "Karnataka, India",
     freshness: "Polished Grains",
     deliveryTime: "3-4 days",
+    farmerEmail: "farmer3@example.com",
+    inStock: true,
+    onSale: false,
   },
   {
     id: 4,
@@ -62,6 +71,9 @@ const products = [
     origin: "Mahabaleshwar, India",
     freshness: "Freshly Harvested",
     deliveryTime: "1-2 days",
+    farmerEmail: "farmer1@example.com",
+    inStock: true,
+    onSale: true,
   },
   {
     id: 5,
@@ -78,6 +90,9 @@ const products = [
     origin: "Ooty, India",
     freshness: "Organic Certified",
     deliveryTime: "1-2 days",
+    farmerEmail: "farmer2@example.com",
+    inStock: true,
+    onSale: false,
   },
   {
     id: 6,
@@ -94,6 +109,9 @@ const products = [
     origin: "Kerala, India",
     freshness: "Handpicked",
     deliveryTime: "1 day",
+    farmerEmail: "farmer3@example.com",
+    inStock: true,
+    onSale: false,
   },
   {
     id: 7,
@@ -110,6 +128,9 @@ const products = [
     origin: "Himachal Pradesh, India",
     freshness: "Freshly Harvested",
     deliveryTime: "2-3 days",
+    farmerEmail: "farmer2@example.com",
+    inStock: true,
+    onSale: true,
   },
   {
     id: 8,
@@ -126,6 +147,9 @@ const products = [
     origin: "Punjab, India",
     freshness: "Freshly Milled",
     deliveryTime: "3 days",
+    farmerEmail: "farmer3@example.com",
+    inStock: true,
+    onSale: false,
   },
   {
     id: 9,
@@ -142,6 +166,9 @@ const products = [
     origin: "USA",
     freshness: "Imported Fresh",
     deliveryTime: "3-5 days",
+    farmerEmail: "farmer1@example.com",
+    inStock: true,
+    onSale: true,
   },
   {
     id: 10,
@@ -158,6 +185,9 @@ const products = [
     origin: "Mysuru, India",
     freshness: "Farm Fresh",
     deliveryTime: "1 day",
+    farmerEmail: "farmer2@example.com",
+    inStock: true,
+    onSale: false,
   },
   {
     id: 11,
@@ -174,6 +204,9 @@ const products = [
     origin: "Ratnagiri, India",
     freshness: "100% Natural",
     deliveryTime: "2-3 days",
+    farmerEmail: "farmer1@example.com",
+    inStock: true,
+    onSale: true,
   },
   {
     id: 12,
@@ -190,5 +223,8 @@ const products = [
     origin: "Ratnagiri, India",
     freshness: "100% Natural",
     deliveryTime: "2-3 days",
+    farmerEmail: "farmer2@example.com",
+    inStock: true,
+    onSale: false,
   },
 ];

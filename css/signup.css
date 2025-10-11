@@ -249,3 +249,23 @@ body {
     gap: 10px;
   }
 }
+.gender-options {
+  display: flex;
+  gap: 20px; /* space between options */
+}
+
+/* Each label acts as a flex container */
+.gender-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* space between radio button and text */
+  cursor: pointer;
+}
+
+/* Stack vertically on mobile */
+@media (max-width: 480px) {
+  .gender-options {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

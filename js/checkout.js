@@ -903,36 +903,48 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    function createOrder() {
-        const timestamp = Date.now();
-        const random = Math.floor(Math.random() * 10000);
-        const orderId = `AGRI-${timestamp}-${random}`;
-        const orderDate = new Date().toLocaleDateString('en-IN', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric', 
-            hour: '2-digit', 
-            minute: '2-digit' 
-        });
-        
-        const order = {
-            id: orderId,
-            date: orderDate,
-            items: [...cartItems],
-            shippingAddress: selectedShippingAddress,
-            billingAddress: selectedBillingAddress,
-            subtotal: orderSummary.subtotal, 
-            tax: orderSummary.tax,
-            total: orderSummary.total,
-            status: 'confirmed'
-        };
-        
-        // Clear cart after successful order
-        localStorage.removeItem('agrimart_cart');
-        localStorage.removeItem('agrimart_order_summary');
-        
-        return order;
-    }
+  function createOrder() {
+    const timestamp = Date.now();
+    const random = Math.floor(Math.random() * 10000);
+    const orderId = `AGRI-${timestamp}-${random}`;
+    const orderDate = new Date().toLocaleDateString("en-IN", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    // Collect unique farmer emails from cart items
+    const farmerEmails = [
+      ...new Set(cartItems.map((item) => item.farmerEmail)),
+    ];
+
+    const order = {
+      id: orderId,
+      date: orderDate,
+      items: [...cartItems],
+      shippingAddress: selectedShippingAddress,
+      billingAddress: selectedBillingAddress,
+      subtotal: orderSummary.subtotal,
+      tax: orderSummary.tax,
+      total: orderSummary.total,
+      status: "confirmed",
+      farmers: farmerEmails, // <-- Add this
+    };
+
+    // Save order for history
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    orders.push(order);
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    // Clear cart after successful order
+    localStorage.removeItem("agrimart_cart");
+    localStorage.removeItem("agrimart_order_summary");
+
+    return order;
+  }
+
 
     function showSuccessModal(order) {
         successOrderId.textContent = order.id;

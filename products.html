@@ -15,18 +15,143 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/index.css" />
   </head>
   <body>
-    <header class="header">
-      <h1 class="font-heading">Agri Mart</h1>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="container">
+        <div class="nav-content">
+          <a href="index.html" class="logo" aria-label="AgriMart Home">
+            <span class="logo-icon">🌾</span>
+            <span class="logo-text">AgriMart</span>
+          </a>
+
+          <div class="nav-links">
+            <a href="index.html" class="nav-link active" aria-current="page"
+              >Home</a
+            >
+
+            <div class="dropdown">
+              <button
+                class="nav-link dropdown-toggle"
+                aria-haspopup="true"
+                aria-expanded="false"
+                id="categoryDropdown"
+              >
+                Categories
+                <svg
+                  class="dropdown-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div
+                class="dropdown-menu"
+                role="menu"
+                aria-labelledby="categoryDropdown"
+              >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="all"
+                  >All Products</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="fruits"
+                  >Fruits</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="vegetables"
+                  >Vegetables</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="cereals"
+                  >Cereals</a
+                >
+              </div>
+            </div>
+
+            <a href="contact.html" class="nav-link">Contact</a>
+
+            <button class="cart-button" aria-label="Shopping cart">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path
+                  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                ></path>
+              </svg>
+              <span class="cart-count" id="cartCount">0</span>
+            </button>
+
+            <a
+              href="profile.html"
+              class="profile-link"
+              aria-label="Profile page"
+            >
+              <img
+                src="\Images\Profile.png"
+                alt="Profile"
+                class="profile-icon"
+              />
+            </a>
+          </div>
+
+          <button
+            class="mobile-menu-toggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
+      "
+    >
       <input
         type="text"
         id="searchInput"
         placeholder="Search any product..."
         class="search-bar font-body"
       />
-      <span id="mobileFilterBtn" class="mobile-filter-icon">&#9776;</span>
-    </header>
+    </div>
+    <span id="mobileFilterBtn" class="mobile-filter-icon">&#9776;</span>
 
     <div class="main-container">
       <aside id="mobileFilterDrawer" class="mobile-filter-drawer">
@@ -179,6 +304,22 @@
       <main class="products-grid">
         <!-- JS will inject product cards here -->
       </main>
+      <!-- Quantity Dialog -->
+      <div id="quantityModal" class="modal">
+        <div class="modal-content">
+          <h3 id="modalTitle">Add to Cart</h3>
+          <p>Select Quantity:</p>
+          <div class="quantity-controls">
+            <button id="decreaseQty" aria-label="Decrease quantity">−</button>
+            <span id="modalQty">1</span>
+            <button id="increaseQty" aria-label="Increase quantity">+</button>
+          </div>
+          <div class="modal-actions">
+            <button id="confirmAddToCart">Add to Cart</button>
+            <button id="cancelModal">Cancel</button>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="data/data.js"></script>
     <script src="js/products.js"></script>
