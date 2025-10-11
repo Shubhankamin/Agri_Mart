@@ -141,6 +141,7 @@ function setupEventListeners() {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
                 const category = this.getAttribute('data-filter');
+                const category = this.getAttribute('data-filter');
                 if (document.getElementById('productsGrid')) {
                     renderProducts(category);
                 }
