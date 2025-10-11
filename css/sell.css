@@ -569,10 +569,10 @@ footer {
   transform: scale(1.1);
 }
 
-/* --- Back to Profile Button --- */
+/* Back to Profile Button */
 #backToProfile {
   position: absolute;
-  top: 20px;
+  top: 16px;
   left: 20px;
   background: transparent;
   color: white;
@@ -583,10 +583,33 @@ footer {
   cursor: pointer;
   font-size: 14px;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Hover effect */
 #backToProfile:hover {
   background-color: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
+}
+
+/* Responsive: shrink to icon only on small screens */
+@media (max-width: 600px) {
+  #backToProfile {
+    padding: 6px;
+    font-size: 0;       /* hide text */
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+  #backToProfile::before {
+    content: "←";       /* show arrow */
+    font-size: 16px;
+    color: white;
+    display: block;
+    text-align: center;
+    line-height: 1;
+  }
 }
 

@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agrikart | Sell Page</title>
+  <title>AgriMart | Sell Page</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="css/sell.css">
 </head>
 <body>
   <header>
-    <h1>AgriKart</h1>
+    <h1>AgriMart</h1>
     <button id="backToProfile">← Back to Profile</button>
- </header>
-
+  </header>
 
   <section id="addProductSection" class="add-product">
     <h2>Add New Product</h2>
@@ -54,6 +53,16 @@
           <option value="Very Good">Very Good</option>
           <option value="Good">Good</option>
           <option value="Fair">Fair</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="productCategory">Category:</label>
+        <select id="productCategory" required>
+          <option value="">Select Category</option>
+          <option value="Fruit">Fruit</option>
+          <option value="Vegetable">Vegetable</option>
+          <option value="Cereals/Grains">Cereals/Grains</option>
         </select>
       </div>
 
@@ -129,10 +138,19 @@
           </select>
         </div>
 
+        <div class="form-group">
+          <label for="editCategory">Category:</label>
+          <select id="editCategory" required>
+            <option value="">Select Category</option>
+            <option value="Fruit">Fruit</option>
+            <option value="Vegetable">Vegetable</option>
+            <option value="Cereals/Grains">Cereals/Grains</option>
+          </select>
+        </div>
+
         <div class="edit-images-section">
           <h4>Manage Images</h4>
-          <div id="editImageContainer" class="edit-image-container">
-            </div>
+          <div id="editImageContainer" class="edit-image-container"></div>
           <label class="file-label">
             Add New Image (max 3):
             <i class="fas fa-info-circle info-icon" title="Images must be less than 200KB."></i>
@@ -146,7 +164,7 @@
   </div>
 
   <footer>
-    <p>© 2025 Agrikart | Empowering Farmers Through Technology 🌿</p>
+    <p>© 2025 Agrimart | Empowering Farmers Through Technology 🌿</p>
   </footer>
 
   <script src="js/sell.js"></script>

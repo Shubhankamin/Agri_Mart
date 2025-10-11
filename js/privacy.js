@@ -31,3 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(h);
   });
 });
+
+// Go back to profile page
+document.getElementById('backToProfile').addEventListener('click', () => {
+  window.location.href = 'index.html'; // change to your actual profile page filename
+});

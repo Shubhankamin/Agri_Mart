@@ -22,8 +22,7 @@ a:hover {
 /* Header */
 .header {
   width: 100%;
-  background: #e0dbc9;
-  border-bottom: 1px solid #c0b89c;
+  background: linear-gradient(135deg, #2e8b57, #3ca36b);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -34,15 +33,57 @@ a:hover {
   padding: 16px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* center title */
+  position: relative; /* for absolute nav */
 }
+
+/* Site Title */
 .site-title {
   font-size: 1.8rem;
-  color: #2a6b35;
+  color: white;
+  text-align: center;
+  pointer-events: none; /* clicks pass through */
+}
+
+/* Navigation */
+.site-nav {
+  display: flex;
+  gap: 20px;
+  position: absolute; /* prevents pushing title */
+  right: 20px;
 }
 .site-nav a {
-  margin-left: 20px;
   font-weight: 500;
+  color: white;
+}
+.site-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Back to Profile Button */
+#backToProfile {
+  position: fixed; /* stays in top-left corner */
+  top: 16px;
+  left: 16px;
+  background: transparent;
+  color: white;
+  font-weight: bold;
+  border: 2px solid white;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+#backToProfile:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
 }
 
 /* Page layout */
@@ -63,7 +104,7 @@ a:hover {
 .toc nav h2 {
   margin-bottom: 10px;
   font-size: 1.1rem;
-  color: #2a6b35;
+  color: #2e8b57;
 }
 .toc nav ul {
   list-style: none;
@@ -75,7 +116,7 @@ a:hover {
   color: #555;
 }
 .toc nav ul li a:hover {
-  color: #2a6b35;
+  color: #2e8b57;
 }
 
 /* Main content area */
@@ -87,12 +128,12 @@ a:hover {
 }
 .content h2 {
   font-size: 1.8rem;
-  color: #2a6b35;
+  color: #2e8b57;
   margin-bottom: 16px;
 }
 .content h3 {
   font-size: 1.3rem;
-  color: #2a6b35;
+  color: #2e8b57;
   margin-top: 20px;
   margin-bottom: 12px;
 }
@@ -128,22 +169,61 @@ a:hover {
 
 /* Footer */
 .footer {
-  border-top: 1px solid #c0b89c;
-  padding-top: 20px;
-  margin-top: 60px;
-  color: #555;
-}
-.footer p {
+  border-top: none;
+  background-color: #2e8b57;
+  color: white;
+  padding: 20px;
   text-align: center;
   font-size: 0.9rem;
+  margin-top: 60px;
 }
 
-/* Responsive */
+/* Responsive adjustments */
 @media (max-width: 900px) {
   .page-wrapper {
     flex-direction: column;
   }
   .toc {
     display: none;
+  }
+  .site-nav {
+    display: none;
+  }
+  #backToProfile {
+    padding: 5px 12px;
+    font-size: 13px;
+    top: 14px;
+    left: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    padding: 12px 10px;
+  }
+  .site-title {
+    font-size: 1.5rem;
+  }
+  #backToProfile {
+    padding: 0;          /* remove extra padding */
+    font-size: 0;        /* hide text */
+    width: 32px;         /* small square button */
+    height: 32px;
+    border-radius: 50%;  /* circular button */
+  }
+  #backToProfile::before {
+    content: '←';        /* arrow icon */
+    font-size: 18px;
+    color: white;
+  }
+}
+
+@media (max-width: 400px) {
+  #backToProfile {
+    width: 28px;
+    height: 28px;
+  }
+  #backToProfile::before {
+    font-size: 16px;
   }
 }

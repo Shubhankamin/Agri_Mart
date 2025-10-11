@@ -1,22 +1,22 @@
 const productContainer = document.getElementById('productContainer');
 const addProductForm = document.getElementById('addProductForm');
-const newProductImagesContainer = document.getElementById('newProductImagesContainer'); // New for add form image boxes
+const newProductImagesContainer = document.getElementById('newProductImagesContainer');
 
 // Modal elements
 const editModal = document.getElementById('editModal');
 const editForm = document.getElementById('editForm');
-const closeModalBtn = document.getElementById('closeModal'); // Changed ID to closeModalBtn (the cross icon)
+const closeModalBtn = document.getElementById('closeModal');
 const editImageContainer = document.getElementById('editImageContainer');
-const addNewImageInput = document.getElementById('addNewImage'); // For adding new images in edit modal
+const addNewImageInput = document.getElementById('addNewImage');
 
-const MAX_IMAGE_SIZE_KB = 200; // Max image size in KB
+const MAX_IMAGE_SIZE_KB = 200;
 const MAX_IMAGES = 3;
 
 let editIndex = null;
-let tempImages = []; // For images in edit modal
-let newProductTempImages = [null, null, null]; // For images in add new product form
+let tempImages = [];
+let newProductTempImages = [null, null, null];
 
-// Default products - Includes new fields
+// Default products (with new Category field)
 const defaultProducts = [
   {
     name: "Tomatoes",
@@ -25,6 +25,7 @@ const defaultProducts = [
     description: "Freshly picked organic tomatoes, perfect for salads and cooking.",
     availableQuantity: 20,
     freshness: "Excellent",
+    category: "Vegetable",
     images: ["Images/tomato.jpg", "Images/tomato1.jpg", "Images/tomato2.jpg"]
   },
   {
@@ -34,6 +35,7 @@ const defaultProducts = [
     description: "High-quality, starchy potatoes ideal for mashing or baking.",
     availableQuantity: 45,
     freshness: "Very Good",
+    category: "Vegetable",
     images: ["Images/potato.jpg", "Images/potato1.jpg", "Images/potato2.jpg"]
   },
   {
@@ -43,6 +45,7 @@ const defaultProducts = [
     description: "Sweet and crunchy carrots, great for snacks or juice.",
     availableQuantity: 18,
     freshness: "Excellent",
+    category: "Vegetable",
     images: ["Images/carrot.jpg", "Images/carrot1.jpg", "Images/carrot2.jpg"]
   }
 ];
@@ -57,7 +60,6 @@ function saveProducts() {
 // Convert file to base64 and validate size
 function getBase64(file) {
   return new Promise((resolve, reject) => {
-    // 200KB * 1024 bytes/KB = 204800 bytes
     if (file.size > MAX_IMAGE_SIZE_KB * 1024) {
       reject(`Image size must be less than ${MAX_IMAGE_SIZE_KB}KB.`);
       return;
@@ -86,7 +88,6 @@ function renderProducts() {
       slider.appendChild(img);
     });
 
-    // Navigation buttons for slider
     const prev = document.createElement('button');
     prev.classList.add('slider-btn', 'prev');
     prev.textContent = '‹';
@@ -120,11 +121,12 @@ function renderProducts() {
       imgs[currentIndex].classList.add('active');
     };
 
-    // Info section
+    // Info section including Category
     const info = document.createElement('div');
     info.classList.add('product-info');
     info.innerHTML = `
       <h3>${product.name}</h3>
+      <p><strong>Category:</strong> ${product.category}</p>
       <p><strong>Price:</strong> ₹${product.price} per kg</p>
       <p><strong>Quantity:</strong> ${product.quantity} kg (Total Weight)</p>
       <p><strong>Available:</strong> ${product.availableQuantity} kg</p>
@@ -158,22 +160,21 @@ function openEditModal(index) {
   const p = products[index];
   tempImages = Array.isArray(p.images) ? [...p.images] : [];
 
-  // Populate all fields
   document.getElementById('editName').value = p.name;
   document.getElementById('editPrice').value = p.price;
   document.getElementById('editQuantity').value = p.quantity;
   document.getElementById('editDescription').value = p.description;
   document.getElementById('editAvailableQuantity').value = p.availableQuantity;
   document.getElementById('editFreshness').value = p.freshness;
+  document.getElementById('editCategory').value = p.category;
 
   renderEditImages();
   editModal.classList.remove('hidden');
 }
 
-// Render images inside edit modal (with dustbin icon)
+// Render images in edit modal
 function renderEditImages() {
   editImageContainer.innerHTML = '';
-
   tempImages.forEach((src, i) => {
     const idx = i;
     const box = document.createElement('div');
@@ -197,13 +198,12 @@ function renderEditImages() {
       }
     });
 
-    box.appendChild(imgEl);
-    box.appendChild(deleteBtn);
+    box.append(imgEl, deleteBtn);
     editImageContainer.appendChild(box);
   });
 }
 
-// Handle image selection for Add New Product form
+// Handle Add New Product images
 newProductImagesContainer.querySelectorAll('.image-upload-box').forEach((box, index) => {
   const fileInput = box.querySelector('.hidden-file-input');
   const imgElement = box.querySelector('.uploaded-img');
@@ -211,9 +211,7 @@ newProductImagesContainer.querySelectorAll('.image-upload-box').forEach((box, in
   const removeBtn = box.querySelector('.remove-new-image');
 
   box.addEventListener('click', () => {
-    if (imgElement.classList.contains('hidden')) {
-      fileInput.click();
-    }
+    if (imgElement.classList.contains('hidden')) fileInput.click();
   });
 
   fileInput.addEventListener('change', async (e) => {
@@ -244,15 +242,13 @@ newProductImagesContainer.querySelectorAll('.image-upload-box').forEach((box, in
   });
 });
 
-// 🆕 Prevent adding more than 3 images — shows alert immediately on click
+// Add new image in edit modal
 addNewImageInput.addEventListener('click', (e) => {
   if (tempImages.length >= MAX_IMAGES) {
     e.preventDefault();
     alert(`You can only have up to ${MAX_IMAGES} images.`);
   }
 });
-
-// Add new image (in edit modal)
 addNewImageInput.addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (file) {
@@ -280,6 +276,7 @@ editForm.addEventListener('submit', (e) => {
   const description = document.getElementById('editDescription').value.trim();
   const availableQuantity = parseInt(document.getElementById('editAvailableQuantity').value);
   const freshness = document.getElementById('editFreshness').value;
+  const category = document.getElementById('editCategory').value;
 
   products[editIndex] = {
     ...products[editIndex],
@@ -289,6 +286,7 @@ editForm.addEventListener('submit', (e) => {
     description,
     availableQuantity,
     freshness,
+    category,
     images: [...tempImages]
   };
   saveProducts();
@@ -296,12 +294,10 @@ editForm.addEventListener('submit', (e) => {
   editModal.classList.add('hidden');
 });
 
-// Close edit modal
 closeModalBtn.addEventListener('click', () => {
   editModal.classList.add('hidden');
 });
 
-// Delete product
 function deleteProduct(index) {
   if (confirm('Delete this product?')) {
     products.splice(index, 1);
@@ -310,7 +306,7 @@ function deleteProduct(index) {
   }
 }
 
-// Add product
+// Add new product
 addProductForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('productName').value.trim();
@@ -319,9 +315,9 @@ addProductForm.addEventListener('submit', async (e) => {
   const description = document.getElementById('productDescription').value.trim();
   const availableQuantity = parseInt(document.getElementById('availableQuantity').value);
   const freshness = document.getElementById('freshness').value;
+  const category = document.getElementById('productCategory').value;
 
   const uploadedImages = newProductTempImages.filter(img => img !== null);
-
   if (uploadedImages.length === 0) {
     alert("Please add at least one image for the product.");
     return;
@@ -334,6 +330,7 @@ addProductForm.addEventListener('submit', async (e) => {
     description,
     availableQuantity,
     freshness,
+    category,
     images: uploadedImages
   };
   products.push(newProduct);
@@ -341,7 +338,6 @@ addProductForm.addEventListener('submit', async (e) => {
   renderProducts();
   addProductForm.reset();
 
-  // Reset image upload boxes
   newProductTempImages = [null, null, null];
   newProductImagesContainer.querySelectorAll('.image-upload-box').forEach(box => {
     box.querySelector('.uploaded-img').classList.add('hidden');
@@ -352,10 +348,9 @@ addProductForm.addEventListener('submit', async (e) => {
   });
 });
 
-// Initial render
 renderProducts();
 
-// Go back to profile page
+// Back to profile
 document.getElementById('backToProfile').addEventListener('click', () => {
-  window.location.href = 'profile.html'; // change to your actual profile page filename
+  window.location.href = 'profile.html';
 });
