@@ -1,114 +1,102 @@
 // Product Data
-// const products = [
-//   {
-//     id: 1,
-//     name: "Fresh Strawberries",
-//     category: "fruits",
-//     price: 279,
-//     image:
-//       "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&q=80",
-//     description: "Sweet, juicy organic strawberries",
-//   },
-//   {
-//     id: 2,
-//     name: "Organic Bananas",
-//     category: "fruits",
-//     price: 39,
-//     image:
-//       "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400&q=80",
-//     description: "Ripe organic bananas, perfect for snacking",
-//   },
-//   {
-//     id: 3,
-//     name: "Red Apples",
-//     category: "fruits",
-//     price: 199,
-//     image:
-//       "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&q=80",
-//     description: "Crisp and sweet red apples",
-//   },
-//   {
-//     id: 4,
-//     name: "Fresh Oranges",
-//     category: "fruits",
-//     price: 189,
-//     image:
-//       "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=400&q=80",
-//     description: "Juicy oranges packed with vitamin C",
-//   },
-//   {
-//     id: 5,
-//     name: "Organic Tomatoes",
-//     category: "vegetables",
-//     price: 69,
-//     image:
-//       "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400&q=80",
-//     description: "Vine-ripened organic tomatoes",
-//   },
-//   {
-//     id: 6,
-//     name: "Fresh Carrots",
-//     category: "vegetables",
-//     price: 79,
-//     image:
-//       "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400&q=80",
-//     description: "Crunchy organic carrots, farm fresh",
-//   },
-//   {
-//     id: 7,
-//     name: "Green Broccoli",
-//     category: "vegetables",
-//     price: 169,
-//     image:
-//       "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?w=400&q=80",
-//     description: "Fresh organic broccoli crowns",
-//   },
-//   {
-//     id: 8,
-//     name: "Bell Peppers",
-//     category: "vegetables",
-//     price: 79,
-//     image:
-//       "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400&q=80",
-//     description: "Colorful mix of fresh bell peppers",
-//   },
-//   {
-//     id: 9,
-//     name: "Organic Oats",
-//     category: "cereals",
-//     price: 326,
-//     image:
-//       "https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?w=400&q=80",
-//     description: "Whole grain organic rolled oats",
-//   },
-//   {
-//     id: 10,
-//     name: "Brown Rice",
-//     category: "cereals",
-//     price: 199,
-//     image:
-//       "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&q=80",
-//     description: "Premium organic brown rice",
-//   },
-//   {
-//     id: 11,
-//     name: "Quinoa",
-//     category: "cereals",
-//     price: 169,
-//     image:
-//       "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=400&q=80",
-//     description: "Protein-rich organic quinoa",
-//   },
-//   {
-//     id: 12,
-//     name: "Whole Wheat",
-//     category: "cereals",
-//     price: 89,
-//     image:
-//       "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&q=80",
-//     description: "Stone-ground whole wheat flour",
-//   },
-// ];
+const products = [
+    {
+        id: 1,
+        name: 'Fresh Strawberries',
+        category: 'fruits',
+        price: 387,
+        image: 'Images/strawberry.jpg',
+        description: 'Sweet, juicy organic strawberries'
+    },
+    {
+        id: 2,
+        name: 'Organic Bananas',
+        category: 'fruits',
+        price: 39,
+        image: 'Images/Bananas.jpeg',
+        description: 'Ripe organic bananas, perfect for snacking'
+    },
+    {
+        id: 3,
+        name: 'Red Apples',
+        category: 'fruits',
+        price: 198,
+        image: 'Images/apple.jpg',
+        description: 'Crisp and sweet red apples'
+    },
+    {
+        id: 4,
+        name: 'Fresh Oranges',
+        category: 'fruits',
+        price: 179,
+        image: 'Images/oranges.webp',
+        description: 'Juicy oranges packed with vitamin C'
+    },
+    {
+        id: 5,
+        name: 'Organic Tomatoes',
+        category: 'vegetables',
+        price: 47,
+        image: 'Images/tomato.jpeg',
+        description: 'Vine-ripened organic tomatoes'
+    },
+    {
+        id: 6,
+        name: 'Fresh Carrots',
+        category: 'vegetables',
+        price: 78,
+        image: 'Images/carot.jpeg',
+        description: 'Crunchy organic carrots, farm fresh'
+    },
+    {
+        id: 7,
+        name: 'Green Broccoli',
+        category: 'vegetables',
+        price: 148,
+        image: 'Images/broccoli.webp',
+        description: 'Fresh organic broccoli crowns'
+    },
+    {
+        id: 8,
+        name: 'Bell Peppers',
+        category: 'vegetables',
+        price: 48,
+        image: 'Images/bellpepper.webp',
+        description: 'Colorful mix of fresh bell peppers'
+    },
+    {
+        id: 9,
+        name: 'Organic Oats',
+        category: 'cereals',
+        price: 121,
+        image: 'Images/oats.webp',
+        description: 'Whole grain organic rolled oats'
+    },
+    {
+        id: 10,
+        name: 'Brown Rice',
+        category: 'cereals',
+        price: 165,
+        image: 'Images/rice.webp',
+        description: 'Premium organic brown rice'
+    },
+    {
+        id: 11,
+        name: 'Quinoa',
+        category: 'cereals',
+        price: 159,
+        image: 'Images/Quinoa.webp',
+        description: 'Protein-rich organic quinoa'
+    },
+    {
+        id: 12,
+        name: 'Whole Wheat',
+        category: 'cereals',
+        price: 89,
+        image: 'Images/wheat.webp',
+        description: 'Stone-ground whole wheat flour'
+    }
+];
 
 // Cart state
 let cart = [];
@@ -148,18 +136,16 @@ function setupEventListeners() {
     });
 
     // Handle dropdown item clicks
-    const dropdownItems = document.querySelectorAll(".dropdown-item");
-    dropdownItems.forEach((item) => {
-      item.addEventListener("click", function (e) {
-        e.preventDefault(); // Prevent default link behavior
-        const category = this.getAttribute("data-category");
-
-        // Redirect to products.html with query parameter
-        window.location.href = `products.html?category=${encodeURIComponent(
-          category
-        )}`;
-      });
-    });
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.getAttribute('data-filter');
+                if (document.getElementById('productsGrid')) {
+                    renderProducts(category);
+                }
+            });
+        });
   }
 
   // Filter buttons
@@ -204,7 +190,7 @@ function renderProducts(filter = "all") {
     .map(
       (product) => `
         <article class="product-card" data-product-id="${product.id}">
-            <img src="${product.img}" alt="${
+            <img src="${product.image}" alt="${
         product.name
       }" class="product-image" loading="lazy">
             <div class="product-info">
