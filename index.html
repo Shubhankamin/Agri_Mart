@@ -15,13 +15,13 @@
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
             <div class="nav-content">
-                <a href="index.html" class="logo" aria-label="AgriMart Home">
+                <a href="/index.html" class="logo" aria-label="AgriMart Home">
                     <span class="logo-icon">🌾</span>
                     <span class="logo-text">AgriMart</span>
                 </a>
                 
                 <div class="nav-links">
-                    <a href="index.html" class="nav-link active" aria-current="page">Home</a>
+                    <a href="/index.html" class="nav-link active" aria-current="page">Home</a>
                     
                     <div class="dropdown">
                         <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" id="categoryDropdown">
@@ -31,17 +31,17 @@
                             </svg>
                         </button>
                         <div class="dropdown-menu" role="menu" aria-labelledby="categoryDropdown">
-                            <a href="#" class="dropdown-item" role="menuitem" data-filter="all">All Products</a>
-                            <a href="#" class="dropdown-item" role="menuitem" data-filter="fruits">Fruits</a>
-                            <a href="#" class="dropdown-item" role="menuitem" data-filter="vegetables">Vegetables</a>
-                            <a href="#" class="dropdown-item" role="menuitem" data-filter="cereals">Cereals</a>
+                            <a href="#" class="dropdown-item" role="menuitem" data-filter="all" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">All Products</a>
+                            <a href="#" class="dropdown-item" role="menuitem" data-filter="fruits" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Fruits</a>
+                            <a href="#" class="dropdown-item" role="menuitem" data-filter="vegetables" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Vegetables</a>
+                            <a href="#" class="dropdown-item" role="menuitem" data-filter="cereals" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Cereals</a>
                         </div>
                     </div>
                     
                     <a href="contact.html" class="nav-link">Contact</a>
 
                     
-                    <button class="cart-button" aria-label="Shopping cart">
+                    <button class="cart-button" aria-label="Shopping cart" onclick="window.location.href='cart.html'">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="9" cy="21" r="1"></circle>
                             <circle cx="20" cy="21" r="1"></circle>
@@ -50,7 +50,7 @@
                         <span class="cart-count" id="cartCount">0</span>
                     </button>
                     
-                    <a href="profile.html" class="profile-link" aria-label="Profile page">
+                    <a href="/login.html" class="profile-link" aria-label="Profile page">
                      <img src="\Images\Profile.png" alt="Profile" class="profile-icon">
                     </a>
 
@@ -75,7 +75,7 @@
                     <button class="btn btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
                         Shop Now
                     </button>
-                    <a href="about_us.html" class="btn btn-secondary">Learn More</a>
+                    <a href="/about_us.html" class="btn btn-secondary">Learn More</a>
                 </div>
             </div>
         </div>
@@ -86,10 +86,10 @@
     <section class="category-filter">
         <div class="container">
             <div class="filter-buttons" role="group" aria-label="Product category filters">
-                <button class="filter-btn active" data-filter="all">All Products</button>
-                <button class="filter-btn" data-filter="fruits">Fruits</button>
-                <button class="filter-btn" data-filter="vegetables">Vegetables</button>
-                <button class="filter-btn" data-filter="cereals">Cereals</button>
+                <button class="filter-btn active" data-filter="all" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">All Products</button>
+                <button class="filter-btn" data-filter="fruits" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Fruits</button>
+                <button class="filter-btn" data-filter="vegetables" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Vegetables</button>
+                <button class="filter-btn" data-filter="cereals" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">Cereals</button>
             </div>
         </div>
     </section>
@@ -109,7 +109,7 @@
     </section>
 
    <div class="section-footer centered-footer">
-    <a href="/products" class="btn btn-secondary">View All Products</a>
+    <a href="/products.html" class="btn btn-secondary">View All Products >>> </a>
    </div>
 
 
@@ -170,13 +170,13 @@
                 <div class="footer-section">
                     <h4 class="footer-heading">Quick Links</h4>
                     <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#products">Products</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="terms_conditions.html">Terms & Conditions</a></li>
-                        <li><a href="policy.html">Privacy Policy</a></li>
+                        <li><a href="/index.html">Home</a></li>
+                        <li><a href="/products.html">Products</a></li>
+                        <li><a href="/contact.html">Contact Us</a></li>
+                        <li><a href="/about_us.html">About Us</a></li>
+                        <li><a href="/blogs.html">Blog</a></li>
+                        <li><a href="/terms_conditions.html">Terms & Conditions</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
 
 
                     </ul>
@@ -194,9 +194,9 @@
                 <div class="footer-section">
                     <h4 class="footer-heading">Contact Info</h4>
                     <ul class="footer-contact">
-                        <li>Email: info@agrimart.com</li>
-                        <li>Phone: +1 (555) 123-4567</li>
-                        <li>Address: 123 Farm Road, Green Valley</li>
+                        <li>Email: agrimart@gmail.com</li>
+                        <li>Phone: +91 9876543215</li>
+                        <li>Address: 1-23 Farm Road, Green Valley,Bengaluru-56747</li>
                     </ul>
                 </div>
             </div>
