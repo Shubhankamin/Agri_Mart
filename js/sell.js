@@ -76,7 +76,7 @@ function renderProducts() {
     const card = document.createElement('div');
     card.classList.add('product-card');
 
-    // Image slider (Same as before, adapted for a variable number of images)
+    // Image slider
     const slider = document.createElement('div');
     slider.classList.add('image-slider');
     product.images.forEach((src, i) => {
@@ -120,7 +120,7 @@ function renderProducts() {
       imgs[currentIndex].classList.add('active');
     };
 
-    // Info section - UPDATED to show all new fields
+    // Info section
     const info = document.createElement('div');
     info.classList.add('product-info');
     info.innerHTML = `
@@ -185,11 +185,10 @@ function renderEditImages() {
 
     const deleteBtn = document.createElement('button');
     deleteBtn.classList.add('delete-btn');
-    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>'; // Dustbin icon
+    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
 
-    // Delete handler
     deleteBtn.addEventListener('click', (e) => {
-      e.preventDefault(); // Prevent form submission
+      e.preventDefault();
       if (tempImages.length > 1) {
         tempImages.splice(idx, 1);
         renderEditImages();
@@ -212,7 +211,6 @@ newProductImagesContainer.querySelectorAll('.image-upload-box').forEach((box, in
   const removeBtn = box.querySelector('.remove-new-image');
 
   box.addEventListener('click', () => {
-    // Only open file input if no image is present OR if the click isn't on the remove button
     if (imgElement.classList.contains('hidden')) {
       fileInput.click();
     }
@@ -222,7 +220,7 @@ newProductImagesContainer.querySelectorAll('.image-upload-box').forEach((box, in
     const file = e.target.files[0];
     if (file) {
       try {
-        const base64 = await getBase64(file); // Validates size
+        const base64 = await getBase64(file);
         newProductTempImages[index] = base64;
         imgElement.src = base64;
         imgElement.classList.remove('hidden');
@@ -230,22 +228,29 @@ newProductImagesContainer.querySelectorAll('.image-upload-box').forEach((box, in
         removeBtn.classList.remove('hidden');
       } catch (error) {
         alert(error);
-        fileInput.value = ''; // Clear input if size is too large
+        fileInput.value = '';
       }
     }
   });
 
   removeBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Stop the event from bubbling up to the box's click listener
+    e.stopPropagation();
     newProductTempImages[index] = null;
     imgElement.src = '';
     imgElement.classList.add('hidden');
     plusIcon.classList.remove('hidden');
     removeBtn.classList.add('hidden');
-    fileInput.value = ''; // Clear the file input
+    fileInput.value = '';
   });
 });
 
+// 🆕 Prevent adding more than 3 images — shows alert immediately on click
+addNewImageInput.addEventListener('click', (e) => {
+  if (tempImages.length >= MAX_IMAGES) {
+    e.preventDefault();
+    alert(`You can only have up to ${MAX_IMAGES} images.`);
+  }
+});
 
 // Add new image (in edit modal)
 addNewImageInput.addEventListener('change', async (e) => {
@@ -253,7 +258,7 @@ addNewImageInput.addEventListener('change', async (e) => {
   if (file) {
     if (tempImages.length < MAX_IMAGES) {
       try {
-        const base64 = await getBase64(file); // Validates size
+        const base64 = await getBase64(file);
         tempImages.push(base64);
         renderEditImages();
       } catch (error) {
@@ -263,7 +268,7 @@ addNewImageInput.addEventListener('change', async (e) => {
       alert(`You can only have up to ${MAX_IMAGES} images.`);
     }
   }
-  addNewImageInput.value = ''; // Clear the input regardless of success/fail
+  addNewImageInput.value = '';
 });
 
 // Save edits
@@ -291,7 +296,7 @@ editForm.addEventListener('submit', (e) => {
   editModal.classList.add('hidden');
 });
 
-// Close edit modal with cross icon
+// Close edit modal
 closeModalBtn.addEventListener('click', () => {
   editModal.classList.add('hidden');
 });
@@ -349,3 +354,8 @@ addProductForm.addEventListener('submit', async (e) => {
 
 // Initial render
 renderProducts();
+
+// Go back to profile page
+document.getElementById('backToProfile').addEventListener('click', () => {
+  window.location.href = 'profile.html'; // change to your actual profile page filename
+});

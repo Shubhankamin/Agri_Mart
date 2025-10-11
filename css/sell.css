@@ -523,7 +523,70 @@ footer {
         width: 20px;
         height: 20px;
         font-size: 0.7em;
-        top: -2px;
-        right: -2px;
+        top: -4px;
+        right: -4px;
     }
 }
+/* Generic override for green delete buttons inside image boxes */
+.edit-image-container button,
+.manage-images button {
+  background-color: transparent !important;
+}
+/* --- Force trash bin icon to the exact top-right corner of image --- */
+.edit-image-box {
+  position: relative !important;
+  padding: 0 !important;
+}
+
+.edit-image-box img {
+  display: block;
+  border-radius: 8px;
+}
+
+/* absolute positioning on top of image */
+.edit-image-box .delete-btn {
+  position: absolute !important;
+  top: 2px !important;
+  right: 2px !important;
+  background: transparent !important;
+  color: rgb(123, 238, 159) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 24px !important;
+  height: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.edit-image-box .delete-btn:hover {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  transform: scale(1.1);
+}
+
+/* --- Back to Profile Button --- */
+#backToProfile {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: transparent;
+  color: white;
+  font-weight: bold;
+  border: 2px solid white;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+#backToProfile:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
