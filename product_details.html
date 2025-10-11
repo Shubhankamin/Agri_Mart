@@ -6,6 +6,8 @@
     <title>Product Details - Agri Mart</title>
 
     <link rel="stylesheet" href="css/product_details.css" />
+    <link rel="stylesheet" href="css/index.css" />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap"
       rel="stylesheet"
@@ -17,33 +19,125 @@
   </head>
 
   <body>
-    <header class="header">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="container">
-        <h1 class="logo">Agri Mart</h1>
-        <nav class="nav">
-          <a href="#" class="nav-link">Home</a>
-          <a href="#" class="nav-link">Products</a>
-          <a href="#" class="nav-link">Categories</a>
-          <a href="#" class="nav-link">About</a>
-          <a href="#" class="nav-link">Contact</a>
-        </nav>
-        <div class="header-actions">
-          <button class="icon-btn">
-            <i class="fas fa-search"></i>
-          </button>
-          <a href="cart.html" aria-label="View your shopping cart">
-            <button class="icon-btn">
-              <i class="fas fa-shopping-cart"></i>
-              <span class="cart-count">2</span>
-            </button>
+        <div class="nav-content">
+          <a href="index.html" class="logo" aria-label="AgriMart Home">
+            <span class="logo-icon">🌾</span>
+            <span class="logo-text">AgriMart</span>
           </a>
 
-          <button class="icon-btn">
-            <i class="fas fa-user"></i>
+          <div class="nav-links">
+            <a href="index.html" class="nav-link active" aria-current="page"
+              >Home</a
+            >
+            <div class="dynamic-links"></div>
+
+            <div class="dropdown">
+              <button
+                class="nav-link dropdown-toggle"
+                aria-haspopup="true"
+                aria-expanded="false"
+                id="categoryDropdown"
+              >
+                Categories
+                <svg
+                  class="dropdown-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div
+                class="dropdown-menu"
+                role="menu"
+                aria-labelledby="categoryDropdown"
+              >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="all"
+                  >All Products</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="fruits"
+                  >Fruits</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="vegetables"
+                  >Vegetables</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="cereals"
+                  >Cereals</a
+                >
+              </div>
+            </div>
+
+            <a href="contact.html" class="nav-link">Contact</a>
+
+            <button class="cart-button" aria-label="Shopping cart">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path
+                  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                ></path>
+              </svg>
+              <span class="cart-count" id="cartCount">0</span>
+            </button>
+
+            <a
+              href="profile.html"
+              class="profile-link"
+              aria-label="Profile page"
+            >
+              <img
+                src="\Images\Profile.png"
+                alt="Profile"
+                class="profile-icon"
+              />
+            </a>
+          </div>
+
+          <button
+            class="mobile-menu-toggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
           </button>
         </div>
       </div>
-    </header>
+    </nav>
 
     <main class="main-content">
       <div class="container">
@@ -259,5 +353,7 @@
 
     <script src="data/data.js"></script>
     <script src="js/product_detail.js"></script>
+    <script src="js/index.js"></script>
+
   </body>
 </html>

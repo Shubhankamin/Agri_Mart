@@ -156,6 +156,7 @@ menuItems.forEach((item, index) => {
 });
 
 // Handle tab switching
+// Handle tab switching
 function handleTabClick(tabName, clickedBtn) {
   sidebarMenu
     .querySelectorAll("button")
@@ -176,55 +177,17 @@ function handleTabClick(tabName, clickedBtn) {
       <p>Home / My Account / ${tabName}</p>
     </header>`;
 
+  // Farmer's Sales History table
   if (tabName === "Sales History") {
-    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    contentContainer.innerHTML = contentHTML; // Clear old content
+    renderSalesHistory(); // Only call when tab is clicked
+    return;
+  }
 
-    // Filter orders where the current farmer is part of the order
-    const farmerOrders = orders.filter((o) =>
-      o.farmers.includes(currentUser.email)
-    );
-
-    if (farmerOrders.length === 0) {
-      contentHTML += "<p>No sales found.</p>";
-    } else {
-      contentHTML += `
-        <table style="width:100%; border-collapse: collapse; margin-top:20px;">
-          <thead>
-            <tr style="background:#f0f0f0;">
-              <th style="padding:10px; border:1px solid #ccc;">Order ID</th>
-              <th style="padding:10px; border:1px solid #ccc;">Date</th>
-              <th style="padding:10px; border:1px solid #ccc;">Status</th>
-              <th style="padding:10px; border:1px solid #ccc;">Total</th>
-              <th style="padding:10px; border:1px solid #ccc;">Products Sold</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${farmerOrders
-              .map((o) => {
-                // Filter only items added by this farmer
-                const itemsByFarmer = o.items.filter(
-                  (item) => item.farmerEmail === currentUser.email
-                );
-
-                const productList = itemsByFarmer
-                  .map((i) => `${i.name} (${i.quantity})`)
-                  .join(", ");
-
-                return `<tr>
-                  <td style="padding:10px; border:1px solid #ccc;">${o.id}</td>
-                  <td style="padding:10px; border:1px solid #ccc;">${o.date}</td>
-                  <td style="padding:10px; border:1px solid #ccc;">${o.status}</td>
-                  <td style="padding:10px; border:1px solid #ccc;">₹${o.total}</td>
-                  <td style="padding:10px; border:1px solid #ccc;">${productList}</td>
-                </tr>`;
-              })
-              .join("")}
-          </tbody>
-        </table>
-      `;
-    }
-
-    contentContainer.innerHTML = contentHTML;
+  // Regular user My Orders
+  if (tabName === "My Orders") {
+    contentContainer.innerHTML = contentHTML; // Clear old content
+    renderOrders(); // Only call when tab is clicked
     return;
   }
 
@@ -386,16 +349,19 @@ function attachAddressHandler() {
   renderAddresses();
 
   // Save new address
+  // Save new address
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+
     const addressData = {
-      email: currentUser.email,
+      email: currentUser.email, // user's email
+      name: currentUser.name, // user's name
       address: document.getElementById("modalAddress").value.trim(),
       city: document.getElementById("modalCity").value.trim(),
       state: document.getElementById("modalState").value,
       pincode: document.getElementById("modalPincode").value.trim(),
       landmark: document.getElementById("modalLandmark").value.trim(),
-      type: form.querySelector(".type-btn.active").dataset.type,
+      // type is optional now
     };
 
     if (!/^\d{6}$/.test(addressData.pincode)) {
@@ -409,10 +375,6 @@ function attachAddressHandler() {
     showSnackbar("Address added successfully!", "success");
 
     form.reset();
-    form
-      .querySelectorAll(".type-btn")
-      .forEach((b) => b.classList.remove("active"));
-    form.querySelector(".type-btn[data-type='Home']").classList.add("active");
     modal.style.display = "none";
     renderAddresses();
   });
@@ -427,6 +389,183 @@ function attachAddressHandler() {
     showSnackbar("Address deleted successfully!", "success");
     renderAddresses();
   };
+}
+
+function renderOrders() {
+  const ordersContainer = document.createElement("div");
+  ordersContainer.id = "ordersContainer";
+  ordersContainer.style.display = "grid";
+  ordersContainer.style.gridTemplateColumns =
+    "repeat(auto-fit, minmax(300px, 1fr))";
+  ordersContainer.style.gap = "20px";
+  ordersContainer.style.marginTop = "20px";
+
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  let userOrders = [];
+
+  if (user.role === "farmer") {
+    // Show orders where this farmer sold products
+    userOrders = orders.filter((o) => o.farmers.includes(currentUser.email));
+    console.log(userOrders, "order");
+  } else {
+    // Regular customer, show orders placed by this user
+    userOrders = orders.filter((o) => o.userEmail === currentUser.email);
+    console.log(userOrders, "order");
+  }
+
+  if (userOrders.length === 0) {
+    ordersContainer.innerHTML = "<p>No orders found.</p>";
+  } else {
+    ordersContainer.innerHTML = userOrders
+      .map((o) => {
+        const items =
+          user.role === "farmer"
+            ? o.items.filter((i) => i.farmerEmail === currentUser.email)
+            : o.items;
+
+        return `
+        <div style="
+          border:1px solid #eee;
+          border-radius:12px;
+          padding:15px;
+          background:#fff;
+          box-shadow:0 2px 6px rgba(0,0,0,0.05);
+          margin-bottom:15px;
+        ">
+          <h4 style="margin:0 0 10px 0;">Order #${o.id}</h4>
+          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Date: ${
+            o.date
+          }</p>
+          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Status: <strong>${
+            o.status
+          }</strong></p>
+          <p style="margin:0 0 10px 0; font-size:14px; color:#555;">Total: ₹${
+            o.total
+          }</p>
+          <div>
+            <strong>Products:</strong>
+            <ul style="margin:5px 0 0 0; padding:0; list-style-type:none;">
+              ${items
+                .map(
+                  (i) =>
+                    `<li style="display:flex; align-items:center; margin-bottom:10px;">
+                      <img src="${i.image}" alt="${
+                      i.title
+                    }" style="width:60px; height:60px; object-fit:cover; border-radius:6px; margin-right:10px;">
+                      <div>
+                        <div>${i.title}</div>
+                        <div style="font-size:13px; color:#555;">Quantity: ${
+                          i.quantity
+                        }, Price: ₹${i.price.toFixed(2)}, Subtotal: ₹${(
+                      i.price * i.quantity
+                    ).toFixed(2)}</div>
+                      </div>
+                    </li>`
+                )
+                .join("")}
+            </ul>
+          </div>
+        </div>
+      `;
+      })
+      .join("");
+  }
+  contentContainer.appendChild(ordersContainer);
+}
+
+function renderSalesHistory() {
+  const salesContainer = document.createElement("div");
+  salesContainer.id = "salesContainer";
+  salesContainer.style.display = "grid";
+  salesContainer.style.gridTemplateColumns =
+    "repeat(auto-fit, minmax(300px, 1fr))";
+  salesContainer.style.gap = "20px";
+  salesContainer.style.marginTop = "20px";
+
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  // Filter sales for the current farmer
+  const sales = orders
+    .map((o) => {
+      // Only items sold by this farmer
+      const soldItems = o.items.filter(
+        (i) => i.farmerEmail === currentUser.email
+      );
+      if (soldItems.length === 0) return null;
+
+      return {
+        orderId: o.id,
+        date: o.date,
+        status: o.status,
+        buyerEmail: o.userEmail,
+        items: soldItems,
+        total: soldItems.reduce((sum, i) => sum + i.price * i.quantity, 0),
+      };
+    })
+    .filter(Boolean);
+
+  if (sales.length === 0) {
+    salesContainer.innerHTML = "<p>No sales found.</p>";
+  } else {
+    salesContainer.innerHTML = sales
+      .map((sale) => {
+        return `
+        <div style="
+          border:1px solid #eee;
+          border-radius:12px;
+          padding:15px;
+          background:#fff;
+          box-shadow:0 2px 6px rgba(0,0,0,0.05);
+        ">
+          <h4 style="margin:0 0 10px 0;">Order #${sale.orderId}</h4>
+          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Date: ${
+            sale.date
+          }</p>
+          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Buyer: <strong>${
+            sale.buyerEmail
+          }</strong></p>
+          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Status: <strong>${
+            sale.status
+          }</strong></p>
+          <p style="margin:0 0 10px 0; font-size:14px; color:#555;">Total Earnings: ₹${sale.total.toFixed(
+            2
+          )}</p>
+          <div>
+            <strong>Products Sold:</strong>
+            <ul style="margin:5px 0 0 0; padding:0; list-style-type:none;">
+              ${sale.items
+                .map(
+                  (i) => `
+                  <li style="display:flex; align-items:center; margin-bottom:10px;">
+                    <img src="${i.image}" alt="${
+                    i.title
+                  }" style="width:60px; height:60px; object-fit:cover; border-radius:6px; margin-right:10px;">
+                    <div>
+                      <div>${i.title}</div>
+                      <div style="font-size:13px; color:#555;">Quantity Sold: ${
+                        i.quantity
+                      }, Price: ₹${i.price.toFixed(2)}, Subtotal: ₹${(
+                    i.price * i.quantity
+                  ).toFixed(2)}</div>
+                    </div>
+                  </li>`
+                )
+                .join("")}
+            </ul>
+          </div>
+        </div>
+        `;
+      })
+      .join("");
+  }
+
+  contentContainer.appendChild(salesContainer);
+}
+
+// Call it for farmers
+if (user.role === "farmer") {
+  renderSalesHistory();
 }
 
 function attachPasswordHandler() {
@@ -458,3 +597,64 @@ function showSnackbar(message, type = "info") {
   snackbar.classList.add("show");
   setTimeout(() => snackbar.classList.remove("show"), 3000);
 }
+
+
+
+// Get current user from localStorage
+const currentUser = localStorage.getItem("currentUser");
+const user = currentUser ? JSON.parse(currentUser) : null;
+
+// Function to setup dynamic navbar links and category dropdown
+function setupNavbar() {
+  const container = document.querySelector(".dynamic-links");
+  if (!container) return; // stop if no container exists
+
+  // Clear existing links
+  container.innerHTML = "";
+
+  // Always show "Products"
+  const productsLink = document.createElement("a");
+  productsLink.href = "/products.html";
+  productsLink.className = "nav-link";
+  productsLink.textContent = "Products";
+  container.appendChild(productsLink);
+
+  // Show "Sell" only if user is a farmer
+  if (user && user.role === "farmer") {
+    const sellLink = document.createElement("a");
+    sellLink.href = "/sell.html";
+    sellLink.className = "nav-link";
+    sellLink.textContent = "Sell";
+    container.appendChild(sellLink);
+  }
+
+  // Setup category dropdown
+  const dropdownToggle = document.querySelector(".dropdown-toggle");
+  const dropdownMenu = document.querySelector(".dropdown-menu");
+
+  if (dropdownToggle && dropdownMenu) {
+    dropdownToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle("active");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", () => {
+      dropdownMenu.classList.remove("active");
+    });
+
+    // Redirect to products page on category click
+    dropdownMenu.querySelectorAll(".dropdown-item").forEach((item) => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        const category = item.getAttribute("data-category");
+        window.location.href = `products.html?category=${category}`;
+      });
+    });
+  }
+}
+
+// Initialize navbar on page load
+document.addEventListener("DOMContentLoaded", () => {
+  setupNavbar();
+});
