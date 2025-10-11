@@ -74,6 +74,7 @@ body {
 }
 
 .search-bar {
+  min-width: 350px;
   padding: 8px 15px;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -277,6 +278,10 @@ body {
   }
 
   .search-bar {
+    min-width: 100%; /* Full width on mobile */
+    max-width: 500px;
+    margin: 0 auto;
+    display: block;
   }
 
   .main-container {

@@ -4,6 +4,7 @@ const productId = parseInt(params.get("id"));
 
 // Find product
 const product = products.find((p) => p.id === productId);
+console.log("Product ID:", product);
 
 if (product) {
   const breadcrumbContainer = document.getElementById("breadcrumb");
@@ -231,3 +232,16 @@ function showNotification(message) {
     setTimeout(() => document.body.removeChild(notification), 300);
   }, 3000);
 }
+// Add to Cart
+// Only pass product ID and quantity
+document.getElementById("addToCart").addEventListener("click", () => {
+  // Get the quantity from the span
+  const qtySpan = document.getElementById("quantity");
+  const qty = parseInt(qtySpan.textContent) || 1; // default to 1 if not a number
+
+  // Redirect to cart page with query parameters
+  const url = `cart.html?id=${product.id}&qty=${qty}`;
+  console.log("Quantity:", qty);
+
+  window.location.href = url;
+});
