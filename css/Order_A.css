@@ -79,6 +79,22 @@ footer.site-footer {
   box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
 }
 
+/* ✅ Search filter row (input + button inline) */
+.search-filter {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* spacing between input and button */
+}
+
+.search-filter input {
+  flex: 1; /* takes full available width */
+  min-width: 200px;
+}
+
+.search-filter #clear-btn {
+  flex-shrink: 0; /* button keeps natural size */
+}
+
 /* Clear button styling */
 #clear-btn {
   background: var(--accent-light);
@@ -95,7 +111,6 @@ footer.site-footer {
 #clear-btn:hover {
   background: var(--accent);
 }
-
 
 /* ORDERS SECTION */
 .orders {
@@ -198,6 +213,12 @@ footer.site-footer {
     width: 100%;
   }
 
+  /* ✅ Make search filter stack vertically on smaller screens */
+  .search-filter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .order-meta {
     flex-direction: column;
     align-items: flex-start;
@@ -219,4 +240,21 @@ footer.site-footer {
     text-align: center;
     padding: 8px 0;
   }
+}
+/* Control row: filter + clear button inline */
+.control-row {
+  display: flex;
+  align-items: flex-end;  /* aligns button with select */
+  gap: 15px;              /* spacing between dropdown & button */
+  flex-wrap: wrap;        /* stacks nicely on small screens */
+  margin-top: 10px;
+}
+
+.control-row .control-group {
+  flex: 1; /* filter takes available width */
+  min-width: 200px;
+}
+
+.control-row #clear-btn {
+  flex-shrink: 0; /* button keeps natural size */
 }
