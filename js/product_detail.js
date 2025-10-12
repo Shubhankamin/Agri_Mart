@@ -192,7 +192,7 @@ function displayProductDetails() {
       cartCount.textContent = parseInt(cartCount.textContent || 0) + quantity;
 
       // Optional: redirect to cart page
-      // window.location.href = `cart.html?id=${product.id}&qty=${quantity}`;
+      window.location.href = `cart.html?id=${product.id}&qty=${quantity}`;
     });
 
     const buyNowBtn = document.getElementById("buyNow");
