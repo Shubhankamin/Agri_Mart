@@ -255,17 +255,7 @@ function updateCartCount() {
   }
 }
 
-// Show Notification
-function showNotification() {
-  const notification = document.getElementById("cartNotification");
-  if (!notification) return;
 
-  notification.classList.add("show");
-
-  setTimeout(() => {
-    notification.classList.remove("show");
-  }, 2000);
-}
 
 // Save Cart to LocalStorage
 function saveCart() {
@@ -389,4 +379,21 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       });
     }
   });
+});
+const form = document.getElementById("enquiryForm");
+const notification = document.getElementById("notification");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  // Show notification
+  notification.classList.add("show");
+
+  // Hide notification after 3 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+  }, 3000);
+
+  // Reset form
+  form.reset();
 });

@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     
-                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="/contact.html" class="nav-link">Contact</a>
 
                     
                     <button class="cart-button" aria-label="Shopping cart" onclick="window.location.href='cart.html'">
@@ -57,9 +57,19 @@
                 </div>
                 
                 <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <div class="dropdown">
+                        <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" id="categoryDropdown">
+                            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu" role="menu" aria-labelledby="categoryDropdown">
+                            <a href="/index.html" class="dropdown-item" role="menuitem" >Home</a>
+                            <a href="/products.html" class="dropdown-item" role="menuitem" >Products</a>
+                            <a href="/contact.html" class="dropdown-item" role="menuitem" >Contact</a>
+                            <a href="/cart.html" class="dropdown-item" role="menuitem" >Cart</a>
+                        </div>
+                    </div>
                 </button>
             </div>
         </div>

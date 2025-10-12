@@ -829,28 +829,38 @@ body {
     border-bottom: none;
 }
 
-.success-message {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background-color: var(--primary-green);
-    color: #fff;
-    padding: 16px 24px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: var(--shadow-lg);
-    transform: translateY(100px);
-    opacity: 0;
-    transition: var(--transition);
-    z-index: 1000;
+
+/* Stylish Notification */
+.notification {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #2f6d3b; /* dark green */
+  color: #f5f3e7; /* beige */
+  padding: 15px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(47, 109, 59, 0.3);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.5s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  z-index: 999;
 }
 
-.success-message.show {
-    transform: translateY(0);
-    opacity: 1;
+/* Visible state */
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
 }
+
+/* Optional fade-out animation */
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(40px); }
+}
+
 
 /* Animations */
 @keyframes fadeInUp {
