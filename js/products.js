@@ -10,18 +10,18 @@ const searchInput = document.getElementById("searchInput");
 const priceRange = document.getElementById("priceRange");
 const priceValue = document.getElementById("priceValue");
 const sortSelect = document.getElementById("sortSelect");
-const inStockCheckbox = document.getElementById("inStock");
-const onSaleCheckbox = document.getElementById("onSale");
+// const inStockCheckbox = document.getElementById("inStock");
+// const onSaleCheckbox = document.getElementById("onSale");
 const ratingRadios = document.querySelectorAll('input[name="rating"]');
 
 const categorySelectMobile = document.getElementById("categorySelectMobile");
 const priceRangeMobile = document.getElementById("priceRangeMobile");
 const priceValueMobile = document.getElementById("priceValueMobile");
 const sortSelectMobile = document.getElementById("sortSelectMobile");
-const inStockCheckboxMobile =
-  document.getElementById("inStockMobile") || inStockCheckbox;
-const onSaleCheckboxMobile =
-  document.getElementById("onSaleMobile") || onSaleCheckbox;
+// const inStockCheckboxMobile =
+//   document.getElementById("inStockMobile") || inStockCheckbox;
+// const onSaleCheckboxMobile =
+//   document.getElementById("onSaleMobile") || onSaleCheckbox;
 const ratingRadiosMobile =
   document.querySelectorAll('input[name="ratingMobile"]') || ratingRadios;
 
@@ -34,15 +34,23 @@ function displayProducts(list) {
   productGrid.innerHTML = "";
 
   if (list.length === 0) {
-    productGrid.innerHTML = `<p class="no-results">No products found.</p>`;
+    productGrid.innerHTML = `<p class="no-results" style="text-align:center;font-size:1.5rem;margin-top:20px;">No products found.</p>`;
     return;
   }
 
   list.forEach((product) => {
     const card = document.createElement("div");
     card.className = "product-card";
+
+    // handle DB images (base64) or data.js images
+    let imgSrc = Array.isArray(product.images)
+      ? product.images[0]
+      : product.img
+      ? product.img[0].src
+      : "";
+
     card.innerHTML = `
-      <img src="${product.img}" alt="${product.name}">
+      <img src="${imgSrc}" alt="${product.name}" class="product-image" loading="lazy">
       <div class="info">
         <h3>${product.name}</h3>
         <p>₹${product.price}</p>
@@ -50,23 +58,58 @@ function displayProducts(list) {
       </div>
     `;
 
-    // Navigate to details page when clicking card (except Add to Cart button)
+    // Navigate to details page
     card.addEventListener("click", (e) => {
       if (!e.target.classList.contains("add-cart-btn")) {
         window.location.href = `product_details.html?id=${product.id}`;
       }
     });
 
-    // Add to cart button
-    // const btn = card.querySelector(".add-cart-btn");
-    // btn.addEventListener("click", (e) => {
-    //   e.stopPropagation();
-    //   alert(`"${product.name}" added to cart!`);
-    // });
-
     productGrid.appendChild(card);
   });
 }
+
+let db;
+const request = indexedDB.open("AgriMartDB", 1);
+
+request.onerror = (e) => console.error("DB error:", e);
+request.onsuccess = (e) => {
+  db = e.target.result;
+  loadAllProducts(); // Load DB products + data.js products
+};
+
+request.onupgradeneeded = (e) => {
+  db = e.target.result;
+  if (!db.objectStoreNames.contains("products")) {
+    const store = db.createObjectStore("products", {
+      keyPath: "id",
+      autoIncrement: true,
+    });
+    store.createIndex("farmerId", "farmerId", { unique: false });
+  }
+};
+
+let allProducts = []; // <-- use this for filtering & display
+
+function loadAllProducts() {
+  const tx = db.transaction("products", "readonly");
+  const store = tx.objectStore("products");
+  const request = store.getAll();
+
+  request.onsuccess = (e) => {
+    const dbProducts = e.target.result.map((p) => ({
+      ...p,
+      images: p.images || [],
+    }));
+    console.log(dbProducts, "DB products");
+
+    // Merge with data.js products
+    allProducts = [...products, ...dbProducts]; // <-- products from data.js
+    console.log(allProducts, "Merged products");
+    filterProducts(); // display merged products
+  };
+}
+
 
 function isMobileView() {
   return window.innerWidth <= 768; // adjust breakpoint
@@ -74,53 +117,40 @@ function isMobileView() {
 
 // 3️⃣ Filter & sort products
 function filterProducts() {
-  // Read all filter values from desktop
+  if (!allProducts || allProducts.length === 0) return;
+
   const categoryDesktop = categorySelect?.value || "all";
   const maxPriceDesktop = parseInt(priceRange?.value) || Infinity;
   const sortDesktop = sortSelect?.value || "default";
-  const inStockDesktop = inStockCheckbox?.checked || false;
-  const onSaleDesktop = onSaleCheckbox?.checked || false;
   const ratingDesktop =
     parseInt(document.querySelector('input[name="rating"]:checked')?.value) ||
     0;
 
-  // Read all filter values from mobile
   const categoryMobile = categorySelectMobile?.value || "all";
   const maxPriceMobile = parseInt(priceRangeMobile?.value) || Infinity;
   const sortMobile = sortSelectMobile?.value || "default";
-  const inStockMobileVal = inStockCheckboxMobile?.checked || false;
-  const onSaleMobileVal = onSaleCheckboxMobile?.checked || false;
   const ratingMobile =
     parseInt(
       document.querySelector('input[name="ratingMobile"]:checked')?.value
     ) || 0;
 
-  // Read search text (shared)
   const searchText = searchInput?.value?.toLowerCase() || "";
 
-  // Decide which set of filters to use based on which element triggered the event
-  // Or simply filter products using **both sets independently** if you want
-  // For simplicity, we combine them here: if desktop filter differs from default, use desktop
   const category = categoryDesktop !== "all" ? categoryDesktop : categoryMobile;
   const maxPrice =
     maxPriceDesktop !== Infinity ? maxPriceDesktop : maxPriceMobile;
   const sortBy = sortDesktop !== "default" ? sortDesktop : sortMobile;
-  const inStock = inStockDesktop || inStockMobileVal;
-  const onSale = onSaleDesktop || onSaleMobileVal;
   const minRating = ratingDesktop || ratingMobile;
 
-  let filtered = products.filter((p) => {
+  let filtered = allProducts.filter((p) => {
     return (
       (category === "all" || p.category === category) &&
       p.name.toLowerCase().includes(searchText) &&
       p.price <= maxPrice &&
-      (!minRating || p.rating >= minRating) &&
-      (!inStock || p.inStock === true) &&
-      (!onSale || p.onSale === true)
+      (!minRating || p.rating >= minRating)
     );
   });
 
-  // Sorting
   if (sortBy === "lowToHigh") filtered.sort((a, b) => a.price - b.price);
   if (sortBy === "highToLow") filtered.sort((a, b) => b.price - a.price);
   if (sortBy === "aToZ") filtered.sort((a, b) => a.name.localeCompare(b.name));
@@ -129,18 +159,23 @@ function filterProducts() {
   displayProducts(filtered);
 }
 
-// 4️⃣ Attach event listeners for filters
-categorySelect.addEventListener("change", filterProducts);
-searchInput.addEventListener("input", filterProducts);
-priceRange.addEventListener("input", () => {
+// ===== Attach filter event listeners =====
+categorySelect?.addEventListener("change", filterProducts);
+searchInput?.addEventListener("input", filterProducts);
+priceRange?.addEventListener("input", () => {
   priceValue.textContent = `₹0 - ₹${priceRange.value}`;
   filterProducts();
 });
-sortSelect.addEventListener("change", filterProducts);
-inStockCheckbox.addEventListener("change", filterProducts);
-onSaleCheckbox.addEventListener("change", filterProducts);
+sortSelect?.addEventListener("change", filterProducts);
 ratingRadios.forEach((r) => r.addEventListener("change", filterProducts));
 
+categorySelectMobile?.addEventListener("change", filterProducts);
+priceRangeMobile?.addEventListener("input", () => {
+  priceValueMobile.textContent = `₹0 - ₹${priceRangeMobile.value}`;
+  filterProducts();
+});
+sortSelectMobile?.addEventListener("change", filterProducts);
+ratingRadiosMobile.forEach((r) => r.addEventListener("change", filterProducts));
 // 5️⃣ Mobile drawer toggle
 mobileFilterBtn.addEventListener("click", () => {
   mobileFilterDrawer.classList.add("open");
@@ -184,8 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
     filterProducts();
   });
   sortSelect?.addEventListener("change", filterProducts);
-  inStockCheckbox?.addEventListener("change", filterProducts);
-  onSaleCheckbox?.addEventListener("change", filterProducts);
+  // inStockCheckbox?.addEventListener("change", filterProducts);
+  // onSaleCheckbox?.addEventListener("change", filterProducts);
   ratingRadios.forEach((r) => r.addEventListener("change", filterProducts));
 
   // Mobile
@@ -195,8 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
     filterProducts();
   });
   sortSelectMobile?.addEventListener("change", filterProducts);
-  inStockCheckboxMobile?.addEventListener("change", filterProducts);
-  onSaleCheckboxMobile?.addEventListener("change", filterProducts);
+  // inStockCheckboxMobile?.addEventListener("change", filterProducts);
+  // onSaleCheckboxMobile?.addEventListener("change", filterProducts);
   ratingRadiosMobile.forEach((r) =>
     r.addEventListener("change", filterProducts)
   );
