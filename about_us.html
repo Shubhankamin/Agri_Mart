@@ -2,14 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us - Agrimart</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/about_us.css" />
 </head>
 <body>
-  <header>About Agrimart</header>
 
-  <div class="container">
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav-content">
+        <a href="index.html" class="logo" aria-label="AgriMart Home">
+          <span class="logo-icon">🌾</span>
+          <span class="logo-text">AgriMart</span>
+        </a>
+
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="products.html" class="nav-link">Products</a>
+          <a href="blog_A.html" class="nav-link active" aria-current="page">Blogs</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+
+          <button class="cart-button" aria-label="Shopping cart">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+
+          <a href="profile.html" class="profile-link" aria-label="Profile page">
+            <img src="images/Profile.png" alt="Profile" class="profile-icon" />
+          </a>
+        </div>
+
+        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- HEADER -->
+  <header class="blog-header">
+    <h1>About Agrimart</h1>
+    <p>Your trusted partner in agricultural products, empowering farmers and consumers alike</p>
+  </header>
+
+  <!-- ABOUT CONTENT -->
+  <div class="about-container">
     <!-- Who We Are Section -->
     <section class="about-section">
       <div class="about-text">
@@ -18,8 +70,7 @@
           Agrimart is your trusted partner in agricultural products and solutions. 
           Our mission is to empower farmers and consumers by providing easy access 
           to high-quality fruits, vegetables, grains, dairy, seeds, fertilizers, 
-          and farm equipment. We believe in strengthening rural economies by giving 
-          farmers direct access to technology, fair pricing, and transparent markets.
+          and farm equipment.
         </p>
         <p>
           By bridging traditional farming with modern digital agriculture, Agrimart ensures 
@@ -33,7 +84,7 @@
     </section>
 
     <!-- Vision Section -->
-    <section class="about-section reverse">
+    <section class="about-section">
       <div class="about-image">
         <img src="images/about2.jpg" alt="Agriculture vision concept">
       </div>
@@ -42,13 +93,11 @@
         <p>
           To revolutionize agriculture by creating an online marketplace that connects 
           farmers directly to consumers while ensuring transparency, affordability, and 
-          quality in every transaction. We aim to make agriculture not just a livelihood, 
-          but a sustainable and profitable business for future generations.
+          quality in every transaction.
         </p>
         <p>
           Our vision includes leveraging technology to improve crop management, market reach, 
-          and knowledge sharing among farmers. We strive to inspire innovation while preserving 
-          traditional farming wisdom.
+          and knowledge sharing among farmers.
         </p>
       </div>
     </section>
@@ -59,13 +108,11 @@
         <h1>Our Mission</h1>
         <p>
           Agrimart’s mission is to uplift the farming community by providing a digital 
-          ecosystem that enables growth, learning, and fair trade. We strive to make 
-          agriculture smarter, more inclusive, and more profitable for everyone involved.
+          ecosystem that enables growth, learning, and fair trade.
         </p>
         <p>
           We focus on enhancing access to resources, sharing expertise, and connecting 
-          farmers to local and global markets. Through collaboration and innovation, 
-          we aim to ensure a brighter future for agriculture.
+          farmers to local and global markets.
         </p>
       </div>
       <div class="about-image">
@@ -109,8 +156,20 @@
     </div>
   </div>
 
-  <footer>
-    <p>© 2025 Agrimart. All Rights Reserved.</p>
+  <!-- FOOTER -->
+  <footer class="footer">
+      <p>&copy; 2025 Agrimart. All rights reserved.</p>
   </footer>
+
+  <!-- Optional JS for mobile menu toggle -->
+  <script>
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      menuToggle.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+    });
+  </script>
 </body>
 </html>

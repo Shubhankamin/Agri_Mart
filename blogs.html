@@ -1,29 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Agrimart — Blog</title>
-  <link rel="stylesheet" href="css/blog_A.css">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Blog CSS -->
+  <link rel="stylesheet" href="css/blog_A.css" />
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="site-header">
-    Agrimart Blogs
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav-content">
+        <a href="index.html" class="logo" aria-label="AgriMart Home">
+          <span class="logo-icon">🌾</span>
+          <span class="logo-text">AgriMart</span>
+        </a>
+
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="products.html" class="nav-link">Products</a>
+          <a href="blog_A.html" class="nav-link active" aria-current="page">Blogs</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+
+          <button class="cart-button" aria-label="Shopping cart">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+
+          <a href="profile.html" class="profile-link" aria-label="Profile page">
+            <img src="images/Profile.png" alt="Profile" class="profile-icon" />
+          </a>
+        </div>
+
+        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- BLOG TITLE SECTION -->
+  <header class="blog-header">
+    <h1>Agrimart Blogs</h1>
+    <p>Latest insights on sustainable agriculture, technology, and farmer stories</p>
   </header>
 
   <!-- BLOG POSTS -->
-  <main class="blogs" id="blog-container">
-    <!-- Blog cards will be injected here by JS -->
-  </main>
+  <main class="blogs" id="blog-container"></main>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    © 2025 Agrimart. All Rights Reserved.
+  <footer class="footer">
+      <p>&copy; 2025 AgriMart. All rights reserved.</p>
   </footer>
 
-  <!-- BLOG JS -->
+  <!-- Blog Script -->
   <script src="js/blog_A.js"></script>
 </body>
 </html>
