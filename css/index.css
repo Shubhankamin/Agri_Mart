@@ -407,7 +407,6 @@ body {
   transition: background-color 0.2s, color 0.2s;
 }
 
-.dynamic-links .nav-link:hover,
 .dynamic-links .nav-link.active {
   background-color: var(--primary-green);
   color: #fff;
