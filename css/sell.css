@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: #fdf7e1;
   color: #2e3d2f;
   overflow-x: hidden;
@@ -11,7 +11,7 @@ header {
   color: white;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
@@ -44,7 +44,7 @@ h1 {
   border-radius: 16px;
   width: 90%;
   max-width: 600px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
   animation: fadeInDown 0.8s ease-out;
 }
@@ -78,7 +78,7 @@ h1 {
 .modal-content textarea:focus,
 .modal-content select:focus {
   border-color: #2e8b57;
-  box-shadow: 0 0 5px rgba(46,139,87,0.4);
+  box-shadow: 0 0 5px rgba(46, 139, 87, 0.4);
   outline: none;
 }
 
@@ -197,7 +197,6 @@ h1 {
   display: none !important;
 }
 
-
 /* Product Card Styles */
 .product-container {
   display: flex;
@@ -210,7 +209,7 @@ h1 {
 .product-card {
   background-color: white;
   border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   width: 270px;
   text-align: center;
@@ -219,7 +218,7 @@ h1 {
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
 }
 
 .image-slider {
@@ -244,7 +243,7 @@ h1 {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(255,255,255,0.7);
+  background-color: rgba(255, 255, 255, 0.7);
   border: none;
   padding: 6px 10px;
   cursor: pointer;
@@ -252,8 +251,12 @@ h1 {
   border-radius: 50%;
 }
 
-.prev { left: 10px; }
-.next { right: 10px; }
+.prev {
+  left: 10px;
+}
+.next {
+  right: 10px;
+}
 
 .product-info {
   padding: 15px;
@@ -286,8 +289,14 @@ h1 {
   font-weight: bold;
 }
 
-.edit-btns .edit { background-color: #f5f5dc; color: #2e8b57; }
-.edit-btns .delete { background-color: #c0392b; color: white; }
+.edit-btns .edit {
+  background-color: #f5f5dc;
+  color: #2e8b57;
+}
+.edit-btns .delete {
+  background-color: #c0392b;
+  color: white;
+}
 
 footer {
   text-align: center;
@@ -301,30 +310,34 @@ footer {
 /* Modal */
 .modal {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.4);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
 }
 
-.modal.hidden { display: none; }
+.modal.hidden {
+  display: none;
+}
 
 .modal-content {
   background: #fff;
   border-radius: 12px;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
-  
+
   /* CRITICAL CHANGE 1: Enable Flexbox and disable overflow here */
   display: flex;
   flex-direction: column;
-  max-height: 95vh; 
-  overflow-y: hidden; 
+  max-height: 95vh;
+  overflow-y: hidden;
   padding-bottom: 0; /* Ensures the height calculation is clean */
 }
 
@@ -370,7 +383,7 @@ footer {
 
 /* Make form groups slightly more compact in the modal */
 .modal-content .form-group {
-    margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 .edit-images-section h4 {
@@ -383,34 +396,34 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px; 
+  gap: 15px;
   margin: 10px 0 20px;
 }
 
 .edit-image-box {
   width: 100px;
-  position: relative; 
-  display: flex; 
+  position: relative;
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .edit-image-box img {
-  width: 100px; 
-  height: 100px; 
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
 
 .edit-image-box .delete-btn {
-  position: absolute; 
-  top: -5px; 
-  right: -5px; 
+  position: absolute;
+  top: -5px;
+  right: -5px;
   background-color: rgba(204, 0, 0, 0.7);
   color: white;
   border: none;
-  border-radius: 50%; 
+  border-radius: 50%;
   width: 24px;
   height: 24px;
   font-size: 0.8em;
@@ -418,8 +431,8 @@ footer {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 2; 
-  padding: 0; 
+  z-index: 2;
+  padding: 0;
 }
 
 .edit-image-box .delete-btn:hover {
@@ -427,7 +440,7 @@ footer {
 }
 
 /* Reapply styles for main form buttons, excluding the close button */
-.modal-content button:not(.close-modal-btn) { 
+.modal-content button:not(.close-modal-btn) {
   margin: 10px auto;
   padding: 10px;
   border-radius: 8px;
@@ -442,90 +455,88 @@ footer {
 /* Animations (omitted for brevity) */
 /* ... */
 
-
 /* --- RESPONSIVENESS (Mobile devices up to 600px) --- */
 
 @media (max-width: 600px) {
-    header h1 {
-        font-size: 1.5rem;
-    }
-    
-    .add-product {
-        margin: 15px auto;
-        padding: 15px;
-    }
+  header h1 {
+    font-size: 1.5rem;
+  }
 
-    .product-container {
-        padding: 15px;
-        gap: 20px;
-    }
-    .product-card {
-        width: 95%; 
-        max-width: 400px; 
-    }
+  .add-product {
+    margin: 15px auto;
+    padding: 15px;
+  }
 
-    /* Form Adjustments - Maximize use of screen space */
-    .form-group {
-        width: 95%; 
-    }
-    .add-product button[type="submit"],
-    .modal-content button[type="submit"],
-    .modal-content button:not(.close-modal-btn) {
-        width: 95%; 
-    }
+  .product-container {
+    padding: 15px;
+    gap: 20px;
+  }
+  .product-card {
+    width: 95%;
+    max-width: 400px;
+  }
 
-    /* Image Upload for Add Product - Make boxes smaller for compactness */
-    .image-upload-boxes {
-        gap: 8px;
-    }
-    .image-upload-box {
-        width: 70px;
-        height: 70px;
-    }
-    .image-upload-box .plus-icon {
-        font-size: 2em;
-    }
-    .image-upload-box .remove-new-image {
-        width: 20px;
-        height: 20px;
-        font-size: 0.7em;
-        top: 2px;
-        right: 2px;
-    }
+  /* Form Adjustments - Maximize use of screen space */
+  .form-group {
+    width: 95%;
+  }
+  .add-product button[type="submit"],
+  .modal-content button[type="submit"],
+  .modal-content button:not(.close-modal-btn) {
+    width: 95%;
+  }
 
+  /* Image Upload for Add Product - Make boxes smaller for compactness */
+  .image-upload-boxes {
+    gap: 8px;
+  }
+  .image-upload-box {
+    width: 70px;
+    height: 70px;
+  }
+  .image-upload-box .plus-icon {
+    font-size: 2em;
+  }
+  .image-upload-box .remove-new-image {
+    width: 20px;
+    height: 20px;
+    font-size: 0.7em;
+    top: 2px;
+    right: 2px;
+  }
 
-    /* Edit Modal Adjustments */
-    .modal-content {
-        width: 95%; 
-        max-width: none; 
-    }
-    .modal-header-green {
-        padding: 10px 15px;
-    }
-    
-    /* Ensure form padding is slightly adjusted for mobile inside the scrollable area */
-    #editForm {
-      padding: 15px; 
-    }
+  /* Edit Modal Adjustments */
+  .modal-content {
+    width: 95%;
+    max-width: none;
+  }
+  .modal-header-green {
+    padding: 10px 15px;
+  }
 
-    /* Edit Modal Images - Adjust size to fit three images comfortably */
-    .edit-image-container {
-        gap: 10px;
-    }
-    .edit-image-box {
-        width: 80px; 
-    }
-    .edit-image-box img {
-        width: 80px; 
-        height: 80px; 
-    }
-    .edit-image-box .delete-btn {
-        width: 20px;
-        height: 20px;
-        font-size: 0.7em;
-        top: -4px;
-        right: -4px;
-    }
+  /* Ensure form padding is slightly adjusted for mobile inside the scrollable area */
+  #editForm {
+    padding: 15px;
+  }
+
+  /* Edit Modal Images - Adjust size to fit three images comfortably */
+  .edit-image-container {
+    gap: 10px;
+  }
+  .edit-image-box {
+    width: 80px;
+  }
+  .edit-image-box img {
+    width: 80px;
+    height: 80px;
+  }
+  .edit-image-box .delete-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 0.7em;
+    top: -4px;
+    right: -4px;
+  }
 }
 /* Generic override for green delete buttons inside image boxes */
 .edit-image-container button,
@@ -598,13 +609,13 @@ footer {
 @media (max-width: 600px) {
   #backToProfile {
     padding: 6px;
-    font-size: 0;       /* hide text */
+    font-size: 0; /* hide text */
     width: 36px;
     height: 36px;
     border-radius: 50%;
   }
   #backToProfile::before {
-    content: "←";       /* show arrow */
+    content: "←"; /* show arrow */
     font-size: 16px;
     color: white;
     display: block;
@@ -613,3 +624,26 @@ footer {
   }
 }
 
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #4caf50; /* green */
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 14px;
+  position: fixed;
+  z-index: 1000;
+  left: 70%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: visibility 0s, opacity 0.5s linear;
+  opacity: 0;
+}
+
+#snackbar.show {
+  visibility: visible;
+  opacity: 1;
+}

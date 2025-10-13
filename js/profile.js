@@ -63,6 +63,8 @@ const snackbar = document.getElementById("snackbar");
 
 // Get user info
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+console.log(currentUser, "current user");
 const users = JSON.parse(localStorage.getItem("users")) || [];
 
 if (!currentUser) {
@@ -86,6 +88,38 @@ const menuItems = [
   "Password Manager",
   "Logout",
 ];
+
+function populateUserInfo() {
+  if (!user) return;
+
+  const firstNameInput = document.getElementById("firstName");
+  const lastNameInput = document.getElementById("lastName");
+  const emailInput = document.getElementById("email");
+  const phoneInput = document.getElementById("phone");
+  const genderInputs = document.querySelectorAll('input[name="gender"]');
+
+  if (firstNameInput) firstNameInput.value = user.firstName || "";
+  if (lastNameInput) lastNameInput.value = user.lastName || "";
+  if (emailInput) emailInput.value = user.email || "";
+  if (phoneInput) phoneInput.value = user.phone || "";
+
+  if (genderInputs.length > 0 && user.gender) {
+    genderInputs.forEach((input) => {
+      input.checked = input.value === user.gender;
+    });
+  }
+}
+
+function loadSection(sectionName) {
+  const container = document.getElementById("contentContainer");
+  container.innerHTML = contentSections[sectionName];
+
+  // Wait for DOM to render, then populate fields
+  if (sectionName === "Personal Information") {
+    setTimeout(populateUserInfo, 0);
+  }
+}
+
 
 // Content sections for each tab
 const contentSections = {

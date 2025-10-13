@@ -1,210 +1,255 @@
-// Get product ID from URL
-const params = new URLSearchParams(window.location.search);
-const productId = parseInt(params.get("id"));
+// ---------------------------
+// IndexedDB setup
+// ---------------------------
+let db;
+let allProducts = []; // merged products
 
-// Find product
-const product = products.find((p) => p.id === productId);
-console.log("Product ID:", product);
+const request = indexedDB.open("AgriMartDB", 1);
 
-if (product) {
-  const breadcrumbContainer = document.getElementById("breadcrumb");
-  breadcrumbContainer.innerHTML = `
-    <a href="index.html">Home</a> /
-    <a href="category.html?category=${encodeURIComponent(product.category)}">${
-    product.category
-  }</a> /
-    <span>${product.name}</span>
-  `;
-  // Basic Info
-  document.getElementById("productName").textContent = product.name;
-  document.getElementById("productPrice").textContent = `₹${product.price}`;
-  document.getElementById("productDescription").textContent =
-    product.description;
-  document.getElementById("mainImage").src = product.img;
-  document.getElementById("mainImage").alt = product.name;
+request.onerror = (e) => console.error("DB error:", e);
 
-  // Create thumbnails
-  const thumbnailsContainer = document.getElementById("thumbnails");
-  const thumbnailImages = [product.img, product.img, product.img, product.img];
+request.onsuccess = (e) => {
+  db = e.target.result;
+  loadAllProducts();
+};
 
-  thumbnailImages.forEach((imgSrc, index) => {
-    const thumbnail = document.createElement("img");
-    thumbnail.src = imgSrc;
-    thumbnail.alt = `${product.name} thumbnail ${index + 1}`;
-    thumbnail.classList.add("thumbnail");
-    if (index === 0) thumbnail.classList.add("active");
-
-    thumbnail.addEventListener("click", function () {
-      document.getElementById("mainImage").src = imgSrc;
-      document
-        .querySelectorAll(".thumbnail")
-        .forEach((thumb) => thumb.classList.remove("active"));
-      this.classList.add("active");
+request.onupgradeneeded = (e) => {
+  db = e.target.result;
+  if (!db.objectStoreNames.contains("products")) {
+    const store = db.createObjectStore("products", {
+      keyPath: "id",
+      autoIncrement: true,
     });
-
-    thumbnailsContainer.appendChild(thumbnail);
-  });
-
-  // Rating
-  const fullStars = Math.floor(product.rating);
-  const halfStar = product.rating % 1 >= 0.5;
-
-  const starsContainer = document.createElement("div");
-  starsContainer.classList.add("stars");
-
-  for (let i = 0; i < fullStars; i++) {
-    const star = document.createElement("i");
-    star.classList.add("fas", "fa-star");
-    starsContainer.appendChild(star);
+    store.createIndex("farmerId", "farmerId", { unique: false });
   }
+};
 
-  if (halfStar) {
-    const halfStarEl = document.createElement("i");
-    halfStarEl.classList.add("fas", "fa-star-half-alt");
-    starsContainer.appendChild(halfStarEl);
-  }
+// Load products from IndexedDB + data.js
+function loadAllProducts() {
+  const tx = db.transaction("products", "readonly");
+  const store = tx.objectStore("products");
+  const request = store.getAll();
 
-  const totalStars = 5;
-  const emptyStars = totalStars - fullStars - (halfStar ? 1 : 0);
-  for (let i = 0; i < emptyStars; i++) {
-    const emptyStar = document.createElement("i");
-    emptyStar.classList.add("far", "fa-star");
-    starsContainer.appendChild(emptyStar);
-  }
+  request.onsuccess = (e) => {
+    const dbProducts = e.target.result.map((p) => ({
+      ...p,
+      img: (p.images || []).map((base64) => ({ src: base64 })), // convert base64 strings to {src: ...}
+    }));
+    allProducts = [...products, ...dbProducts];
+    console.log("Merged products:", allProducts);
 
-  const ratingText = document.createElement("span");
-  ratingText.classList.add("rating-text");
-  ratingText.textContent = `${product.rating} (${product.reviews} reviews)`;
-
-  document.getElementById("productRating").appendChild(starsContainer);
-  document.getElementById("productRating").appendChild(ratingText);
-
-  // Old Price & Discount
-  const oldPrice = Math.floor(product.price * 1.2);
-  document.getElementById("oldPrice").textContent = `₹${oldPrice}`;
-  document.getElementById("discount").textContent = `20% OFF`;
-
-  // Features
-  const features = [
-    "Safe & Fresh",
-    "Organic",
-    "Eco-friendly",
-    "Locally Sourced",
-  ];
-  const featuresIcons = [
-    "fas fa-shield-alt",
-    "fas fa-leaf",
-    "fas fa-recycle",
-    "fas fa-truck",
-  ];
-
-  const featuresContainer = document.getElementById("features");
-  featuresContainer.innerHTML = "";
-  features.forEach((f, i) => {
-    const div = document.createElement("div");
-    div.classList.add("feature");
-    div.innerHTML = `<i class="${featuresIcons[i]}"></i><span>${f}</span>`;
-    featuresContainer.appendChild(div);
-  });
-
-  // Details Info
-  document.getElementById(
-    "detailsInfo"
-  ).textContent = `Origin: ${product.origin}, Freshness: ${product.freshness}, Delivery: ${product.deliveryTime}`;
-
-  // Quantity
-  let quantity = 1;
-  const quantityEl = document.getElementById("quantity");
-
-  document.getElementById("increaseQty").addEventListener("click", () => {
-    if (quantity < product.stock) quantity++;
-    quantityEl.textContent = quantity;
-  });
-
-  document.getElementById("decreaseQty").addEventListener("click", () => {
-    if (quantity > 1) quantity--;
-    quantityEl.textContent = quantity;
-  });
-
-  // Add to Cart
-  document.getElementById("addToCart").addEventListener("click", () => {
-    showNotification(`${quantity} x ${product.name} added to cart!`);
-
-    const cartCount = document.querySelector(".cart-count");
-    const currentCount = parseInt(cartCount.textContent);
-    cartCount.textContent = currentCount + quantity;
-  });
-
-  // Buy Now
-  document.getElementById("buyNow").addEventListener("click", () => {
-    alert("Redirecting to checkout...");
-  });
+    // Now run the existing product display code
+    displayProductDetails();
+  };
 }
 
-// Similar products
-const similarProducts = products.filter(
-  (p) => p.category === product.category && p.id !== product.id
-);
+// ---------------------------
+// Existing product display logic
+// ---------------------------
+function displayProductDetails() {
+  const params = new URLSearchParams(window.location.search);
+  const productId = parseInt(params.get("id"));
 
-const carousel = document.getElementById("similarProductsCarousel");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
+  // Use merged products here
+  const product = allProducts.find((p) => p.id === productId);
+  console.log("Product ID:", product);
 
-similarProducts.forEach((p) => {
-  const card = document.createElement("div");
-  card.classList.add("product-card");
-  card.innerHTML = `
-    <img src="${p.img}" alt="${p.name}" />
-    <h4>${p.name}</h4>
-    <p>₹${p.price}</p>
-    <a href="product_details.html?id=${p.id}" class="view-btn">View</a>
-  `;
-  carousel.appendChild(card);
-});
+  if (product) {
+    const breadcrumbContainer = document.getElementById("breadcrumb");
+    breadcrumbContainer.innerHTML = `
+      <a href="index.html">Home</a> /
+      <a href="category.html?category=${encodeURIComponent(product.category)}">
+        ${product.category}
+      </a> /
+      <span>${product.name}</span>
+    `;
 
-const getCardsToScroll = () => {
-  const width = window.innerWidth;
-  if (width >= 1024) return 1;
-  if (width >= 768) return 1;
-  return 1;
-};
+    // Basic Info
+    document.getElementById("productName").textContent = product.name;
+    document.getElementById("productPrice").textContent = `₹${product.price}`;
+    document.getElementById("productDescription").textContent =
+      product.description;
+    document.getElementById("mainImage").src =
+      product.img[0]?.src || "images/no-image.png";
+    document.getElementById("mainImage").alt = product.name;
 
-const getCardWidth = () => {
-  const card = carousel.querySelector(".product-card");
-  if (!card) return 0;
-  const gap = 16;
-  return card.offsetWidth + gap;
-};
+    // Thumbnails
+    const thumbnailsContainer = document.getElementById("thumbnails");
+    thumbnailsContainer.innerHTML = "";
+    if (Array.isArray(product.img) && product.img.length > 0) {
+      product.img.forEach((imgObj, index) => {
+        const thumbnail = document.createElement("img");
+        thumbnail.src = imgObj.src;
+        thumbnail.alt = `${product.name} thumbnail ${index + 1}`;
+        thumbnail.classList.add("thumbnail");
+        if (index === 0) thumbnail.classList.add("active");
 
-const updateButtons = () => {
-  prevBtn.disabled = carousel.scrollLeft <= 0;
-  nextBtn.disabled =
-    carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth;
-};
+        thumbnail.addEventListener("click", function () {
+          document.getElementById("mainImage").src = imgObj.src;
+          document
+            .querySelectorAll(".thumbnail")
+            .forEach((thumb) => thumb.classList.remove("active"));
+          this.classList.add("active");
+        });
 
-const scrollRight = () => {
-  const cardsToScroll = getCardsToScroll();
-  const cardWidth = getCardWidth();
-  if (carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth) {
-    carousel.scrollTo({ left: 0, behavior: "smooth" });
+        thumbnailsContainer.appendChild(thumbnail);
+      });
+    } else {
+      const fallback = document.createElement("img");
+      fallback.src = "images/no-image.png";
+      fallback.alt = "No image available";
+      thumbnailsContainer.appendChild(fallback);
+    }
+
+    // Rating
+    const fullStars = Math.floor(product.rating || 0);
+    const halfStar = (product.rating || 0) % 1 >= 0.5;
+    const starsContainer = document.createElement("div");
+    starsContainer.classList.add("stars");
+
+    for (let i = 0; i < fullStars; i++) {
+      const star = document.createElement("i");
+      star.classList.add("fas", "fa-star");
+      starsContainer.appendChild(star);
+    }
+    if (halfStar) {
+      const halfStarEl = document.createElement("i");
+      halfStarEl.classList.add("fas", "fa-star-half-alt");
+      starsContainer.appendChild(halfStarEl);
+    }
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+    for (let i = 0; i < emptyStars; i++) {
+      const emptyStar = document.createElement("i");
+      emptyStar.classList.add("far", "fa-star");
+      starsContainer.appendChild(emptyStar);
+    }
+
+    const ratingText = document.createElement("span");
+    ratingText.classList.add("rating-text");
+    ratingText.textContent = `${product.rating || 0} (${
+      product.reviews || 0
+    } reviews)`;
+
+    const ratingContainer = document.getElementById("productRating");
+    ratingContainer.innerHTML = "";
+    ratingContainer.appendChild(starsContainer);
+    ratingContainer.appendChild(ratingText);
+
+    // Old Price & Discount
+    document.getElementById("oldPrice").textContent = `₹${Math.floor(
+      (product.price || 0) * 1.2
+    )}`;
+    document.getElementById("discount").textContent = "20% OFF";
+
+    // Features
+    const features = [
+      "Safe & Fresh",
+      "Organic",
+      "Eco-friendly",
+      "Locally Sourced",
+    ];
+    const featuresIcons = [
+      "fas fa-shield-alt",
+      "fas fa-leaf",
+      "fas fa-recycle",
+      "fas fa-truck",
+    ];
+    const featuresContainer = document.getElementById("features");
+    featuresContainer.innerHTML = "";
+    features.forEach((f, i) => {
+      const div = document.createElement("div");
+      div.classList.add("feature");
+      div.innerHTML = `<i class="${featuresIcons[i]}"></i><span>${f}</span>`;
+      featuresContainer.appendChild(div);
+    });
+
+    // Details Info
+    document.getElementById("detailsInfo").textContent = `Origin: ${
+      product.origin || "Unknown"
+    }, Freshness: ${product.freshness || "N/A"}, Delivery: ${
+      product.deliveryTime || "2-4 days"
+    }`;
+
+    // Quantity
+    let quantity = 1;
+    const quantityEl = document.getElementById("quantity");
+    quantityEl.textContent = quantity;
+
+    document.getElementById("increaseQty").addEventListener("click", () => {
+      if (quantity < (product.stock || 10)) quantity++;
+      quantityEl.textContent = quantity;
+    });
+
+    document.getElementById("decreaseQty").addEventListener("click", () => {
+      if (quantity > 1) quantity--;
+      quantityEl.textContent = quantity;
+    });
+
+    // Add to Cart
+    document.getElementById("addToCart").addEventListener("click", () => {
+      showNotification(`${quantity} x ${product.name} added to cart!`);
+      const cartCount = document.querySelector(".cart-count");
+      cartCount.textContent = parseInt(cartCount.textContent || 0) + quantity;
+
+      // Optional: redirect to cart page
+      window.location.href = `cart.html?id=${product.id}&qty=${quantity}`;
+    });
+
+    const buyNowBtn = document.getElementById("buyNow");
+    if (buyNowBtn)
+      buyNowBtn.addEventListener("click", () =>
+        alert("Redirecting to checkout...")
+      );
+
+    // Farmer
+    const farmerNameEl = document.getElementById("farmerName");
+    if (farmerNameEl)
+      farmerNameEl.textContent = product.farmerId || "Unknown";
+
+    // Similar products
+    const similarProducts = allProducts.filter(
+      (p) => p.category === product.category && p.id !== product.id
+    );
+
+    const carousel = document.getElementById("similarProductsCarousel");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    carousel.innerHTML = "";
+
+    similarProducts.forEach((p) => {
+      const card = document.createElement("div");
+      card.classList.add("product-card");
+      card.innerHTML = `
+        <img src="${p.img[0]?.src || "images/no-image.png"}" alt="${p.name}" />
+        <h4>${p.name}</h4>
+        <p>₹${p.price}</p>
+        <a href="product_details.html?id=${p.id}" class="view-btn">View</a>
+      `;
+      carousel.appendChild(card);
+    });
+
+    const getCardWidth = () => {
+      const card = carousel.querySelector(".product-card");
+      if (!card) return 0;
+      return card.offsetWidth + 16;
+    };
+
+    const scrollRight = () =>
+      carousel.scrollBy({ left: getCardWidth(), behavior: "smooth" });
+    const scrollLeft = () =>
+      carousel.scrollBy({ left: -getCardWidth(), behavior: "smooth" });
+
+    nextBtn.addEventListener("click", scrollRight);
+    prevBtn.addEventListener("click", scrollLeft);
+    carousel.addEventListener("scroll", () => {
+      prevBtn.disabled = carousel.scrollLeft <= 0;
+      nextBtn.disabled =
+        carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth;
+    });
   } else {
-    carousel.scrollBy({ left: cardWidth * cardsToScroll, behavior: "smooth" });
+    console.log("Product not found");
   }
-  setTimeout(updateButtons, 300);
-};
-
-const scrollLeft = () => {
-  const cardsToScroll = getCardsToScroll();
-  const cardWidth = getCardWidth();
-  carousel.scrollBy({ left: -cardWidth * cardsToScroll, behavior: "smooth" });
-  setTimeout(updateButtons, 300);
-};
-
-nextBtn.addEventListener("click", scrollRight);
-prevBtn.addEventListener("click", scrollLeft);
-carousel.addEventListener("scroll", updateButtons);
-window.addEventListener("resize", updateButtons);
-updateButtons();
+}
 
 // Notification function
 function showNotification(message) {
@@ -224,7 +269,6 @@ function showNotification(message) {
     transform: translateX(150%);
     transition: transform 0.3s ease;
   `;
-
   document.body.appendChild(notification);
   setTimeout(() => (notification.style.transform = "translateX(0)"), 100);
   setTimeout(() => {
@@ -232,16 +276,3 @@ function showNotification(message) {
     setTimeout(() => document.body.removeChild(notification), 300);
   }, 3000);
 }
-// Add to Cart
-// Only pass product ID and quantity
-document.getElementById("addToCart").addEventListener("click", () => {
-  // Get the quantity from the span
-  const qtySpan = document.getElementById("quantity");
-  const qty = parseInt(qtySpan.textContent) || 1; // default to 1 if not a number
-
-  // Redirect to cart page with query parameters
-  const url = `cart.html?id=${product.id}&qty=${qty}`;
-  console.log("Quantity:", qty);
-
-  window.location.href = url;
-});

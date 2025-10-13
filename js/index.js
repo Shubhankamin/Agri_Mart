@@ -52,22 +52,25 @@ function renderProducts(filter = "all") {
   if (!productsGrid) return; // skip if no products grid
 
   const filteredProducts =
-    filter === "all"
-      ? products
-      : products.filter((p) => p.category === filter);
+    filter === "all" ? products : products.filter((p) => p.category === filter);
 
   productsGrid.innerHTML = filteredProducts
     .map(
       (product) => `
       <article class="product-card" data-product-id="${product.id}">
-        <img src="${product.img}" alt="${product.name}" class="product-image" loading="lazy">
+    <img src="${product.img[0].src}" alt="${
+        product.name
+      }" class="product-image" loading="lazy">
+
         <div class="product-info">
           <span class="product-category">${product.category}</span>
           <h3 class="product-name">${product.name}</h3>
           <p class="product-description">${product.description}</p>
           <div class="product-footer">
             <span class="product-price">₹${product.price.toFixed(2)}</span>
-            <button class="add-to-cart-btn" onclick="addToCart(${product.id})" aria-label="Add ${product.name} to cart">
+            <button class="add-to-cart-btn" onclick="addToCart(${
+              product.id
+            })" aria-label="Add ${product.name} to cart">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="9" cy="21" r="1"></circle>
                 <circle cx="20" cy="21" r="1"></circle>
@@ -119,7 +122,9 @@ function setupEventListeners() {
       e.stopPropagation();
       dropdown.classList.toggle("active");
     });
-    document.addEventListener("click", () => dropdown.classList.remove("active"));
+    document.addEventListener("click", () =>
+      dropdown.classList.remove("active")
+    );
     document.querySelectorAll(".dropdown-item").forEach((item) => {
       item.addEventListener("click", (e) => {
         e.preventDefault();
@@ -132,7 +137,9 @@ function setupEventListeners() {
   document.querySelectorAll(".filter-btn").forEach((button) => {
     button.addEventListener("click", () => {
       const category = button.getAttribute("data-filter");
-      document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach((b) => b.classList.remove("active"));
       button.classList.add("active");
       renderProducts(category);
     });
@@ -143,7 +150,8 @@ function setupEventListeners() {
   if (mobileMenuToggle && navLinks) {
     mobileMenuToggle.addEventListener("click", () => {
       navLinks.classList.toggle("active");
-      const expanded = mobileMenuToggle.getAttribute("aria-expanded") === "true";
+      const expanded =
+        mobileMenuToggle.getAttribute("aria-expanded") === "true";
       mobileMenuToggle.setAttribute("aria-expanded", !expanded);
     });
   }
