@@ -4,244 +4,168 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us - Agrimart</title>
-
-  <!-- CSS -->
   <link rel="stylesheet" href="css/about_us.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-      rel="stylesheet"/>
-      
-  </head>
-  <body>
-    <!-- Navigation -->
-    <nav class="navbar" role="navigation" aria-label="Main navigation">
-      <div class="container">
-        <div class="nav-content">
-          <a href="/index.html" class="logo" aria-label="AgriMart Home">
-            <span class="logo-icon">🌾</span>
-            <span class="logo-text">AgriMart</span>
-          </a>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
-          <div class="nav-links">
-            <a href="/index.html" class="nav-link active" aria-current="page"
-              >Home</a
-            >
-            <div class="dynamic-links"></div>
-            <div class="dropdown">
-              <button
-                class="nav-link dropdown-toggle"
-                aria-haspopup="true"
-                aria-expanded="false"
-                id="categoryDropdown"
-              >
-                Categories
-                <svg
-                  class="dropdown-icon"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </button>
-              <div
-                class="dropdown-menu"
-                role="menu"
-                aria-labelledby="categoryDropdown"
-              >
-                <a
-                  href="#"
-                  class="dropdown-item"
-                  role="menuitem"
-                  data-filter="all"
-                  >All Products</a
-                >
-                <a
-                  href="#"
-                  class="dropdown-item"
-                  role="menuitem"
-                  data-filter="fruits"
-                  >Fruits</a
-                >
-                <a
-                  href="#"
-                  class="dropdown-item"
-                  role="menuitem"
-                  data-filter="vegetables"
-                  >Vegetables</a
-                >
-                <a
-                  href="#"
-                  class="dropdown-item"
-                  role="menuitem"
-                  data-filter="cereals"
-                  >Cereals</a
-                >
-              </div>
-            </div>
+<!-- Navigation -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-content">
+      <!-- LOGO -->
+      <a href="/index.html" class="logo" aria-label="AgriMart Home">
+        <span class="logo-icon">🌾</span>
+        <span class="logo-text">AgriMart</span>
+      </a>
 
-            <a href="contact.html" class="nav-link">Contact</a>
-
-            <button
-              class="cart-button"
-              aria-label="Shopping cart"
-              onclick="window.location.href='/cart.html'"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path
-                  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
-                ></path>
+      <div class="nav-right-section">
+        <!-- Desktop Navigation Links -->
+        <div class="desktop-nav-links">
+          <a href="/index.html" class="nav-link active" aria-current="page">Home</a>
+          <div class="dynamic-links"></div>
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+              Categories
+              <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
-              <span class="cart-count" id="cartCount">0</span>
             </button>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item" data-filter="all">All Products</a>
+              <a href="#" class="dropdown-item" data-filter="fruits">Fruits</a>
+              <a href="#" class="dropdown-item" data-filter="vegetables">Vegetables</a>
+              <a href="#" class="dropdown-item" data-filter="cereals">Cereals</a>
+            </div>
+          </div>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </div>
 
-            <a
-              href="/profile.html"
-              class="profile-link"
-              aria-label="Profile page"
-            >
-              <img
-                src="\Images\Profile.png"
-                alt="Profile"
-                class="profile-icon"
-              />
+        <!-- Desktop Actions -->
+        <div class="desktop-actions">
+          <button class="cart-button" onclick="window.location.href='/cart.html'">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+          <a href="/profile.html" class="profile-link">
+            <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
+          </a>
+        </div>
+      </div>
+
+            <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- NEW MOBILE SLIDE-OUT MENU PANEL -->
+      <div class="nav-links" id="navLinks">
+        <div class="mobile-menu-header">
+          <div class="mobile-profile-section">
+            <a href="/profile.html" class="profile-link-mobile">
+              <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
+              <div class="mobile-profile-info">
+                <h3 id="mobileUserName">Guest User</h3>
+                <p id="mobileUserEmail">Login or Sign Up</p>
+              </div>
             </a>
           </div>
+        </div>
+        
+        <div class="mobile-menu-body">
+          <a href="/index.html" class="nav-link">Home</a>
+          <div class="dynamic-links"></div>
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Categories
+            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+           </button>
+            <div class="dropdown-menu" role="menu">
+              <a href="#" class="dropdown-item" data-filter="all">All Products</a>
+              <a href="#" class="dropdown-item" data-filter="fruits">Fruits</a>
+              <a href="#" class="dropdown-item" data-filter="vegetables">Vegetables</a>
+              <a href="#" class="dropdown-item" data-filter="cereals">Cereals</a>
+            </div>
+          </div>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </div>
 
-          <button
-            class="mobile-menu-toggle"
-            aria-label="Toggle mobile menu"
-            aria-expanded="false"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="mobile-cart-section">
+          <button class="mobile-cart-btn" onclick="window.location.href='/cart.html'">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            View Cart
+            <span class="cart-count" id="mobileCartCount">0</span>
           </button>
         </div>
       </div>
-    </nav>
-
-
-  <!-- HEADER -->
-  <header class="blog-header">
-    <h1>About Agrimart</h1>
-    <p>Your trusted partner in agricultural products, empowering farmers and consumers alike</p>
-  </header>
-
-  <!-- ABOUT CONTENT -->
-  <div class="about-container">
-    <!-- Who We Are Section -->
-    <section class="about-section">
-      <div class="about-text">
-        <h1>Who We Are</h1>
-        <p>
-          Agrimart is your trusted partner in agricultural products and solutions. 
-          Our mission is to empower farmers and consumers by providing easy access 
-          to high-quality fruits, vegetables, grains, dairy, seeds, fertilizers, 
-          and farm equipment.
-        </p>
-        <p>
-          By bridging traditional farming with modern digital agriculture, Agrimart ensures 
-          every farmer receives visibility, support, and fair opportunities. Consumers benefit 
-          from fresh produce and transparent pricing, creating a sustainable ecosystem for all.
-        </p>
-      </div>
-      <div class="about-image">
-        <img src="images/about1.jpg" alt="Farmers working in field">
-      </div>
-    </section>
-
-    <!-- Vision Section -->
-    <section class="about-section">
-      <div class="about-image">
-        <img src="images/about2.jpg" alt="Agriculture vision concept">
-      </div>
-      <div class="about-text">
-        <h1>Our Vision</h1>
-        <p>
-          To revolutionize agriculture by creating an online marketplace that connects 
-          farmers directly to consumers while ensuring transparency, affordability, and 
-          quality in every transaction.
-        </p>
-        <p>
-          Our vision includes leveraging technology to improve crop management, market reach, 
-          and knowledge sharing among farmers.
-        </p>
-      </div>
-    </section>
-
-    <!-- Mission Section -->
-    <section class="about-section">
-      <div class="about-text">
-        <h1>Our Mission</h1>
-        <p>
-          Agrimart’s mission is to uplift the farming community by providing a digital 
-          ecosystem that enables growth, learning, and fair trade.
-        </p>
-        <p>
-          We focus on enhancing access to resources, sharing expertise, and connecting 
-          farmers to local and global markets.
-        </p>
-      </div>
-      <div class="about-image">
-        <img src="images/about3.jpg" alt="Agrimart mission teamwork">
-      </div>
-    </section>
-
-    <!-- Goals Section -->
-    <h1 class="goals-heading">Our Goals</h1>
-    <div class="goals">
-      <div class="goal">
-        <img src="images/about4.jpg" alt="Empowering Farmers">
-        <h3>1. Empowering Farmers</h3>
-        <p>Provide farmers access to digital tools, resources, and fair marketplaces to improve their livelihoods.</p>
-      </div>
-      <div class="goal">
-        <img src="images/about5.jpg" alt="Sustainable Farming">
-        <h3>2. Promote Sustainable Farming</h3>
-        <p>Encourage eco-friendly practices, organic farming, and renewable resources for long-term growth.</p>
-      </div>
-      <div class="goal">
-        <img src="images/about6.jpg" alt="Technological Innovation">
-        <h3>3. Innovate with Technology</h3>
-        <p>Adopt AI, IoT, and data analytics to make farming smarter and more efficient.</p>
-      </div>
-      <div class="goal">
-        <img src="images/about7.jpg" alt="Market Connection">
-        <h3>4. Strengthen Market Access</h3>
-        <p>Connect farmers directly with buyers, reducing middlemen and ensuring fair pricing.</p>
-      </div>
-      <div class="goal">
-        <img src="images/about8.jpg" alt="Education">
-        <h3>5. Educate and Train</h3>
-        <p>Offer workshops, webinars, and knowledge hubs to teach modern agricultural techniques.</p>
-      </div>
-      <div class="goal">
-        <img src="images/about9.jpg" alt="Community Growth">
-        <h3>6. Build Strong Communities</h3>
-        <p>Encourage collaboration among farmers, researchers, and consumers to build resilient rural communities.</p>
-      </div>
     </div>
   </div>
+</nav>
 
-      <!-- Footer -->
+    <!-- HEADER -->
+    <header class="blog-header">
+      <h1>About Agrimart</h1>
+      <p>Your trusted partner in agricultural products, empowering farmers and consumers alike</p>
+    </header>
+
+    <!-- ABOUT CONTENT -->
+    <div class="about-container">
+      <section class="about-section">
+        <div class="about-text">
+          <h1>Who We Are</h1>
+          <p>Agrimart is your trusted partner in agricultural products and solutions. Our mission is to empower farmers and consumers by providing easy access to high-quality fruits, vegetables, grains, dairy, seeds, fertilizers, and farm equipment.</p>
+          <p>By bridging traditional farming with modern digital agriculture, Agrimart ensures every farmer receives visibility, support, and fair opportunities. Consumers benefit from fresh produce and transparent pricing, creating a sustainable ecosystem for all.</p>
+        </div>
+        <div class="about-image">
+          <img src="images/about1.jpg" alt="Farmers working in field">
+        </div>
+      </section>
+      <section class="about-section reverse">
+        <div class="about-image">
+          <img src="images/about2.jpg" alt="Agriculture vision concept">
+        </div>
+        <div class="about-text">
+          <h1>Our Vision</h1>
+          <p>To revolutionize agriculture by creating an online marketplace that connects farmers directly to consumers while ensuring transparency, affordability, and quality in every transaction.</p>
+          <p>Our vision includes leveraging technology to improve crop management, market reach, and knowledge sharing among farmers.</p>
+        </div>
+      </section>
+      <section class="about-section">
+        <div class="about-text">
+          <h1>Our Mission</h1>
+          <p>Agrimart’s mission is to uplift the farming community by providing a digital ecosystem that enables growth, learning, and fair trade.</p>
+          <p>We focus on enhancing access to resources, sharing expertise, and connecting farmers to local and global markets.</p>
+        </div>
+        <div class="about-image">
+          <img src="images/about3.jpg" alt="Agrimart mission teamwork">
+        </div>
+      </section>
+      <h1 class="goals-heading">Our Goals</h1>
+      <div class="goals">
+        <div class="goal"><img src="images/about4.jpg" alt="Empowering Farmers"><h3>1. Empowering Farmers</h3><p>Provide farmers access to digital tools, resources, and fair marketplaces to improve their livelihoods.</p></div>
+        <div class="goal"><img src="images/about5.jpg" alt="Sustainable Farming"><h3>2. Promote Sustainable Farming</h3><p>Encourage eco-friendly practices, organic farming, and renewable resources for long-term growth.</p></div>
+        <div class="goal"><img src="images/about6.jpg" alt="Technological Innovation"><h3>3. Innovate with Technology</h3><p>Adopt AI, IoT, and data analytics to make farming smarter and more efficient.</p></div>
+        <div class="goal"><img src="images/about7.jpg" alt="Market Connection"><h3>4. Strengthen Market Access</h3><p>Connect farmers directly with buyers, reducing middlemen and ensuring fair pricing.</p></div>
+        <div class="goal"><img src="images/about8.jpg" alt="Education"><h3>5. Educate and Train</h3><p>Offer workshops, webinars, and knowledge hubs to teach modern agricultural techniques.</p></div>
+        <div class="goal"><img src="images/about9.jpg" alt="Community Growth"><h3>6. Build Strong Communities</h3><p>Encourage collaboration among farmers, researchers, and consumers to build resilient rural communities.</p></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
     <footer class="footer" role="contentinfo">
       <div class="container">
         <div class="footer-content">
@@ -292,7 +216,6 @@
       </div>
     </footer>
     
-  <!-- Optional JS for mobile menu toggle -->
   <script src="js/about.js"></script>
 </body>
 </html>

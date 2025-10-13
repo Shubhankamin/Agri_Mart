@@ -1,218 +1,193 @@
-// Cart state
-let cart = [];
+// --- SHARED NAVIGATION & CART LOGIC ---
 
 // Get current user from localStorage
 const currentUser = localStorage.getItem("currentUser");
 const user = currentUser ? JSON.parse(currentUser) : null;
 
-// Add dynamic navbar links
+// Add dynamic navbar links to both desktop and mobile menus
 function setupDynamicLinks() {
-  const container = document.querySelector(".dynamic-links");
-  if (!container) return;
+  const containers = document.querySelectorAll(".dynamic-links");
+  if (containers.length === 0) return;
 
-  container.innerHTML = "";
+  containers.forEach(container => {
+    container.innerHTML = ""; // Clear existing links
+    const productsLink = document.createElement("a");
+    productsLink.href = "/products.html";
+    productsLink.className = "nav-link";
+    productsLink.textContent = "Products";
+    container.appendChild(productsLink);
 
-  const productsLink = document.createElement("a");
-  productsLink.href = "/products.html";
-  productsLink.className = "nav-link";
-  productsLink.textContent = "Products";
-  container.appendChild(productsLink);
-
-  if (user && user.role === "farmer") {
-    const sellLink = document.createElement("a");
-    sellLink.href = "/sell.html";
-    sellLink.className = "nav-link";
-    sellLink.textContent = "Sell";
-    container.appendChild(sellLink);
-  }
+    if (user && user.role === "farmer") {
+      const sellLink = document.createElement("a");
+      sellLink.href = "/sell.html";
+      sellLink.className = "nav-link";
+      sellLink.textContent = "Sell";
+      container.appendChild(sellLink);
+    }
+  });
 }
 
-// Load Cart
-function loadCart() {
-  const savedCart = localStorage.getItem("agrimart_cart");
-  if (savedCart) cart = JSON.parse(savedCart);
-  updateCartCount();
-}
-
-// Update Cart Count
+// Update cart count in both desktop and mobile headers
 function updateCartCount() {
   const cartCountElem = document.getElementById("cartCount");
-  if (!cartCountElem) return;
+  const mobileCartCountElem = document.getElementById("mobileCartCount");
+  if (!cartCountElem || !mobileCartCountElem) return;
 
   const savedCart = localStorage.getItem("agrimart_cart");
   const cartData = savedCart ? JSON.parse(savedCart) : [];
   const totalItems = cartData.reduce((sum, item) => sum + item.quantity, 0);
 
   cartCountElem.textContent = totalItems;
+  mobileCartCountElem.textContent = totalItems;
 }
 
-// Render Products (only on pages with #productsGrid)
-function renderProducts(filter = "all") {
-  const productsGrid = document.getElementById("productsGrid");
-  if (!productsGrid) return; // skip if no products grid
+// --- PROFILE DISPLAY LOGIC ---
+function updateProfileUI() {
+  const desktopProfile = document.querySelector(".profile-link img");
+  const mobileUserName = document.getElementById("mobileUserName");
+  const mobileUserEmail = document.getElementById("mobileUserEmail");
 
-  const filteredProducts =
-    filter === "all"
-      ? products
-      : products.filter((p) => p.category === filter);
-
-  productsGrid.innerHTML = filteredProducts
-    .map(
-      (product) => `
-      <article class="product-card" data-product-id="${product.id}">
-        <img src="${product.img}" alt="${product.name}" class="product-image" loading="lazy">
-        <div class="product-info">
-          <span class="product-category">${product.category}</span>
-          <h3 class="product-name">${product.name}</h3>
-          <p class="product-description">${product.description}</p>
-          <div class="product-footer">
-            <span class="product-price">₹${product.price.toFixed(2)}</span>
-            <button class="add-to-cart-btn" onclick="addToCart(${product.id})" aria-label="Add ${product.name} to cart">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </article>
-    `
-    )
-    .join("");
-}
-
-// Add to Cart
-function addToCart(productId) {
-  const product = products.find((p) => p.id === productId);
-  if (!product) return;
-
-  const existingItem = cart.find((item) => item.id === productId);
-  if (existingItem) existingItem.quantity += 1;
-  else cart.push({ ...product, quantity: 1 });
-
-  saveCart();
-  updateCartCount();
-  showNotification();
-}
-
-function saveCart() {
-  localStorage.setItem("agrimart_cart", JSON.stringify(cart));
-}
-
-function showNotification() {
-  const notification = document.getElementById("cartNotification");
-  if (!notification) return;
-
-  notification.classList.add("show");
-  setTimeout(() => notification.classList.remove("show"), 2000);
-}
-
-// Setup Event Listeners (only elements that exist)
-function setupEventListeners() {
-  const dropdownToggle = document.querySelector(".dropdown-toggle");
-  const dropdown = document.querySelector(".dropdown");
-
-  if (dropdownToggle && dropdown) {
-    dropdownToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdown.classList.toggle("active");
-    });
-    document.addEventListener("click", () => dropdown.classList.remove("active"));
-    document.querySelectorAll(".dropdown-item").forEach((item) => {
-      item.addEventListener("click", (e) => {
-        e.preventDefault();
-        const category = item.getAttribute("data-filter");
-        window.location.href = `products.html?category=${category}`;
-      });
-    });
+  if (user) {
+    // Logged-in user
+    if (desktopProfile) {
+      desktopProfile.src = user.image || "/Images/Profile.png"; // fallback image
+      desktopProfile.alt = user.name || "Profile";
+    }
+    if (mobileUserName) {
+      mobileUserName.textContent = user.name || "User";
+    }
+    if (mobileUserEmail) {
+      mobileUserEmail.textContent = user.email || "No email provided";
+    }
+  } else {
+    // Guest user
+    if (desktopProfile) {
+      desktopProfile.src = "/Images/Profile.png";
+      desktopProfile.alt = "Guest";
+    }
+    if (mobileUserName) {
+      mobileUserName.textContent = "Guest User";
+    }
+    if (mobileUserEmail) {
+      mobileUserEmail.textContent = "Login or Sign Up";
+    }
   }
+}
 
-  document.querySelectorAll(".filter-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      const category = button.getAttribute("data-filter");
-      document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
-      button.classList.add("active");
-      renderProducts(category);
+// Setup all navigation event listeners
+function setupNavigationEventListeners() {
+  // Dropdown logic for both desktop and mobile
+  const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+  dropdownToggles.forEach(toggle => {
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const dropdown = toggle.closest(".dropdown");
+      if (dropdown) {
+        document.querySelectorAll(".dropdown.active").forEach(openDropdown => {
+          if (openDropdown !== dropdown) openDropdown.classList.remove("active");
+        });
+        dropdown.classList.toggle("active");
+      }
     });
   });
 
-  const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-  if (mobileMenuToggle && navLinks) {
-    mobileMenuToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-      const expanded = mobileMenuToggle.getAttribute("aria-expanded") === "true";
-      mobileMenuToggle.setAttribute("aria-expanded", !expanded);
+  // Global click listener to close dropdowns when clicking outside
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".dropdown.active").forEach(dropdown => {
+      dropdown.classList.remove("active");
     });
+  });
+
+  // --- MOBILE MENU TOGGLE LOGIC ---
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const navLinks = document.getElementById("navLinks");
+  const mobileOverlay = document.getElementById("mobileOverlay");
+  const mobileCloseBtn = document.querySelector(".mobile-close-btn"); 
+  const body = document.body;
+
+  if (mobileMenuToggle && navLinks && mobileOverlay) {
+    const toggleMenu = () => {
+      mobileMenuToggle.classList.toggle("active");
+      navLinks.classList.toggle("active");
+      mobileOverlay.classList.toggle("active");
+      body.style.overflow = navLinks.classList.contains("active") ? "hidden" : "";
+    };
+    mobileMenuToggle.addEventListener("click", toggleMenu);
+    mobileOverlay.addEventListener("click", toggleMenu);
+    if (mobileCloseBtn) {
+      mobileCloseBtn.addEventListener("click", toggleMenu);
+    }
   }
 }
 
-// ------------------------
-// Initialize all JS safely
-// ------------------------
+// --- MAIN INITIALIZATION SCRIPT ---
 document.addEventListener("DOMContentLoaded", () => {
-  loadCart();
+  // Initialize shared components on the page
   setupDynamicLinks();
   updateCartCount();
-  renderProducts("all"); // only renders if #productsGrid exists
-  setupEventListeners();
+  updateProfileUI(); // ✅ update profile details
+  setupNavigationEventListeners();
 
-  // Contact form setup only if exists
-  if (document.getElementById("contactForm")) setupContactForm();
-});
+  // --- BLOG PAGE SPECIFIC LOGIC ---
+  const blogContainer = document.getElementById('blog-container');
 
-const blogs = [
-  {
-    title: "Sustainable Farming Practices",
-    image: "images/blog1.jpg",
-    content: "Discover how eco-friendly farming methods can protect our planet while improving crop yields for future generations. Techniques like crop rotation, natural composting, and minimal chemical usage ensure soil fertility and biodiversity."
-  },
-  {
-    title: "The Future of Organic Agriculture",
-    image: "images/blog2.jpg",
-    content: "Organic farming is reshaping global agriculture by emphasizing soil health, biodiversity, and chemical-free produce. With growing consumer awareness, organic practices are creating new market opportunities."
-  },
-  {
-    title: "Smart Irrigation Systems",
-    image: "images/blog3.jpg",
-    content: "Explore how AI and IoT-driven irrigation technologies conserve water while ensuring optimal crop hydration. Smart irrigation empowers farmers to manage resources effectively."
-  },
-  {
-    title: "Seed Selection for High Yield",
-    image: "images/blog4.jpg",
-    content: "Choosing the right seeds helps farmers boost productivity, resist pests, and adapt to changing climate conditions. Modern research focuses on developing resilient seed varieties."
-  },
-  {
-    title: "Farm-to-Table Revolution",
-    image: "images/blog5.jpg",
-    content: "Connecting farmers directly with consumers ensures transparency, freshness, and fair pricing. The farm-to-table model supports sustainable food systems."
-  },
-  {
-    title: "Agricultural Machinery Evolution",
-    image: "images/blog6.jpg",
-    content: "From autonomous tractors to drone surveillance, modern machines are transforming agriculture. Advanced machinery enables precision farming and better yields."
+  if (blogContainer) {
+    // UPDATED: Now contains all 6 blog posts
+    const posts = [
+      {
+        title: "Sustainable Farming Practices",
+        description: "Discover how eco-friendly farming methods can protect our planet while improving crop yields for future generations, ensuring soil fertility and biodiversity.",
+        image: "/Images/blog1.jpg",
+        altLayout: false
+      },
+      {
+        title: "The Future of Organic Agriculture",
+        description: "Organic farming is reshaping global agriculture by emphasizing soil health and chemical-free produce. Explore the growing consumer demand and market opportunities.",
+        image: "/Images/blog2.jpg",
+        altLayout: true
+      },
+      {
+        title: "Smart Irrigation Systems",
+        description: "Explore how AI and IoT-driven irrigation technologies conserve precious water while ensuring optimal crop hydration, empowering farmers to manage resources effectively.",
+        image: "/Images/blog3.jpg",
+        altLayout: false
+      },
+      {
+        title: "Seed Selection for High Yield",
+        description: "Choosing the right seeds is crucial. Learn how modern research helps farmers boost productivity, resist pests, and adapt to changing climate conditions.",
+        image: "/Images/blog4.jpg",
+        altLayout: true
+      },
+      {
+        title: "The Farm-to-Table Revolution",
+        description: "Connecting farmers directly with consumers ensures transparency, freshness, and fair pricing. Discover how this model supports sustainable food systems.",
+        image: "/Images/blog5.jpg",
+        altLayout: false
+      },
+      {
+        title: "Evolution of Agricultural Machinery",
+        description: "From autonomous tractors to drone surveillance, modern machines are transforming agriculture. See how advanced machinery enables precision farming and better yields.",
+        image: "/Images/blog6.jpg",
+        altLayout: true
+      }
+    ];
+
+    blogContainer.innerHTML = '';
+    posts.forEach(post => {
+      const card = document.createElement('div');
+      card.className = `blog-card ${post.altLayout ? 'alt' : ''}`;
+      
+      card.innerHTML = `
+        <div class="blog-image">
+          <img src="${post.image}" alt="${post.title}">
+        </div>
+        <div class="blog-content">
+          <h3>${post.title}</h3>
+          <p>${post.description}</p>
+        </div>
+      `;
+      
+      blogContainer.appendChild(card);
+    });
   }
-];
-
-const container = document.getElementById('blog-container');
-
-blogs.forEach((blog, index) => {
-  const card = document.createElement('article');
-  card.className = 'blog-card';
-  
-  if(index % 2 !== 0) card.classList.add('alt');
-
-  card.innerHTML = `
-    <div class="blog-image">
-      <img src="${blog.image}" alt="${blog.title}">
-    </div>
-    <div class="blog-content">
-      <h3>${blog.title}</h3>
-      <p>${blog.content}</p>
-    </div>
-  `;
-
-  container.appendChild(card);
 });
