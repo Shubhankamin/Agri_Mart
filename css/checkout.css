@@ -1,8 +1,8 @@
 /* ============================================
-   CSS VARIABLES - MATCHING INDEX PAGE THEME
+   CSS VARIABLES - IMPROVED CONTRAST
    ============================================ */
 :root {
-    /* Primary Colors from Index */
+    /* Primary Colors */
     --primary-green: #2d5016;
     --light-green: #4a7c2c;
     --accent-green: #5a8f3a;
@@ -10,14 +10,14 @@
     --light-beige: #faf8f3;
     --dark-beige: #e8d5b7;
     
-    /* Text Colors */
+    /* ✅ FIXED: Improved text color contrast for WCAG AA */
     --text-dark: #2d2d2d;
-    --text-light: #666;
+    --text-light: #595959; /* Changed from #666 to meet 7:1 contrast ratio */
     
     /* UI Colors */
     --border-color: #e0ddd5;
     --border-light: #E5E7EB;
-    --error-red: #EF4444;
+    --error-red: #dc2626; /* Improved contrast */
     --success: #2d5016;
     --card-bg: #FFFFFF;
     
@@ -117,7 +117,7 @@ button:focus-visible {
 }
 
 /* ============================================
-   NAVIGATION - FROM INDEX PAGE
+   NAVIGATION
    ============================================ */
 .navbar {
     background-color: #fff;
@@ -404,6 +404,15 @@ button:focus-visible {
     padding: 30px clamp(15px, 3vw, 20px);
 }
 
+/* ✅ FIXED: Added styling for H1 page title */
+.page-title {
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 700;
+    color: var(--primary-green);
+    margin-bottom: 30px;
+    font-family: "Playfair Display", serif;
+}
+
 .checkout-content {
     display: flex;
     gap: 30px;
@@ -478,14 +487,19 @@ button:focus-visible {
     margin-bottom: 20px;
 }
 
+/* ✅ FIXED: Native fieldset for addresses */
 .saved-addresses {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    border: none;
+    padding: 0;
 }
 
+/* ✅ FIXED: Address card as label for native radio */
 .address-card {
+    display: block;
     border: 2px solid var(--border-color);
     border-radius: var(--radius);
     padding: 18px;
@@ -495,20 +509,30 @@ button:focus-visible {
     background: white;
 }
 
+/* ✅ FIXED: Hide native radio visually but keep it accessible */
+.address-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* ✅ FIXED: Use :has() for modern browsers or JavaScript fallback */
+.address-card:has(input[type="radio"]:checked),
+.address-card.selected {
+    border-color: var(--primary-green);
+    background-color: rgba(45, 80, 22, 0.05);
+}
+
+.address-card:has(input[type="radio"]:focus-visible),
+.address-card:focus-within {
+    outline: 3px solid var(--primary-green);
+    outline-offset: 2px;
+}
+
 .address-card:hover {
     border-color: var(--primary-green);
     box-shadow: 0 2px 8px rgba(45, 80, 22, 0.1);
-}
-
-.address-card:focus-visible {
-    border-color: var(--primary-green);
-    box-shadow: 0 0 0 4px rgba(45, 80, 22, 0.2);
-}
-
-.address-card.selected,
-.address-card[aria-checked="true"] {
-    border-color: var(--primary-green);
-    background-color: rgba(45, 80, 22, 0.05);
 }
 
 .address-card-header {
@@ -688,8 +712,11 @@ button:focus-visible {
     color: var(--text-dark);
 }
 
+/* ✅ FIXED: Cart items as proper list */
 .cart-items {
     margin-bottom: 25px;
+    list-style: none;
+    padding: 0;
 }
 
 .cart-item {
@@ -985,7 +1012,7 @@ button:focus-visible {
 .form-group input.error:focus,
 .form-group select.error:focus,
 .form-group textarea.error:focus {
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
 .error-message {
@@ -1648,7 +1675,7 @@ button:focus-visible {
 }
 
 /* ============================================
-   FOOTER - FROM INDEX PAGE
+   FOOTER
    ============================================ */
 .footer {
     background-color: var(--primary-green);
@@ -1685,7 +1712,8 @@ button:focus-visible {
 .footer-description {
     font-size: 14px;
     line-height: 1.6;
-    opacity: 0.9;
+    /* ✅ FIXED: Removed opacity for better contrast */
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .footer-heading {
@@ -1708,24 +1736,26 @@ button:focus-visible {
     color: #fff;
     text-decoration: none;
     font-size: 14px;
-    opacity: 0.85;
+    /* ✅ FIXED: Better contrast on footer links */
+    opacity: 0.95;
     transition: var(--transition);
 }
 
 .footer-links a:hover {
     opacity: 1;
     padding-left: 4px;
+    text-decoration: underline;
 }
 
 .footer-contact li {
     font-size: 14px;
-    opacity: 0.85;
+    opacity: 0.95;
 }
 
 .footer-contact a {
     color: #fff;
     text-decoration: none;
-    opacity: 0.85;
+    opacity: 0.95;
     transition: var(--transition);
 }
 
@@ -1739,7 +1769,7 @@ button:focus-visible {
     padding-top: 24px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     font-size: 14px;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 /* ============================================
@@ -1850,6 +1880,7 @@ button:focus-visible {
         width: 320px;
         max-width: 85%;
         height: 100vh;
+        height: 100dvh;
         background-color: #fff;
         flex-direction: column;
         align-items: stretch;
@@ -1948,7 +1979,7 @@ button:focus-visible {
         transform: rotate(90deg);
     }
 
-    /* Navigation Links - PROPERLY ALIGNED */
+    /* Navigation Links */
     .nav-link {
         padding: 16px 24px;
         font-size: 15px;
@@ -1973,7 +2004,7 @@ button:focus-visible {
         color: var(--primary-green);
     }
 
-    /* Dynamic Links in Mobile - FIXED ALIGNMENT */
+    /* Dynamic Links in Mobile */
     .dynamic-links {
         flex-direction: column;
         width: 100%;
@@ -1988,7 +2019,7 @@ button:focus-visible {
         padding: 16px 24px;
     }
 
-    /* Dropdown in Mobile - FIXED */
+    /* Dropdown in Mobile */
     .dropdown {
         width: 100%;
         margin: 0;
@@ -2087,7 +2118,7 @@ button:focus-visible {
         margin: 0;
     }
 
-    /* Footer - IMPROVED RESPONSIVENESS */
+    /* Footer */
     .footer-content {
         grid-template-columns: 1fr;
         gap: 32px;
@@ -2178,9 +2209,15 @@ button:focus-visible {
     }
 }
 
+/* ✅ FIXED: Optimizations for very small screens (320px-375px) */
 @media (max-width: 480px) {
     .checkout-container {
         padding: 20px 15px;
+    }
+    
+    .page-title {
+        font-size: 24px;
+        margin-bottom: 20px;
     }
     
     .address-section, 
@@ -2240,6 +2277,59 @@ button:focus-visible {
 
     .container {
         padding: 0 16px;
+    }
+}
+
+/* ✅ ADDED: Extra small screens optimization */
+@media (max-width: 360px) {
+    .edit-address-content,
+    .order-content {
+        width: 100%;
+        border-radius: 0;
+    }
+    
+    .edit-address-body,
+    .order-body {
+        padding: 15px 10px;
+    }
+    
+    .card-header,
+    .edit-address-header,
+    .order-header {
+        padding: 12px 15px;
+    }
+    
+    .address-card {
+        padding: 12px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+}
+
+/* ✅ ADDED: Landscape mode optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+    .nav-links::before {
+        height: 60px;
+    }
+    
+    .mobile-profile-section {
+        padding: 10px 20px;
+        position: relative;
+    }
+    
+    .edit-address-content,
+    .order-content {
+        max-height: calc(100vh - 20px);
+    }
+    
+    .edit-address-body,
+    .order-body {
+        padding: 15px 20px;
     }
 }
 
