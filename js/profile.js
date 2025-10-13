@@ -488,28 +488,34 @@ function attachAddressHandler() {
 function renderOrders() {
   const ordersContainer = document.createElement("div");
   ordersContainer.id = "ordersContainer";
-  ordersContainer.style.display = "grid";
-  ordersContainer.style.gridTemplateColumns =
-    "repeat(auto-fit, minmax(300px, 1fr))";
-  ordersContainer.style.gap = "20px";
   ordersContainer.style.marginTop = "20px";
 
-  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const orders = JSON.parse(localStorage.getItem("orders")) || []
+
+  console.log(orders, "all orders");
 
   let userOrders = [];
 
   if (user.role === "farmer") {
-    // Show orders where this farmer sold products
     userOrders = orders.filter((o) => o.farmers.includes(currentUser.email));
-    console.log(userOrders, "order");
   } else {
-    // Regular customer, show orders placed by this user
     userOrders = orders.filter((o) => o.userEmail === currentUser.email);
-    console.log(userOrders, "order");
   }
 
+  console.log(userOrders, "user orders");
+
   if (userOrders.length === 0) {
-    ordersContainer.innerHTML = "<p>No orders found.</p>";
+    ordersContainer.innerHTML = `
+      <div style="text-align:center; padding:40px; color:#999;">
+        <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <h3>No Orders Yet</h3>
+        <p>Looks like you haven't placed any orders yet.</p>
+      </div>
+    `;
   } else {
     ordersContainer.innerHTML = userOrders
       .map((o) => {
@@ -517,48 +523,125 @@ function renderOrders() {
           user.role === "farmer"
             ? o.items.filter((i) => i.farmerEmail === currentUser.email)
             : o.items;
+        console.log(items, "order imahe");
+
+        // Status indicator
+        const statusColor = 
+          o.status === "Delivered" ? "#388e3c" : 
+          o.status === "Shipped" ? "#1976d2" : 
+          o.status === "Processing" ? "#f57c00" : "#666";
 
         return `
         <div style="
-          border:1px solid #eee;
-          border-radius:12px;
-          padding:15px;
+          border:1px solid #e0e0e0;
+          border-radius:8px;
           background:#fff;
-          box-shadow:0 2px 6px rgba(0,0,0,0.05);
-          margin-bottom:15px;
+          margin-bottom:16px;
+          overflow:hidden;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         ">
-          <h4 style="margin:0 0 10px 0;">Order #${o.id}</h4>
-          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Date: ${
-            o.date
-          }</p>
-          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Status: <strong>${
-            o.status
-          }</strong></p>
-          <p style="margin:0 0 10px 0; font-size:14px; color:#555;">Total: ₹${
-            o.total
-          }</p>
-          <div>
-            <strong>Products:</strong>
-            <ul style="margin:5px 0 0 0; padding:0; list-style-type:none;">
-              ${items
-                .map(
-                  (i) =>
-                    `<li style="display:flex; align-items:center; margin-bottom:10px;">
-                      <img src="${i.image}" alt="${
-                      i.title
-                    }" style="width:60px; height:60px; object-fit:cover; border-radius:6px; margin-right:10px;">
-                      <div>
-                        <div>${i.title}</div>
-                        <div style="font-size:13px; color:#555;">Quantity: ${
-                          i.quantity
-                        }, Price: ₹${i.price.toFixed(2)}, Subtotal: ₹${(
-                      i.price * i.quantity
-                    ).toFixed(2)}</div>
-                      </div>
-                    </li>`
-                )
-                .join("")}
-            </ul>
+          <!-- Order Header -->
+          <div style="
+            background:#f8f8f8;
+            padding:12px 16px;
+            border-bottom:1px solid #e0e0e0;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:10px;
+          ">
+            <div>
+              <div style="font-size:12px; color:#666;">ORDER PLACED</div>
+              <div style="font-size:13px; font-weight:500; color:#222;">${o.date}</div>
+            </div>
+            <div>
+              <div style="font-size:12px; color:#666;">TOTAL</div>
+              <div style="font-size:13px; font-weight:500; color:#222;">₹${o.total.toFixed(2)}</div>
+            </div>
+            <div>
+              <div style="font-size:12px; color:#666;">ORDER ID</div>
+              <div style="font-size:13px; font-weight:500; color:#222;">#${o.id}</div>
+            </div>
+          </div>
+
+          <!-- Order Status -->
+          <div style="
+            padding:12px 16px;
+            background:#fff;
+            border-bottom:1px solid #f0f0f0;
+          ">
+            <div style="
+              display:inline-block;
+              padding:4px 12px;
+              background:${statusColor};
+              color:#fff;
+              border-radius:4px;
+              font-size:12px;
+              font-weight:600;
+              text-transform:uppercase;
+            ">
+              ${o.status}
+            </div>
+          </div>
+
+          <!-- Order Items -->
+          <div style="padding:16px;">
+         ${items.map((item) => `
+  <div style="
+    display:flex;
+    gap:16px;
+    padding-bottom:16px;
+    margin-bottom:16px;
+    border-bottom:1px solid #f0f0f0;
+  ">
+    <!-- Product Image -->
+    <div style="flex-shrink:0;">
+      <img 
+        src="${item.image && item.image.length ? item.image[0].src : '/images/no-image.jpg'}" 
+        alt="${item.title}" 
+        style="
+          width:100px;
+          height:100px;
+          object-fit:cover;
+          border-radius:6px;
+          border:1px solid #e0e0e0;
+        "
+      />
+    </div>
+
+    <!-- Product Details -->
+    <div style="flex:1;">
+      <h4 style="
+        margin:0 0 8px 0;
+        font-size:16px;
+        color:#222;
+        font-weight:500;
+      ">${item.title}</h4>
+      
+      <div style="
+        display:flex;
+        gap:20px;
+        margin-bottom:8px;
+        flex-wrap:wrap;
+      ">
+        <div>
+          <span style="color:#666; font-size:13px;">Quantity:</span>
+          <span style="color:#222; font-weight:500; font-size:13px;"> ${item.quantity}</span>
+        </div>
+        <div>
+          <span style="color:#666; font-size:13px;">Price:</span>
+          <span style="color:#222; font-weight:500; font-size:13px;"> ₹${item.price.toFixed(2)}</span>
+        </div>
+        <div>
+          <span style="color:#666; font-size:13px;">Subtotal:</span>
+          <span style="color:#00b67a; font-weight:600; font-size:14px;"> ₹${(item.price * item.quantity).toFixed(2)}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+`).join('')}
+
           </div>
         </div>
       `;
