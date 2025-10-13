@@ -3,55 +3,145 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout - AgriMart | Fresh from Farm to Table</title>
+    <title>Checkout - AgriMart | Fresh Organic Produce</title>
+    
+    <!-- Same fonts as index page -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
       rel="stylesheet"
     />
+    
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="/css/checkout.css" />
+    <link rel="stylesheet" href="checkout.css" />
   </head>
   <body>
     <!-- Skip to main content link for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Header -->
-    <header class="main-header" role="banner">
-      <div class="header-container">
-        <div class="logo-section">
-          <div class="logo">
-            <i class="fas fa-seedling" aria-hidden="true"></i>
-            <h1>AgriMart</h1>
-          </div>
-          <p class="tagline">Fresh from farm to table</p>
-        </div>
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
-        <nav class="nav-links" aria-label="Main navigation">
-          <a href="index.html" class="nav-link">Home</a>
-          <a href="products.html" class="nav-link">Products</a>
-          <a href="#" class="nav-link">Farmers</a>
-          <a href="#" class="nav-link">Deals</a>
-          <a href="checkout.html" class="nav-link active" aria-current="page"
-            >Checkout</a
-          >
-        </nav>
-
-        <div class="user-actions">
-          <a href="cart.html" class="cart-icon" aria-label="Shopping cart">
-            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
-            <span class="cart-count" id="header-cart-count">0</span>
+    <!-- Navigation - Same as Index Page -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="container">
+        <div class="nav-content">
+          <a href="/index.html" class="logo" aria-label="AgriMart Home">
+            <span class="logo-icon">🌾</span>
+            <span class="logo-text">AgriMart</span>
           </a>
-          <button class="user-profile" aria-label="User profile">
-            <i class="fas fa-user-circle" aria-hidden="true"></i>
+
+          <div class="nav-links" id="navLinks">
+            <!-- Mobile Close Button -->
+          
+
+            <!-- Mobile Profile Section -->
+            <div class="mobile-profile-section">
+              <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
+              <div class="mobile-profile-info">
+                <h3 id="mobileUserName">Guest User</h3>
+                <p id="mobileUserEmail">guest@agrimart.com</p>
+              </div>
+            </div>
+
+            <a href="/index.html" class="nav-link">Home</a>
+            
+            <div class="dynamic-links"></div>
+
+            <div class="dropdown">
+              <button
+                class="nav-link dropdown-toggle"
+                aria-haspopup="true"
+                aria-expanded="false"
+                id="categoryDropdown"
+              >
+                Categories
+                <svg
+                  class="dropdown-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="dropdown-menu" role="menu" aria-labelledby="categoryDropdown">
+                <a href="#" class="dropdown-item" role="menuitem" data-filter="all">All Products</a>
+                <a href="#" class="dropdown-item" role="menuitem" data-filter="fruits">Fruits</a>
+                <a href="#" class="dropdown-item" role="menuitem" data-filter="vegetables">Vegetables</a>
+                <a href="#" class="dropdown-item" role="menuitem" data-filter="cereals">Cereals</a>
+              </div>
+            </div>
+
+            <a href="contact.html" class="nav-link">Contact</a>
+
+            <!-- Mobile Cart Section -->
+            <div class="mobile-cart-section">
+              <button class="mobile-cart-btn" onclick="window.location.href='/cart.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                View Cart
+                <span class="cart-count" id="mobileCartCount">0</span>
+              </button>
+            </div>
+
+            <!-- Mobile Menu Footer -->
+            <div class="mobile-menu-footer">
+              <p>© 2025 AgriMart. All rights reserved.</p>
+            </div>
+          </div>
+
+          <!-- Desktop Cart & Profile -->
+          <button class="cart-button" aria-label="Shopping cart" onclick="window.location.href='/cart.html'">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-count" id="cartCount">0</span>
           </button>
+
+          <a href="/profile.html" class="profile-link" aria-label="Profile page">
+            <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
+          </a>
+
+         
+
+          <button
+            class="mobile-menu-toggle"
+            id="mobileMenuToggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
         </div>
       </div>
-    </header>
+    </nav>
 
     <!-- Main Content -->
     <main class="checkout-container" id="main-content">
@@ -67,7 +157,6 @@
         <!-- Left Column - Delivery Information -->
         <div class="delivery-column">
           <section class="delivery-card" aria-labelledby="delivery-heading">
-            <!-- FIX #4: Removed edit button from header -->
             <div class="card-header">
               <h2 id="delivery-heading">
                 <i class="fas fa-truck" aria-hidden="true"></i> Delivery Address
@@ -138,7 +227,6 @@
                 </div>
               </fieldset>
 
-              <!-- FIX #5: Container to show selected delivery address -->
               <div class="same-address-display" id="same-address-display">
                 <div class="same-address-message">
                   <i class="fas fa-check-circle" aria-hidden="true"></i>
@@ -217,7 +305,6 @@
                 <span>Delivery Fee</span>
                 <span>FREE</span>
               </div>
-              <!-- FIX #9: Removed discount section -->
               <div class="price-line">
                 <span>Taxes & Charges (5%)</span>
                 <span id="summary-tax">₹0.00</span>
@@ -227,8 +314,6 @@
                 <span id="summary-total">₹0.00</span>
               </div>
             </div>
-
-            <!-- FIX #9: Removed savings info -->
 
             <button class="pay-now-btn" id="pay-now-btn" type="button">
               <i class="fab fa-google-pay" aria-hidden="true"></i>
@@ -265,7 +350,6 @@
           </button>
         </div>
         <div class="edit-address-body">
-          <!-- FIX #7: Added validation attributes -->
           <form id="edit-address-form" novalidate>
             <div class="form-row">
               <div class="form-group">
@@ -484,7 +568,6 @@
           </button>
         </div>
         <div class="edit-address-body">
-          <!-- FIX #7: Added validation attributes -->
           <form id="billing-address-form" novalidate>
             <div class="form-row">
               <div class="form-group">
@@ -848,50 +931,68 @@
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="main-footer" role="contentinfo">
-      <div class="footer-container">
-        <div class="footer-section">
-          <h3>AgriMart</h3>
-          <p>Fresh from farm to table</p>
-          <div class="social-links">
-            <a href="#" aria-label="Facebook"
-              ><i class="fab fa-facebook" aria-hidden="true"></i
-            ></a>
-            <a href="#" aria-label="Twitter"
-              ><i class="fab fa-twitter" aria-hidden="true"></i
-            ></a>
-            <a href="#" aria-label="Instagram"
-              ><i class="fab fa-instagram" aria-hidden="true"></i
-            ></a>
+    <!-- Footer - Same as Index Page -->
+    <footer class="footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-logo">
+              <span class="logo-icon" aria-hidden="true">🌾</span>
+              <h3 class="footer-title">AgriMart</h3>
+            </div>
+            <p class="footer-description">
+              Your trusted source for fresh, organic produce. Farm to table,
+              quality to your doorstep.
+            </p>
           </div>
+
+          <nav class="footer-section" aria-label="Footer navigation">
+            <h4 class="footer-heading">Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">Products</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="about_us.html">About Us</a></li>
+              <li><a href="terms_conditions.html">Terms & Conditions</a></li>
+              <li><a href="policy.html">Privacy Policy</a></li>
+            </ul>
+          </nav>
+
+          <nav class="footer-section" aria-label="Product categories">
+            <h4 class="footer-heading">Categories</h4>
+            <ul class="footer-links">
+              <li><a href="products.html?category=fruits" data-category="fruits">Fruits</a></li>
+              <li><a href="products.html?category=vegetables" data-category="vegetables">Vegetables</a></li>
+              <li><a href="products.html?category=cereals" data-category="cereals">Cereals</a></li>
+            </ul>
+          </nav>
+
+          <address class="footer-section">
+            <h4 class="footer-heading">Contact Info</h4>
+            <ul class="footer-contact">
+              <li>
+                <a href="mailto:agrimart@gmail.com" aria-label="Email AgriMart">
+                  Email: agrimart@gmail.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+919876543215" aria-label="Call AgriMart">
+                  Phone: +91 9876543215
+                </a>
+              </li>
+              <li>1-23 Farm Road, Green Valley, Bengaluru-56747</li>
+            </ul>
+          </address>
         </div>
-        <nav class="footer-section" aria-labelledby="customer-service-heading">
-          <h4 id="customer-service-heading">Customer Service</h4>
-          <a href="#">Help Center</a>
-          <a href="#">Returns & Refunds</a>
-          <a href="#">Shipping Policy</a>
-          <a href="#">Contact Us</a>
-        </nav>
-        <nav class="footer-section" aria-labelledby="about-heading">
-          <h4 id="about-heading">About AgriMart</h4>
-          <a href="#">About Us</a>
-          <a href="#">Careers</a>
-          <a href="#">Terms & Conditions</a>
-          <a href="#">Privacy Policy</a>
-        </nav>
-        <nav class="footer-section" aria-labelledby="farmers-heading">
-          <h4 id="farmers-heading">Farmers</h4>
-          <a href="#">Sell on AgriMart</a>
-          <a href="#">Farmer Support</a>
-          <a href="#">Training & Resources</a>
-        </nav>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2023 AgriMart. All rights reserved.</p>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 AgriMart. All rights reserved.</p>
+        </div>
       </div>
     </footer>
 
-    <script src="/js/checkout.js"></script>
+    <script src="data.js"></script>
+    <script src="index.js"></script>
+    <script src="checkout.js"></script>
   </body>
 </html>

@@ -1,4 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // ⭐ Get current user - BUT DON'T BLOCK GUEST USERS
+  const currentUser = localStorage.getItem("currentUser");
+  const user = currentUser ? JSON.parse(currentUser) : null;
+
+  // ⭐ Setup Mobile Menu & Dynamic Links - SAME AS INDEX PAGE
+  setupMobileMenu();
+  setupDynamicLinks();
+  setupDropdown();
+
+  // ⭐ NO LOGIN CHECK HERE - GUESTS CAN VIEW CART
+  // Show guest banner if not logged in
+  if (!user) {
+    showGuestBanner();
+  }
+
   // Cart data - initially empty; will load from localStorage
   const cartItems = [];
 
@@ -65,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       saveCartToStorage();
-      // ✅ Add these lines
       renderCartItems();
       updateCartSummary();
     }
@@ -83,11 +97,39 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Close modal on backdrop click
-  confirmationModal.addEventListener("click", function (e) {
-    if (e.target === confirmationModal) {
-      hideConfirmationModal();
-    }
-  });
+  if (confirmationModal) {
+    confirmationModal.addEventListener("click", function (e) {
+      if (e.target === confirmationModal) {
+        hideConfirmationModal();
+      }
+    });
+  }
+
+  // ⭐ Show Guest Banner
+  function showGuestBanner() {
+    const cartContainer = document.querySelector(".container");
+    if (!cartContainer) return;
+
+    const banner = document.createElement("div");
+    banner.className = "guest-banner";
+
+    banner.innerHTML = `
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f0ad4e" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <p>
+        👋 You're shopping as a <strong>guest</strong>. 
+        <a href="/login.html">Login</a> 
+        or 
+        <a href="/signup.html">Sign up</a> 
+        to track your orders and get exclusive deals!
+      </p>
+    `;
+
+    cartContainer.insertBefore(banner, cartContainer.firstChild);
+  }
 
   // Load cart from localStorage
   function loadCartFromStorage() {
@@ -107,22 +149,34 @@ document.addEventListener("DOMContentLoaded", function () {
   function saveCartToStorage() {
     try {
       localStorage.setItem("agrimart_cart", JSON.stringify(cartItems));
+      updateNavbarCartCount();
     } catch (e) {
       console.error("Error saving cart to storage:", e);
     }
+  }
+
+  // ⭐ Update navbar cart count
+  function updateNavbarCartCount() {
+    const navCartCount = document.getElementById("cart-count");
+    const mobileCartCount = document.getElementById("mobileCartCount");
+    
+    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    
+    if (navCartCount) navCartCount.textContent = totalItems;
+    if (mobileCartCount) mobileCartCount.textContent = totalItems;
   }
 
   // Render cart items
   function renderCartItems() {
     if (cartItems.length === 0) {
       cartItemsContainer.style.display = "none";
-      orderSummary.style.display = "none";
+      if (orderSummary) orderSummary.style.display = "none";
       emptyCartMessage.style.display = "block";
       return;
     }
 
     cartItemsContainer.style.display = "block";
-    orderSummary.style.display = "block";
+    if (orderSummary) orderSummary.style.display = "block";
     emptyCartMessage.style.display = "none";
 
     cartItemsContainer.innerHTML = `
@@ -279,13 +333,15 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showConfirmationModal() {
+    if (!confirmationModal) return;
     focusedElementBeforeModal = document.activeElement;
     confirmationModal.style.display = "flex";
-    setTimeout(() => confirmRemoveBtn.focus(), 100);
+    setTimeout(() => confirmRemoveBtn && confirmRemoveBtn.focus(), 100);
     trapFocus(confirmationModal);
   }
 
   function hideConfirmationModal() {
+    if (!confirmationModal) return;
     confirmationModal.style.display = "none";
     itemToRemove = null;
     if (focusedElementBeforeModal) focusedElementBeforeModal.focus();
@@ -315,22 +371,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  confirmRemoveBtn.addEventListener("click", function () {
-    if (itemToRemove) {
-      const itemIndex = cartItems.findIndex((item) => item.id === itemToRemove);
-      if (itemIndex !== -1) {
-        const itemName = cartItems[itemIndex].title;
-        cartItems.splice(itemIndex, 1);
-        saveCartToStorage();
-        renderCartItems();
-        updateCartSummary();
-        announceToScreenReader(`${itemName} removed from cart`);
+  if (confirmRemoveBtn) {
+    confirmRemoveBtn.addEventListener("click", function () {
+      if (itemToRemove) {
+        const itemIndex = cartItems.findIndex(
+          (item) => item.id === itemToRemove
+        );
+        if (itemIndex !== -1) {
+          const itemName = cartItems[itemIndex].title;
+          cartItems.splice(itemIndex, 1);
+          saveCartToStorage();
+          renderCartItems();
+          updateCartSummary();
+          announceToScreenReader(`${itemName} removed from cart`);
+        }
       }
-    }
-    hideConfirmationModal();
-  });
+      hideConfirmationModal();
+    });
+  }
 
-  cancelRemoveBtn.addEventListener("click", hideConfirmationModal);
+  if (cancelRemoveBtn) {
+    cancelRemoveBtn.addEventListener("click", hideConfirmationModal);
+  }
 
   function updateCartSummary() {
     let subtotal = 0;
@@ -343,14 +405,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const tax = subtotal * 0.05;
     const total = subtotal + tax;
 
-    subtotalElement.textContent = `₹${subtotal.toFixed(2)}`;
-    taxElement.textContent = `₹${tax.toFixed(2)}`;
-    totalElement.textContent = `₹${total.toFixed(2)}`;
-    cartCount.textContent = itemCount;
+    if (subtotalElement) subtotalElement.textContent = `₹${subtotal.toFixed(2)}`;
+    if (taxElement) taxElement.textContent = `₹${tax.toFixed(2)}`;
+    if (totalElement) totalElement.textContent = `₹${total.toFixed(2)}`;
+    if (cartCount) cartCount.textContent = itemCount;
 
     const itemText = itemCount === 1 ? "item" : "items";
-    itemsCount.textContent = `${itemCount} ${itemText} in your cart`;
-    cartCount.setAttribute("aria-label", `${itemCount} ${itemText} in cart`);
+    if (itemsCount) itemsCount.textContent = `${itemCount} ${itemText} in your cart`;
+    if (cartCount) cartCount.setAttribute("aria-label", `${itemCount} ${itemText} in cart`);
   }
 
   function announceToScreenReader(message) {
@@ -362,43 +424,195 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  checkoutBtn.addEventListener("click", function (e) {
-    if (cartItems.length === 0) {
-      e.preventDefault();
-      announceToScreenReader(
-        "Your cart is empty. Please add items before checkout."
-      );
-      alert(
-        "Your cart is empty. Please add items before proceeding to checkout."
-      );
-      return;
+  // ⭐ CHECKOUT BUTTON - ONLY HERE WE CHECK LOGIN
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", function (e) {
+      // Check if cart is empty
+      if (cartItems.length === 0) {
+        e.preventDefault();
+        announceToScreenReader(
+          "Your cart is empty. Please add items before checkout."
+        );
+        alert(
+          "Your cart is empty. Please add items before proceeding to checkout."
+        );
+        return;
+      }
+
+      // ⭐ CHECK IF USER IS LOGGED IN
+      if (!user) {
+        e.preventDefault();
+        
+        const shouldLogin = confirm(
+          "Please login to complete your purchase.\n\nWould you like to login now?"
+        );
+
+        if (shouldLogin) {
+          // Save redirect URL so user comes back to cart after login
+          localStorage.setItem("redirectAfterLogin", "/cart.html");
+          window.location.href = "/login.html";
+        }
+        return;
+      }
+
+      // User is logged in - proceed to checkout
+      try {
+        localStorage.setItem("agrimart_cart", JSON.stringify(cartItems));
+
+        let subtotal = 0;
+        cartItems.forEach((item) => {
+          subtotal += item.price * item.quantity;
+        });
+
+        const orderSummary = {
+          subtotal: subtotal,
+          tax: subtotal * 0.05,
+          total: subtotal + subtotal * 0.05,
+          itemCount: cartItems.reduce((sum, item) => sum + item.quantity, 0),
+        };
+
+        localStorage.setItem(
+          "agrimart_order_summary",
+          JSON.stringify(orderSummary)
+        );
+
+        announceToScreenReader("Proceeding to checkout");
+        
+        // Allow navigation to checkout page
+        window.location.href = "/checkout.html";
+      } catch (error) {
+        console.error("Error saving cart data:", error);
+        alert("There was an error. Please try again.");
+        e.preventDefault();
+      }
+    });
+  }
+
+  // ===== MOBILE MENU SETUP - SAME AS INDEX PAGE =====
+  function setupMobileMenu() {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+
+    if (!mobileMenuToggle || !navLinks) return;
+
+    function toggleMenu() {
+      const isActive = navLinks.classList.toggle('active');
+      mobileMenuToggle.classList.toggle('active');
+      mobileOverlay?.classList.toggle('active');
+      document.body.style.overflow = isActive ? 'hidden' : '';
+      mobileMenuToggle.setAttribute('aria-expanded', isActive);
     }
 
-    try {
-      localStorage.setItem("agrimart_cart", JSON.stringify(cartItems));
+    function closeMenu() {
+      navLinks.classList.remove('active');
+      mobileMenuToggle.classList.remove('active');
+      mobileOverlay?.classList.remove('active');
+      document.body.style.overflow = '';
+      mobileMenuToggle.setAttribute('aria-expanded', 'false');
+    }
 
-      let subtotal = 0;
-      cartItems.forEach((item) => {
-        subtotal += item.price * item.quantity;
+    mobileMenuToggle.addEventListener('click', toggleMenu);
+    mobileOverlay?.addEventListener('click', closeMenu);
+    mobileCloseBtn?.addEventListener('click', closeMenu);
+
+    navLinks.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    const mobileProfile = document.querySelector('.mobile-profile-section');
+    if (mobileProfile) {
+      mobileProfile.style.cursor = 'pointer';
+      mobileProfile.addEventListener('click', () => {
+        closeMenu();
+        if (!user) {
+          window.location.href = '/login.html';
+        } else {
+          window.location.href = '/profile.html';
+        }
+      });
+    }
+
+    // Update user info
+    if (user) {
+      const mobileUserName = document.getElementById('mobileUserName');
+      const mobileUserEmail = document.getElementById('mobileUserEmail');
+      if (mobileUserName) mobileUserName.textContent = user.name || 'User';
+      if (mobileUserEmail) mobileUserEmail.textContent = user.email || '';
+    } else {
+      const mobileUserName = document.getElementById('mobileUserName');
+      const mobileUserEmail = document.getElementById('mobileUserEmail');
+      if (mobileUserName) mobileUserName.textContent = 'Guest User';
+      if (mobileUserEmail) mobileUserEmail.textContent = 'Tap to login';
+    }
+
+    // Sync cart counts
+    const mobileCartCount = document.getElementById('mobileCartCount');
+    if (mobileCartCount) {
+      const observer = new MutationObserver(() => {
+        const cartCount = document.getElementById('cart-count');
+        if (cartCount) mobileCartCount.textContent = cartCount.textContent;
+      });
+      const cartCount = document.getElementById('cart-count');
+      if (cartCount) {
+        observer.observe(cartCount, { childList: true, characterData: true, subtree: true });
+        mobileCartCount.textContent = cartCount.textContent;
+      }
+    }
+  }
+
+  // ===== SETUP DYNAMIC LINKS - SAME AS INDEX PAGE =====
+  function setupDynamicLinks() {
+    const container = document.querySelector(".dynamic-links");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    const productsLink = document.createElement("a");
+    productsLink.href = "/products.html";
+    productsLink.className = "nav-link";
+    productsLink.textContent = "Products";
+    container.appendChild(productsLink);
+
+    if (user && user.role === "farmer") {
+      const sellLink = document.createElement("a");
+      sellLink.href = "/sell.html";
+      sellLink.className = "nav-link";
+      sellLink.textContent = "Sell";
+      container.appendChild(sellLink);
+    }
+  }
+
+  // ===== DROPDOWN FUNCTIONALITY =====
+  function setupDropdown() {
+    const dropdownToggle = document.querySelector(".dropdown-toggle");
+    const dropdownMenu = document.querySelector(".dropdown-menu");
+
+    if (dropdownToggle && dropdownMenu) {
+      dropdownToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isExpanded = dropdownToggle.getAttribute("aria-expanded") === "true";
+        dropdownToggle.setAttribute("aria-expanded", !isExpanded);
+        dropdownMenu.classList.toggle("show");
       });
 
-      const orderSummary = {
-        subtotal: subtotal,
-        tax: subtotal * 0.05,
-        total: subtotal + subtotal * 0.05,
-        itemCount: cartItems.reduce((sum, item) => sum + item.quantity, 0),
-      };
+      document.addEventListener("click", () => {
+        dropdownToggle.setAttribute("aria-expanded", "false");
+        dropdownMenu.classList.remove("show");
+      });
 
-      localStorage.setItem(
-        "agrimart_order_summary",
-        JSON.stringify(orderSummary)
-      );
-
-      announceToScreenReader("Proceeding to checkout");
-    } catch (e) {
-      console.error("Error saving cart data:", e);
-      alert("There was an error. Please try again.");
-      e.preventDefault();
+      document.querySelectorAll(".dropdown-item").forEach((item) => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+          const category = item.getAttribute("data-filter");
+          window.location.href = `/products.html?category=${category}`;
+        });
+      });
     }
-  });
+  }
+
+  // Log for debugging
+  console.log("🛒 Cart Page: Guest users can view and manage cart!");
+  console.log("Current user:", user ? user.email : "Guest");
 });
