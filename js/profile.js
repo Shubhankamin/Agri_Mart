@@ -1,21 +1,18 @@
 // ----------------------------
 // Navbar setup (dynamic links + category dropdown)
 // ----------------------------
-function setupNavbar() {
+function setupDynamicLinks() {
   const container = document.querySelector(".dynamic-links");
-  if (!container) return; // stop if navbar container not present
+  if (!container) return;
 
-  // Clear existing links
   container.innerHTML = "";
 
-  // Always show "Products"
   const productsLink = document.createElement("a");
   productsLink.href = "/products.html";
   productsLink.className = "nav-link";
   productsLink.textContent = "Products";
   container.appendChild(productsLink);
 
-  // Show "Sell" only if user is a farmer
   if (user && user.role === "farmer") {
     const sellLink = document.createElement("a");
     sellLink.href = "/sell.html";
@@ -23,39 +20,44 @@ function setupNavbar() {
     sellLink.textContent = "Sell";
     container.appendChild(sellLink);
   }
+}
 
-  // Setup dropdown toggle and items (categories)
+// ===== DROPDOWN FUNCTIONALITY =====
+function setupDropdown() {
+  const dropdown = document.querySelector(".dropdown");
   const dropdownToggle = document.querySelector(".dropdown-toggle");
   const dropdownMenu = document.querySelector(".dropdown-menu");
 
-  if (dropdownToggle && dropdownMenu) {
-    // Toggle dropdown
+  if (dropdown && dropdownToggle && dropdownMenu) {
     dropdownToggle.addEventListener("click", (e) => {
       e.stopPropagation();
-      dropdownMenu.classList.toggle("active");
+
+      const isActive = dropdown.classList.contains("active");
+      dropdown.classList.toggle("active", !isActive);
+      dropdownToggle.setAttribute("aria-expanded", !isActive);
     });
 
-    // Close when clicking outside
+    // Close dropdown when clicking outside
     document.addEventListener("click", () => {
-      dropdownMenu.classList.remove("active");
+      dropdown.classList.remove("active");
+      dropdownToggle.setAttribute("aria-expanded", "false");
     });
 
-    // Handle category clicks → redirect to products page with category
+    // Handle category clicks
     dropdownMenu.querySelectorAll(".dropdown-item").forEach((item) => {
       item.addEventListener("click", (e) => {
         e.preventDefault();
-        const category = item.getAttribute("data-category");
-        window.location.href = `products.html?category=${category}`;
+        const category = item.getAttribute("data-category"); // matches your HTML attribute
+        window.location.href = `/products.html?category=${category}`;
       });
     });
   }
 }
 
-// ----------------------------
-// Call navbar setup safely
-// ----------------------------
+// ===== INITIALIZATION =====
 document.addEventListener("DOMContentLoaded", () => {
-  setupNavbar();
+  setupDynamicLinks();
+  setupDropdown();
 });
 
 const sidebarMenu = document.getElementById("sidebarMenu");
@@ -119,7 +121,6 @@ function loadSection(sectionName) {
     setTimeout(populateUserInfo, 0);
   }
 }
-
 
 // Content sections for each tab
 const contentSections = {
@@ -490,7 +491,7 @@ function renderOrders() {
   ordersContainer.id = "ordersContainer";
   ordersContainer.style.marginTop = "20px";
 
-  const orders = JSON.parse(localStorage.getItem("orders")) || []
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
   console.log(orders, "all orders");
 
@@ -526,10 +527,14 @@ function renderOrders() {
         console.log(items, "order imahe");
 
         // Status indicator
-        const statusColor = 
-          o.status === "Delivered" ? "#388e3c" : 
-          o.status === "Shipped" ? "#1976d2" : 
-          o.status === "Processing" ? "#f57c00" : "#666";
+        const statusColor =
+          o.status === "Delivered"
+            ? "#388e3c"
+            : o.status === "Shipped"
+            ? "#1976d2"
+            : o.status === "Processing"
+            ? "#f57c00"
+            : "#666";
 
         return `
         <div style="
@@ -553,15 +558,21 @@ function renderOrders() {
           ">
             <div>
               <div style="font-size:12px; color:#666;">ORDER PLACED</div>
-              <div style="font-size:13px; font-weight:500; color:#222;">${o.date}</div>
+              <div style="font-size:13px; font-weight:500; color:#222;">${
+                o.date
+              }</div>
             </div>
             <div>
               <div style="font-size:12px; color:#666;">TOTAL</div>
-              <div style="font-size:13px; font-weight:500; color:#222;">₹${o.total.toFixed(2)}</div>
+              <div style="font-size:13px; font-weight:500; color:#222;">₹${o.total.toFixed(
+                2
+              )}</div>
             </div>
             <div>
               <div style="font-size:12px; color:#666;">ORDER ID</div>
-              <div style="font-size:13px; font-weight:500; color:#222;">#${o.id}</div>
+              <div style="font-size:13px; font-weight:500; color:#222;">#${
+                o.id
+              }</div>
             </div>
           </div>
 
@@ -587,7 +598,9 @@ function renderOrders() {
 
           <!-- Order Items -->
           <div style="padding:16px;">
-         ${items.map((item) => `
+         ${items
+           .map(
+             (item) => `
   <div style="
     display:flex;
     gap:16px;
@@ -598,7 +611,11 @@ function renderOrders() {
     <!-- Product Image -->
     <div style="flex-shrink:0;">
       <img 
-        src="${item.image && item.image.length ? item.image[0].src : '/images/no-image.jpg'}" 
+        src="${
+          item.image && item.image.length
+            ? item.image[0].src
+            : "/images/no-image.jpg"
+        }" 
         alt="${item.title}" 
         style="
           width:100px;
@@ -627,20 +644,28 @@ function renderOrders() {
       ">
         <div>
           <span style="color:#666; font-size:13px;">Quantity:</span>
-          <span style="color:#222; font-weight:500; font-size:13px;"> ${item.quantity}</span>
+          <span style="color:#222; font-weight:500; font-size:13px;"> ${
+            item.quantity
+          }</span>
         </div>
         <div>
           <span style="color:#666; font-size:13px;">Price:</span>
-          <span style="color:#222; font-weight:500; font-size:13px;"> ₹${item.price.toFixed(2)}</span>
+          <span style="color:#222; font-weight:500; font-size:13px;"> ₹${item.price.toFixed(
+            2
+          )}</span>
         </div>
         <div>
           <span style="color:#666; font-size:13px;">Subtotal:</span>
-          <span style="color:#00b67a; font-weight:600; font-size:14px;"> ₹${(item.price * item.quantity).toFixed(2)}</span>
+          <span style="color:#00b67a; font-weight:600; font-size:14px;"> ₹${(
+            item.price * item.quantity
+          ).toFixed(2)}</span>
         </div>
       </div>
     </div>
   </div>
-`).join('')}
+`
+           )
+           .join("")}
 
           </div>
         </div>

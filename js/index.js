@@ -121,6 +121,7 @@ function setupEventListeners() {
   if (dropdownToggle && dropdown) {
     dropdownToggle.addEventListener("click", (e) => {
       e.stopPropagation();
+      console.log("Dropdown toggle clicked");
       dropdown.classList.toggle("active");
     });
     document.addEventListener("click", () =>
