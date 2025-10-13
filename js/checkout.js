@@ -19,8 +19,19 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("No user logged in.");
   } else {
     const userEmail = currentUser.email || "";
-    const userName = currentUser.name || "";
-    const phone = currentUser.phone || "";
+const userName = currentUser.name || "";
+const phone = currentUser.phone || "";
+
+// ✅ ADD THESE LINES (after line 23)
+const mobileUserNameEl = document.getElementById("mobileUserName");
+const mobileUserEmailEl = document.getElementById("mobileUserEmail");
+
+if (mobileUserNameEl) {
+  mobileUserNameEl.textContent = userName || "Guest User";
+}
+if (mobileUserEmailEl) {
+  mobileUserEmailEl.textContent = userEmail || "guest@agrimart.com";
+}
 
     // Get all addresses from localStorage
     const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
@@ -28,6 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
       (addr) => addr.email === currentUser.email
     );
 
+
+    
     // Filter addresses by currentUser email
     const userAddresses = addresses.filter((addr) => addr.email === userEmail);
 
