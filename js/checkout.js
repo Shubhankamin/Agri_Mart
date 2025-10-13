@@ -20,13 +20,13 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     const userEmail = currentUser.email || "";
     const userName = currentUser.name || "";
+    const phone = currentUser.phone || "";
 
     // Get all addresses from localStorage
     const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
     savedAddresses = addresses.filter(
       (addr) => addr.email === currentUser.email
     );
-
 
     // Filter addresses by currentUser email
     const userAddresses = addresses.filter((addr) => addr.email === userEmail);
@@ -185,13 +185,18 @@ document.addEventListener("DOMContentLoaded", function () {
     cartItems.forEach((item) => {
       const cartItemElement = document.createElement("article");
       cartItemElement.className = "cart-item";
-
+      const imageSrc =
+        Array.isArray(item.image) && item.image.length > 0
+          ? item.image[0].src
+          : typeof item.image === "string" && item.image.trim() !== ""
+          ? item.image
+          : "assets/default-image.jpg";
       cartItemElement.innerHTML = `
                 <div class="item-image">
-                    <img src="${escapeHtml(item.image)}" alt="${escapeHtml(
-        item.title
-      )}" loading="lazy">
-                </div>
+    <img src="${escapeHtml(imageSrc)}"
+         alt="${escapeHtml(item.title)}"
+         loading="lazy">
+  </div>
                 <div class="item-details">
                     <h3>${escapeHtml(item.title)}</h3>
                     <p class="item-seller">Sold by: Local Farmer</p>
@@ -262,6 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
       billingSavedAddressesContainer.appendChild(addressCard);
     });
   }
+  // <p>${escapeHtml(address.phone)}</p>;
 
   function createAddressCard(address, type, index) {
     const card = document.createElement("div");
@@ -275,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     card.innerHTML = `
         <div class="address-card-header">
-            <div class="address-name">${escapeHtml(address.name)}</div>
+            <div class="address-name">${escapeHtml(address.type)} Address</div>
             <div class="address-type-badge">${typeLabel}</div>
         </div>
         <div class="address-details">
@@ -283,7 +289,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <p>${escapeHtml(address.city)}, ${getStateName(
       address.state
     )} - ${escapeHtml(address.pincode)}</p>
-            <p>${escapeHtml(address.phone)}</p>
             ${
               address.landmark
                 ? `<p>Landmark: ${escapeHtml(address.landmark)}</p>`
@@ -393,7 +398,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     selectedDeliveryPreview.innerHTML = `
-            <p><strong>${escapeHtml(selectedShippingAddress.name)}</strong></p>
+            <p><strong>${escapeHtml(selectedShippingAddress.type)}</strong></p>
             <p>${escapeHtml(selectedShippingAddress.address)}</p>
             <p>${escapeHtml(selectedShippingAddress.city)}, ${getStateName(
       selectedShippingAddress.state
