@@ -1,3 +1,4 @@
+
 // Cart state
 let cart = [];
 

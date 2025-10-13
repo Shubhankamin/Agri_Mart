@@ -1,244 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contact AgriMart for inquiries about fresh organic produce">
-    <title>Contact Us - AgriMart</title>
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact AgriMart for inquiries about fresh organic produce" />
+  <title>Contact Us - AgriMart</title>
+
+  <link rel="stylesheet" href="index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+
 </head>
+
 <body>
-    <!-- Navigation -->
-    <nav class="navbar" role="navigation" aria-label="Main navigation">
-        <div class="container">
-            <div class="nav-content">
-                <a href="index.html" class="logo" aria-label="AgriMart Home">
-                    <span class="logo-icon">🌾</span>
-                    <span class="logo-text">AgriMart</span>
-                </a>
-                
-                <div class="nav-links">
-                    <a href="index.html" class="nav-link">Home</a>
-                    
-                    <a href="products.html" class="nav-link">Products</a>
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav-content">
+        <a href="index.html" class="logo" aria-label="AgriMart Home">
+          <span class="logo-icon">🌾</span>
+          <span class="logo-text">AgriMart</span>
+        </a>
 
-                    
-                    <a href="contact.html" class="nav-link active" aria-current="page">Contact</a>
-                    
-                    <button class="cart-button" aria-label="Shopping cart" onclick="window.location.href='cart.html'"">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="9" cy="21" r="1"></circle>
-                            <circle cx="20" cy="21" r="1"></circle>
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                        </svg>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </button>
-                </div>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="products.html" class="nav-link">Products</a>
+          <a href="contact.html" class="nav-link active" aria-current="page">Contact</a>
 
-                <a href="/login.html" class="profile-link" aria-label="Profile page">
-                     <img src="\Images\Profile.png" alt="Profile" class="profile-icon">
-                    </a>
-                
-                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+          <button
+            class="cart-button"
+            aria-label="Shopping cart"
+            onclick="window.location.href='cart.html'"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path
+                d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+              ></path>
+            </svg>
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
         </div>
-    </nav>
 
-    <!-- Contact Hero -->
-    <section class="contact-hero">
-        <div class="container">
-            <h1 class="page-title">Get In Touch</h1>
-            <p class="page-subtitle">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-        </div>
-    </section>
+        <a href="/login.html" class="profile-link" aria-label="Profile page">
+          <img src="\Images\Profile.png" alt="Profile" class="profile-icon" />
+        </a>
 
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="container">
-            <div class="contact-grid">
-                <!-- Contact Form -->
-                <div class="contact-form-wrapper">
-                    <h2 class="form-title">Send Us a Message</h2>
-                    <form class="contact-form" id="contactForm" novalidate>
-                        <div class="form-group">
-                            <label for="name" class="form-label">Full Name *</label>
-                            <input type="text" id="name" name="name" class="form-input" required aria-required="true" placeholder="Enter your full name" required>
-                            <span class="form-error" role="alert"></span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email Address *</label>
-                            <input type="email" id="email" name="email" class="form-input" required aria-required="true" placeholder="your.email@example.com"  required>
-                            <span class="form-error" role="alert"></span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone" class="form-label">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+1 (555) 123-4567"  required>
-                            <span class="form-error" role="alert"></span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject" class="form-label">Subject *</label>
-                            <select id="subject" name="subject" class="form-input" required aria-required="true"  required>
-                                <option value="">Select a subject</option>
-                                <option value="general">General Inquiry</option>
-                                <option value="product">Product Information</option>
-                                <option value="order">Order Status</option>
-                                <option value="feedback">Feedback</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <span class="form-error" role="alert"></span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message" class="form-label">Message *</label>
-                            <textarea id="message" name="message" class="form-input form-textarea" required aria-required="true" rows="6" placeholder="Tell us how we can help you..."  required></textarea>
-                            <span class="form-error" role="alert"></span>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary btn-full" id="sendButton" disabled>
-                            <span>Send Message</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                 <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                            </svg>
-                    </button>
-
-                    </form>
-                </div>
-                
-                 <!--<div class="form-submitted-notification" id="cartNotification">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    <span>Form Submiited!</span>
-                 </div>
-                -->
-
-
-                <!-- Contact Info -->
-                <div class="contact-info-wrapper">
-                    <h2 class="info-title">Contact Information</h2>
-                    <p class="info-description">Feel free to reach out to us through any of the following channels. We're here to help!</p>
-                    
-                    <div class="info-items">
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                    <circle cx="12" cy="10" r="3"></circle>
-                                </svg>
-                            </div>
-                            <div class="info-content">
-                                <h3>Address</h3>
-                                <p>1-23 Farm Road, Green Valley<br>Bengaluru-574016</p>
-                            </div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                                </svg>
-                            </div>
-                            <div class="info-content">
-                                <h3>Phone</h3>
-                                <p>+91 9876543215<br>Mon-Fri: 9am-6pm</p>
-                            </div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                    <polyline points="22,6 12,13 2,6"></polyline>
-                                </svg>
-                            </div>
-                            <div class="info-content">
-                                <h3>Email</h3>
-                                <p>agrimart@gmail.com<br>support@agrimart.com</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="business-hours">
-                        <h3>Business Hours</h3>
-                        <ul>
-                            <li><span>Monday - Friday:</span> <span>9:00 AM - 6:00 PM</span></li>
-                            <li><span>Saturday:</span> <span>10:00 AM - 4:00 PM</span></li>
-                            <li><span>Sunday:</span> <span>Closed</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Success Message -->
-    <div class="success-message" id="successMessage">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-        </svg>
-        <span>Message sent successfully!</span>
+        <button
+          class="mobile-menu-toggle"
+          aria-label="Toggle mobile menu"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
+  </nav>
 
-    <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <span class="logo-icon">🌾</span>
-                    <h3 class="footer-title">AgriMart</h3>
-                    <p class="footer-description">Your trusted source for fresh, organic produce. Farm to table, quality to your doorstep.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-heading">Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="about_us.html">About Us</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-heading">Categories</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html#products" data-category="fruits">Fruits</a></li>
-                        <li><a href="index.html#products" data-category="vegetables">Vegetables</a></li>
-                        <li><a href="index.html#products" data-category="cereals">Cereals</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-heading">Contact Info</h4>
-                    <ul class="footer-contact">
-                        <li>Email: agrimart@gmail.com</li>
-                        <li>Phone: +91 9876543215</li>
-                        <li>Address: 123 Farm Road, Green Valley,Bengaluru-576356</li>
-                    </ul>
-                </div>
+  <!-- Contact Hero -->
+  <section class="contact-hero">
+    <div class="container">
+      <h1 class="page-title">Get In Touch</h1>
+      <p class="page-subtitle">
+        Have questions? We'd love to hear from you. Send us a message and we'll
+        respond as soon as possible.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper">
+          <h2 class="form-title">Send Us a Message</h2>
+          <form
+            class="contact-form"
+            id="contactForm"
+            novalidate
+            aria-describedby="formInstructions"
+          >
+            <p id="formInstructions" class="sr-only">
+              Fields marked with * are required.
+            </p>
+
+            <div class="form-group">
+              <label for="name" class="form-label">Full Name *</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-input"
+                required
+                aria-required="true"
+                placeholder="Enter your full name"
+              />
+              <span class="form-error" role="alert"></span>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 AgriMart. All rights reserved.</p>
+
+            <div class="form-group">
+              <label for="email" class="form-label">Email Address *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-input"
+                required
+                aria-required="true"
+                placeholder="your.email@example.com"
+              />
+              <span class="form-error" role="alert"></span>
             </div>
+
+            <div class="form-group">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="form-input"
+                placeholder="+91 9876543215"
+              />
+              <span class="form-error" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="subject" class="form-label">Subject *</label>
+              <select
+                id="subject"
+                name="subject"
+                class="form-input"
+                required
+                aria-required="true"
+              >
+                <option value="">Select a subject</option>
+                <option value="general">General Inquiry</option>
+                <option value="product">Product Information</option>
+                <option value="order">Order Status</option>
+                <option value="feedback">Feedback</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="form-error" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="message" class="form-label">Message *</label>
+              <textarea
+                id="message"
+                name="message"
+                class="form-input form-textarea"
+                required
+                aria-required="true"
+                rows="6"
+                placeholder="Tell us how we can help you..."
+              ></textarea>
+              <span class="form-error" role="alert"></span>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-full"
+              id="sendButton"
+              aria-label="Send message"
+            >
+              <span>Send Message</span>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </form>
         </div>
-    </footer>
 
-    
+        <!-- Contact Info -->
+        <div class="contact-info-wrapper">
+          <h2 class="info-title">Contact Information</h2>
+          <p class="info-description">
+            Feel free to reach out to us through any of the following channels.
+            We're here to help!
+          </p>
 
-    <script src="index.js"></script>
-</body>
+          <div class="info-items">
+            <div class="info-item">
+              <div class="info-icon" aria-hidden="true">
+                📍
+              </div>
+              <div class="info-content">
+                <h3>Address</h3>
+                <p>1-23 Farm Road, Green Valley<br />Bengaluru-574016</p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon" aria-hidden="true">📞</div>
+              <div class="info-content">
+                <h3>Phone</h3>
+                <p>+91 9876543215<br />Mon-Fri: 9am-6pm</p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon" aria-hidden="true">✉️</div>
+              <div class="info-content">
+                <h3>Email</h3>
+                <p>agrimart@gmail.com<br />support@agrimart.com</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="business-hours">
+            <h3>Business Hours</h3>
+            <ul>
+              <li><span>Monday - Friday:</span> <span>9:00 AM - 6:00 PM</span></li>
+              <li><span>Saturday:</span> <span>10:00 AM - 4:00 PM</span></li>
+              <li><span>Sunday:</span> <span>Closed</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popup Notification -->
+  <div
+    class="popup-notification"
+    id="popupNotification"
+    role="status"
+    aria-live="polite"
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    </svg>
+    <span>Thank you for contacting AgriMart!</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <span class="logo-icon">🌾</span>
+          <h3 class="footer-title">AgriMart</h3>
+          <p class="footer-description">
+            Your trusted source for fresh, organic produce. Farm to table,
+            quality to your doorstep.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="about_us.html">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-heading">Categories</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#products">Fruits</a></li>
+            <li><a href="index.html#products">Vegetables</a></li>
+            <li><a href="index.html#products">Cereals</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4 class="footer-heading">Contact Info</h4>
+          <ul class="footer-contact">
+            <li>Email: agrimart@gmail.com</li>
+            <li>Phone: +91 9876543215</li>
+            <li>Address: 123 Farm Road, Green Valley, Bengaluru-576356</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 AgriMart. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+   <script src="/js/index.js"></script>
+  </body>
 </html>
