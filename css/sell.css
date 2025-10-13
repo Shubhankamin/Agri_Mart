@@ -1,23 +1,316 @@
-body {
+/* Reset and Base Styles */
+* {
   margin: 0;
-  font-family: "Poppins", sans-serif;
-  background-color: #fdf7e1;
-  color: #2e3d2f;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  color: #2d2d2d;
+  background-color: #fafaf8;
   overflow-x: hidden;
 }
 
+/* CSS Variables for Theme Colors */
+:root {
+  --primary-green: #2d5016;
+  --light-green: #4a7c2c;
+  --accent-green: #5a8f3a;
+  --beige: #f5f5dc;
+  --light-beige: #faf8f3;
+  --dark-beige: #e8d5b7;
+  --text-dark: #2d2d2d;
+  --text-light: #666;
+  --border-color: #e0ddd5;
+  --shadow-sm: 0 2px 8px rgba(45, 80, 22, 0.08);
+  --shadow-md: 0 4px 16px rgba(45, 80, 22, 0.12);
+  --shadow-lg: 0 8px 32px rgba(45, 80, 22, 0.16);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- NAVIGATION STYLES --- */
+.navbar {
+  background-color: #fff;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--primary-green);
+}
+
+.logo-icon {
+  font-size: 28px;
+}
+
+.nav-right-section {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.desktop-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 16px;
+  transition: var(--transition);
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--primary-green);
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--primary-green);
+  border-radius: 2px;
+}
+
+.dynamic-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.desktop-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cart-button {
+  position: relative;
+  background-color: var(--primary-green);
+  color: #fff;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-button:hover {
+  background-color: var(--light-green);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.cart-button svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.5;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #e63946;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 12px;
+  border: 2px solid #fff;
+}
+
+.profile-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.profile-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+  transition: border-color 0.3s ease;
+}
+
+.profile-icon:hover {
+  border-color: var(--primary-green);
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  padding: 0;
+}
+
+.dropdown-icon {
+  transition: transform 0.3s ease;
+}
+
+.dropdown.active .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 20px);
+  left: 0;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  min-width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+.dropdown.active .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  padding: 12px 20px;
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 14px;
+}
+
+.dropdown-item:hover {
+  background-color: var(--light-beige);
+  color: var(--primary-green);
+}
+
+/* --- MOBILE NAVIGATION STYLES --- */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+  width: 24px;
+  height: 3px;
+  background-color: var(--primary-green);
+  transition: var(--transition);
+  border-radius: 2px;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+.nav-links {
+  display: none;
+}
+
+.mobile-profile-section {
+  display: none;
+}
 header {
-  background: linear-gradient(135deg, #2e8b57, #3ca36b);
-  color: white;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  background: linear-gradient(135deg, var(--light-beige) 0%, var(--beige) 100%);
+  padding: 120px 0 80px;
+  overflow: hidden;
 }
 
 h1 {
-  font-size: 1.8rem;
-  margin: 0;
-  letter-spacing: 1px;
+  font-family: "Playfair Display", serif;
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--primary-green);
+  line-height: 1.2;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.8s ease;
+  text-align: center;;
 }
 
 /* Form Group for labels and inputs */
@@ -298,34 +591,97 @@ h1 {
   color: white;
 }
 
-footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #2e8b57;
-  color: white;
-  margin-top: 20px;
-  font-size: 14px;
+.footer {
+  background-color: var(--primary-green);
+  color: #fff;
+  padding: 60px 0 24px;
 }
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-title {
+  font-family: "Playfair Display", serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.footer-description {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.footer-heading {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.footer-links,
+.footer-contact {
+  list-style: none;
+}
+
+.footer-links li,
+.footer-contact li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.85;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  opacity: 1;
+  padding-left: 4px;
+}
+
+.footer-contact li {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+  opacity: 0.8;
+}
+
 
 /* Modal */
 .modal {
   position: fixed;
-  top: 0;
+  top: 40px; /* 👈 Pushes the modal slightly below the navbar */
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 60px); /* Keeps it within the visible viewport */
   background: rgba(0, 0, 0, 0.4);
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* 👈 Aligns modal content from the top */
   justify-content: center;
+  padding-top: 40px; /* 👈 Adds spacing from the top for visibility */
   z-index: 999;
 }
+
 
 .modal.hidden {
   display: none;
 }
 
 .modal-content {
+  
   background: #fff;
   border-radius: 12px;
   width: 90%;
@@ -347,7 +703,7 @@ footer {
   flex-shrink: 0;
   background-color: #2e8b57;
   color: white;
-  padding: 15px 25px;
+  padding: 15px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -378,7 +734,8 @@ footer {
 #editForm {
   flex-grow: 1; /* Take up all available vertical space */
   overflow-y: auto; /* This is the scrollable area */
-  padding: 20px 25px 20px; /* Re-add the necessary padding inside the scrollable area */
+  /* --- CHANGE APPLIED HERE --- */
+  padding: 20px 20px 40px; /* Increased bottom padding to ensure submit button is visible */
 }
 
 /* Make form groups slightly more compact in the modal */
@@ -396,7 +753,7 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
   margin: 10px 0 20px;
 }
 
@@ -516,7 +873,7 @@ footer {
 
   /* Ensure form padding is slightly adjusted for mobile inside the scrollable area */
   #editForm {
-    padding: 15px;
+    padding: 15px 15px 30px; /* Increased bottom padding for mobile */
   }
 
   /* Edit Modal Images - Adjust size to fit three images comfortably */
@@ -646,4 +1003,154 @@ footer {
 #snackbar.show {
   visibility: visible;
   opacity: 1;
+}
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .wrap {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .control-group {
+    width: 100%;
+  }
+  .controls {
+    gap: 12px;
+  }
+  .control-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .control-row #clear-btn {
+    width: 100%;
+  }
+
+  /* Mobile Slide-out Menu */
+  .mobile-menu-toggle {
+    display: flex; /* show toggle */
+  }
+  .desktop-nav-links,
+  .desktop-actions {
+    display: none; /* hide desktop nav on mobile */
+  }
+
+  .nav-links {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100%;
+    background: #fff;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    gap: 0;
+    box-shadow: var(--shadow-lg);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  .nav-links.active {
+    transform: translateX(0);
+  }
+  .nav-links .nav-link {
+    width: 100%;
+    padding: 16px 0;
+    font-size: 16px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .nav-links .nav-link::after {
+    display: none;
+  }
+  .nav-links .dynamic-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+  }
+  .nav-links .dropdown {
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .nav-links .dropdown-toggle {
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 0;
+  }
+  .nav-links .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+  .nav-links .dropdown.active .dropdown-menu {
+    max-height: 500px;
+    padding: 8px 0;
+  }
+  .nav-links .dropdown-item {
+    padding: 12px 16px;
+    background-color: var(--light-beige);
+  }
+  .mobile-profile-section,
+  .mobile-cart-section,
+  .mobile-menu-footer {
+    display: block;
+    width: 100%;
+  }
+  .mobile-profile-section {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .profile-link-mobile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .mobile-profile-info h3 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .mobile-profile-info p {
+    font-size: 13px;
+    color: var(--text-light);
+  }
+  .mobile-cart-section {
+    margin-top: auto;
+    padding-top: 24px;
+  }
+  .mobile-cart-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-green);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: var(--transition);
+  }
+  .mobile-cart-btn:hover {
+    background-color: var(--light-green);
+  }
+  .mobile-cart-btn .cart-count {
+    position: static;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+  }
 }
