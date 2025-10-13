@@ -19,19 +19,19 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("No user logged in.");
   } else {
     const userEmail = currentUser.email || "";
-const userName = currentUser.name || "";
-const phone = currentUser.phone || "";
+    const userName = currentUser.name || "";
+    const phone = currentUser.phone || "";
 
-// ✅ ADD THESE LINES (after line 23)
-const mobileUserNameEl = document.getElementById("mobileUserName");
-const mobileUserEmailEl = document.getElementById("mobileUserEmail");
+    // ✅ ADD THESE LINES (after line 23)
+    const mobileUserNameEl = document.getElementById("mobileUserName");
+    const mobileUserEmailEl = document.getElementById("mobileUserEmail");
 
-if (mobileUserNameEl) {
-  mobileUserNameEl.textContent = userName || "Guest User";
-}
-if (mobileUserEmailEl) {
-  mobileUserEmailEl.textContent = userEmail || "guest@agrimart.com";
-}
+    if (mobileUserNameEl) {
+      mobileUserNameEl.textContent = userName || "Guest User";
+    }
+    if (mobileUserEmailEl) {
+      mobileUserEmailEl.textContent = userEmail || "guest@agrimart.com";
+    }
 
     // Get all addresses from localStorage
     const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
@@ -39,8 +39,6 @@ if (mobileUserEmailEl) {
       (addr) => addr.email === currentUser.email
     );
 
-
-    
     // Filter addresses by currentUser email
     const userAddresses = addresses.filter((addr) => addr.email === userEmail);
 
@@ -548,6 +546,7 @@ if (mobileUserEmailEl) {
     closeModalBtn.addEventListener("click", () => {
       orderModal.style.display = "none";
       restoreFocus();
+      window.location.href = "profile.html";
     });
 
     printOrderBtn.addEventListener("click", () => {
@@ -1087,36 +1086,39 @@ if (mobileUserEmailEl) {
     modalOrderId.textContent = order.id;
     modalOrderDate.textContent = order.date;
     modalOrderTotal.textContent = `₹${order.total.toFixed(2)}`;
+    document.body.style.overflow = "hidden";
 
     // Populate order items
     modalOrderItems.innerHTML = order.items
-      .map(
-        (item) => `
-            <div class="order-item-detail">
-                <div class="order-item-image">
-                    <img src="${escapeHtml(item.image)}" alt="${escapeHtml(
-          item.title
-        )}">
-                </div>
-                <div class="order-item-info">
-                    <h4>${escapeHtml(item.title)}</h4>
-                    <p class="order-item-seller">Sold by: Local Farmer</p>
-                    <p class="order-item-quantity">Quantity: ${
-                      item.quantity
-                    }</p>
-                </div>
-                <div class="order-item-price">₹${(
-                  item.price * item.quantity
-                ).toFixed(2)}</div>
-            </div>
-        `
-      )
+      .map((item) => {
+        const imageSrc = item.image ? item.image : "/images/placeholder.png";
+        console.log("Item Image:", imageSrc);
+        return `
+      <div class="order-item-detail">
+        <div class="order-item-image">
+          <img   src="${
+            item.image && item.image.length
+              ? item.image[0].src
+              : "/images/no-image.jpg"
+          }"  alt="${escapeHtml(item.title)}">
+        </div>
+        <div class="order-item-info">
+          <h4>${escapeHtml(item.title)}</h4>
+          <p class="order-item-seller">Sold by: Local Farmer</p>
+          <p class="order-item-quantity">Quantity: ${item.quantity}</p>
+        </div>
+        <div class="order-item-price">₹${(item.price * item.quantity).toFixed(
+          2
+        )}</div>
+      </div>
+    `;
+      })
       .join("");
 
     // Populate delivery address
     const addr = order.shippingAddress;
     modalDeliveryAddress.innerHTML = `
-            <p><strong>${escapeHtml(addr.name)}</strong></p>
+            <p><strong>${escapeHtml(addr.type)}</strong></p>
             <p>${escapeHtml(addr.address)}</p>
             <p>${escapeHtml(addr.city)}, ${getStateName(
       addr.state
@@ -1132,7 +1134,7 @@ if (mobileUserEmailEl) {
     // Populate billing address
     const billingAddr = order.billingAddress;
     modalBillingAddress.innerHTML = `
-            <p><strong>${escapeHtml(billingAddr.name)}</strong></p>
+            <p><strong>${escapeHtml(billingAddr.type)}</strong></p>
             <p>${escapeHtml(billingAddr.address)}</p>
             <p>${escapeHtml(billingAddr.city)}, ${getStateName(
       billingAddr.state

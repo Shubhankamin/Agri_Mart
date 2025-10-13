@@ -82,6 +82,10 @@ document.addEventListener("DOMContentLoaded", function () {
       saveCartToStorage();
       renderCartItems();
       updateCartSummary();
+      const url = new URL(window.location);
+      url.searchParams.delete("id");
+      url.searchParams.delete("qty");
+      window.history.replaceState({}, document.title, url.toString());
     }
   }
 
@@ -159,9 +163,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateNavbarCartCount() {
     const navCartCount = document.getElementById("cart-count");
     const mobileCartCount = document.getElementById("mobileCartCount");
-    
+
     const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-    
+
     if (navCartCount) navCartCount.textContent = totalItems;
     if (mobileCartCount) mobileCartCount.textContent = totalItems;
   }
@@ -405,14 +409,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const tax = subtotal * 0.05;
     const total = subtotal + tax;
 
-    if (subtotalElement) subtotalElement.textContent = `₹${subtotal.toFixed(2)}`;
+    if (subtotalElement)
+      subtotalElement.textContent = `₹${subtotal.toFixed(2)}`;
     if (taxElement) taxElement.textContent = `₹${tax.toFixed(2)}`;
     if (totalElement) totalElement.textContent = `₹${total.toFixed(2)}`;
     if (cartCount) cartCount.textContent = itemCount;
 
     const itemText = itemCount === 1 ? "item" : "items";
-    if (itemsCount) itemsCount.textContent = `${itemCount} ${itemText} in your cart`;
-    if (cartCount) cartCount.setAttribute("aria-label", `${itemCount} ${itemText} in cart`);
+    if (itemsCount)
+      itemsCount.textContent = `${itemCount} ${itemText} in your cart`;
+    if (cartCount)
+      cartCount.setAttribute("aria-label", `${itemCount} ${itemText} in cart`);
   }
 
   function announceToScreenReader(message) {
@@ -442,7 +449,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // ⭐ CHECK IF USER IS LOGGED IN
       if (!user) {
         e.preventDefault();
-        
+
         const shouldLogin = confirm(
           "Please login to complete your purchase.\n\nWould you like to login now?"
         );
@@ -477,7 +484,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
         announceToScreenReader("Proceeding to checkout");
-        
+
         // Allow navigation to checkout page
         window.location.href = "/checkout.html";
       } catch (error) {
@@ -490,73 +497,79 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ===== MOBILE MENU SETUP - SAME AS INDEX PAGE =====
   function setupMobileMenu() {
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const navLinks = document.getElementById('navLinks');
-    const mobileOverlay = document.getElementById('mobileOverlay');
-    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const navLinks = document.getElementById("navLinks");
+    const mobileOverlay = document.getElementById("mobileOverlay");
+    const mobileCloseBtn = document.getElementById("mobileCloseBtn");
 
     if (!mobileMenuToggle || !navLinks) return;
 
     function toggleMenu() {
-      const isActive = navLinks.classList.toggle('active');
-      mobileMenuToggle.classList.toggle('active');
-      mobileOverlay?.classList.toggle('active');
-      document.body.style.overflow = isActive ? 'hidden' : '';
-      mobileMenuToggle.setAttribute('aria-expanded', isActive);
+      const isActive = navLinks.classList.toggle("active");
+      mobileMenuToggle.classList.toggle("active");
+      mobileOverlay?.classList.toggle("active");
+      document.body.style.overflow = isActive ? "hidden" : "";
+      mobileMenuToggle.setAttribute("aria-expanded", isActive);
     }
 
     function closeMenu() {
-      navLinks.classList.remove('active');
-      mobileMenuToggle.classList.remove('active');
-      mobileOverlay?.classList.remove('active');
-      document.body.style.overflow = '';
-      mobileMenuToggle.setAttribute('aria-expanded', 'false');
+      navLinks.classList.remove("active");
+      mobileMenuToggle.classList.remove("active");
+      mobileOverlay?.classList.remove("active");
+      document.body.style.overflow = "";
+      mobileMenuToggle.setAttribute("aria-expanded", "false");
     }
 
-    mobileMenuToggle.addEventListener('click', toggleMenu);
-    mobileOverlay?.addEventListener('click', closeMenu);
-    mobileCloseBtn?.addEventListener('click', closeMenu);
+    mobileMenuToggle.addEventListener("click", toggleMenu);
+    mobileOverlay?.addEventListener("click", closeMenu);
+    mobileCloseBtn?.addEventListener("click", closeMenu);
 
-    navLinks.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
+    navLinks
+      .querySelectorAll(".nav-link:not(.dropdown-toggle)")
+      .forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
 
-    const mobileProfile = document.querySelector('.mobile-profile-section');
+    const mobileProfile = document.querySelector(".mobile-profile-section");
     if (mobileProfile) {
-      mobileProfile.style.cursor = 'pointer';
-      mobileProfile.addEventListener('click', () => {
+      mobileProfile.style.cursor = "pointer";
+      mobileProfile.addEventListener("click", () => {
         closeMenu();
         if (!user) {
-          window.location.href = '/login.html';
+          window.location.href = "/login.html";
         } else {
-          window.location.href = '/profile.html';
+          window.location.href = "/profile.html";
         }
       });
     }
 
     // Update user info
     if (user) {
-      const mobileUserName = document.getElementById('mobileUserName');
-      const mobileUserEmail = document.getElementById('mobileUserEmail');
-      if (mobileUserName) mobileUserName.textContent = user.name || 'User';
-      if (mobileUserEmail) mobileUserEmail.textContent = user.email || '';
+      const mobileUserName = document.getElementById("mobileUserName");
+      const mobileUserEmail = document.getElementById("mobileUserEmail");
+      if (mobileUserName) mobileUserName.textContent = user.name || "User";
+      if (mobileUserEmail) mobileUserEmail.textContent = user.email || "";
     } else {
-      const mobileUserName = document.getElementById('mobileUserName');
-      const mobileUserEmail = document.getElementById('mobileUserEmail');
-      if (mobileUserName) mobileUserName.textContent = 'Guest User';
-      if (mobileUserEmail) mobileUserEmail.textContent = 'Tap to login';
+      const mobileUserName = document.getElementById("mobileUserName");
+      const mobileUserEmail = document.getElementById("mobileUserEmail");
+      if (mobileUserName) mobileUserName.textContent = "Guest User";
+      if (mobileUserEmail) mobileUserEmail.textContent = "Tap to login";
     }
 
     // Sync cart counts
-    const mobileCartCount = document.getElementById('mobileCartCount');
+    const mobileCartCount = document.getElementById("mobileCartCount");
     if (mobileCartCount) {
       const observer = new MutationObserver(() => {
-        const cartCount = document.getElementById('cart-count');
+        const cartCount = document.getElementById("cart-count");
         if (cartCount) mobileCartCount.textContent = cartCount.textContent;
       });
-      const cartCount = document.getElementById('cart-count');
+      const cartCount = document.getElementById("cart-count");
       if (cartCount) {
-        observer.observe(cartCount, { childList: true, characterData: true, subtree: true });
+        observer.observe(cartCount, {
+          childList: true,
+          characterData: true,
+          subtree: true,
+        });
         mobileCartCount.textContent = cartCount.textContent;
       }
     }
@@ -592,7 +605,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (dropdownToggle && dropdownMenu) {
       dropdownToggle.addEventListener("click", (e) => {
         e.stopPropagation();
-        const isExpanded = dropdownToggle.getAttribute("aria-expanded") === "true";
+        const isExpanded =
+          dropdownToggle.getAttribute("aria-expanded") === "true";
         dropdownToggle.setAttribute("aria-expanded", !isExpanded);
         dropdownMenu.classList.toggle("show");
       });
