@@ -183,22 +183,15 @@
                   aria-required="true"
                   placeholder="Enter your full name"
                 />
-                <span class="form-error" role="alert"></span>
+                 <div class="error" id="errorUsername"></div>
+
               </div>
 
-              <div class="form-group">
-                <label for="email" class="form-label">Email Address *</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  class="form-input"
-                  required
-                  aria-required="true"
-                  placeholder="your.email@example.com"
-                />
-                <span class="form-error" role="alert"></span>
-              </div>
+         <div class="form-group">
+  <label for="email" class="form-label">Email Address *</label>
+  <input type="email" id="email" name="email" class="form-input" required placeholder="your.email@gmail.com"/>
+  <div class="error" role="alert"></div>
+</div>
 
               <div class="form-group">
                 <label for="phone" class="form-label">Phone Number</label>
@@ -209,7 +202,7 @@
                   class="form-input"
                   placeholder="+91 9876543215"
                 />
-                <span class="form-error" role="alert"></span>
+                <span class="error" role="alert"></span>
               </div>
 
               <div class="form-group">
@@ -221,7 +214,7 @@
                   required
                   aria-required="true"
                 >
-                  <option value="">Select a subject</option>
+                  <option value="none">Select a subject</option>
                   <option value="general">General Inquiry</option>
                   <option value="product">Product Information</option>
                   <option value="order">Order Status</option>
@@ -249,7 +242,7 @@
                 type="submit"
                 class="btn btn-primary btn-full"
                 id="sendButton"
-                aria-label="Send message"
+                aria-label="Send message" disabled
               >
                 <span>Send Message</span>
                 <svg
@@ -338,7 +331,7 @@
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
         <polyline points="22 4 12 14.01 9 11.01"></polyline>
       </svg>
-      <span>Thank you for contacting AgriMart!</span>
+     <!-- <span>Thank you for contacting AgriMart!</span> -->
     </div>
 
     <!-- Footer -->
@@ -384,6 +377,7 @@
         </div>
       </div>
     </footer>
+    <script src="/js/contact.js"></script>
     <script src="/js/index.js"></script>
   </body>
 </html>
