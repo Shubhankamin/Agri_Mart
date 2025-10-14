@@ -34,8 +34,7 @@ html {
 
 body {
   margin: 0;
-  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: #2d2d2d;
   background-color: #fafaf8;
   line-height: 1.6;
@@ -62,6 +61,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.logo-toggle-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
   height: 80px;
 }
 
@@ -246,7 +252,7 @@ body {
   color: var(--primary-green);
 }
 
-/* --- MOBILE NAVIGATION STYLES --- */
+/* --- MOBILE NAVIGATION STYLES (SLIDE-OUT) --- */
 .mobile-menu-toggle {
   display: none;
   flex-direction: column;
@@ -269,11 +275,9 @@ body {
 .mobile-menu-toggle.active span:nth-child(1) {
   transform: rotate(45deg) translate(6px, 6px);
 }
-
 .mobile-menu-toggle.active span:nth-child(2) {
   opacity: 0;
 }
-
 .mobile-menu-toggle.active span:nth-child(3) {
   transform: rotate(-45deg) translate(6px, -6px);
 }
@@ -290,7 +294,6 @@ body {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .mobile-overlay.active {
   display: block;
   opacity: 1;
@@ -300,11 +303,7 @@ body {
   display: none;
 }
 
-.mobile-profile-section {
-  display: none;
-}
-
-/* Header */
+/* --- HEADER --- */
 .header {
   text-align: center;
   padding: 4rem 1.5rem;
@@ -329,7 +328,7 @@ body {
   line-height: 1.2;
 }
 
-/* Back to Profile Button */
+/* Responsive Profile Button */
 #backToProfile {
   position: fixed;
   top: 16px;
@@ -448,7 +447,7 @@ body {
   opacity: 0.8;
 }
 
-/* Responsive */
+/* --- RESPONSIVE --- */
 @media (max-width: 600px) {
   .site-title {
     font-size: 1.5rem;
@@ -474,111 +473,19 @@ body {
     align-items: flex-start;
   }
 
-  /* Mobile menu toggle button */
+  /* Show hamburger */
   .mobile-menu-toggle {
     display: flex;
     margin-left: auto;
   }
 
-  /* Nav links hidden by default */
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-    margin-top: 12px;
-    padding: 16px;
-    gap: 18px; /* spacing between links */
-  }
-
-  /* Show nav-links when active */
-  .nav-links.active {
-    display: flex;
-    animation: slideDown 0.3s ease forwards;
-  }
-
-  /* Links inside toggle menu */
-  .nav-links .nav-link {
-    width: 100%;
-    text-align: left;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-  }
-
-  /* Dropdown inside mobile menu */
-  .dropdown {
-    width: 100%;
-  }
-  .dropdown-toggle {
-    width: 100%;
-    justify-content: space-between;
-    padding: 10px 0;
-  }
-  .dropdown-menu {
-    position: static;
-    width: 100%;
-    background: #fafafa;
-    border-radius: 8px;
-    box-shadow: none;
-    margin-top: 6px;
-    padding: 8px 0;
-  }
-  .dropdown-item {
-    padding: 10px 16px;
-    display: block;
-    text-align: left;
-  }
-
-  /* Cart + Profile inside mobile nav */
-  .nav-links .cart-button {
-    width: 100%;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  .nav-links .profile-link {
-    display: flex;
-    justify-content: center;
-    margin-top: 6px;
-  }
-
-  /* Adjust logo for small screens */
-  .logo {
-    font-size: 20px;
-  }
-  /* RESPONSIVE */
-@media (max-width: 1024px) {
-  .wrap {
-    padding: 0 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  .control-group {
-    width: 100%;
-  }
-  .controls {
-    gap: 12px;
-  }
-  .control-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-  .control-row #clear-btn {
-    width: 100%;
-  }
-
-  /* Mobile Slide-out Menu */
-  .mobile-menu-toggle {
-    display: flex; /* show toggle */
-  }
+  /* Hide desktop links */
   .desktop-nav-links,
   .desktop-actions {
-    display: none; /* hide desktop nav on mobile */
+    display: none;
   }
 
+  /* Slide-out nav */
   .nav-links {
     display: flex;
     position: fixed;
@@ -613,6 +520,8 @@ body {
     width: 100%;
     gap: 0;
   }
+
+  /* Dropdown inside slide-out */
   .nav-links .dropdown {
     width: 100%;
     border-bottom: 1px solid var(--border-color);
@@ -642,6 +551,17 @@ body {
     padding: 12px 16px;
     background-color: var(--light-beige);
   }
+
+  @media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: flex;
+  }
+  .nav-right-section {
+    display: none; /* Hide desktop nav/actions */
+  }
+}
+
+  /* Mobile profile/cart/footer */
   .mobile-profile-section,
   .mobile-cart-section,
   .mobile-menu-footer {
@@ -697,6 +617,3 @@ body {
     padding: 2px 8px;
   }
 }
-}
-
-
