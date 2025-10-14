@@ -4,149 +4,239 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy — Agrimart</title>
+
+  <!--External CSS-->
   <link rel="stylesheet" href="css/privacy.css" />
-</head>
-<body>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"/>
+      
+  </head>
+  <body>
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- Navigation -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-content">
+      <!-- LOGO -->
+      <a href="/index.html" class="logo" aria-label="AgriMart Home">
+        <span class="logo-icon">🌾</span>
+        <span class="logo-text">AgriMart</span>
+      </a>
+
+      <div class="nav-right-section">
+        <!-- Desktop Navigation Links -->
+        <div class="desktop-nav-links">
+          <a href="/index.html" class="nav-link active" aria-current="page">Home</a>
+          <div class="dynamic-links"></div>
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+              Categories
+              <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item" data-filter="all">All Products</a>
+              <a href="#" class="dropdown-item" data-filter="fruits">Fruits</a>
+              <a href="#" class="dropdown-item" data-filter="vegetables">Vegetables</a>
+              <a href="#" class="dropdown-item" data-filter="cereals">Cereals</a>
+            </div>
+          </div>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+
+        <!-- Desktop Actions -->
+        <div class="desktop-actions">
+          <button class="cart-button" onclick="window.location.href='/cart.html'">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+          <a href="/profile.html" class="profile-link">
+            <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
+          </a>
+        </div>
+      </div>
+
+            <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- NEW MOBILE SLIDE-OUT MENU PANEL -->
+      <div class="nav-links" id="navLinks">
+        <div class="mobile-menu-header">
+          <div class="mobile-profile-section">
+            <a href="/profile.html" class="profile-link-mobile">
+              <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
+              <div class="mobile-profile-info">
+                <h3 id="mobileUserName">Guest User</h3>
+                <p id="mobileUserEmail">Login or Sign Up</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        
+        <div class="mobile-menu-body">
+          <a href="/index.html" class="nav-link">Home</a>
+          <div class="dynamic-links"></div>
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Categories
+            <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+           </button>
+            <div class="dropdown-menu" role="menu">
+              <a href="#" class="dropdown-item" data-filter="all">All Products</a>
+              <a href="#" class="dropdown-item" data-filter="fruits">Fruits</a>
+              <a href="#" class="dropdown-item" data-filter="vegetables">Vegetables</a>
+              <a href="#" class="dropdown-item" data-filter="cereals">Cereals</a>
+            </div>
+          </div>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+
+        <div class="mobile-cart-section">
+          <button class="mobile-cart-btn" onclick="window.location.href='/cart.html'">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            View Cart
+            <span class="cart-count" id="mobileCartCount">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
   <header class="header">
     <div class="header-inner">
-      <h1 class="site-title">Agrimart</h1>
+      <h1 class="site-title">Agrimart - Privacy Policy</h1>
       <button id="backToProfile">← Back to Home</button>
-      <nav class="site-nav">
-      </nav>
     </div>
   </header>
 
-  <div class="page-wrapper">
-    <aside class="toc" id="toc">
-      <nav>
-        <h2>Contents</h2>
-        <ul>
-          <li><a href="#introduction">Introduction</a></li>
-          <li><a href="#data-collected">Data Collected</a></li>
-          <li><a href="#use-of-data">Use of Data</a></li>
-          <li><a href="#sharing-data">Sharing Data</a></li>
-          <li><a href="#cookies">Cookies & Tracking</a></li>
-          <li><a href="#data-retention">Data Retention</a></li>
-          <li><a href="#your-rights">Your Rights</a></li>
-          <li><a href="#children">Children’s Privacy</a></li>
-          <li><a href="#international">International Transfers</a></li>
-          <li><a href="#links">Third-Party Links</a></li>
-          <li><a href="#changes">Changes to Policy</a></li>
-          <li><a href="#contact">Contact Us</a></li>
-        </ul>
-      </nav>
-    </aside>
+  <main class="content">
+    <h2>Privacy Policy</h2>
+    <p>At Agrimart, we respect and value your privacy. This policy explains what information we collect, how we use it, and the choices available to you. By using our website or services, you agree to the terms described below.</p>
 
-    <main class="content">
-      <section id="introduction" class="section section-animate">
-        <h2 class="animate-heading">Introduction</h2>
-        <p>Welcome to Agrimart (“we,” “us,” “our”). We value your privacy and are committed to protecting your personal data. This Privacy Policy describes how we collect, use, disclose, and safeguard your information when you use our website and services.</p>
-      </section>
+    <h3>1. Information We Collect</h3>
+    <ul>
+      <li><strong>Personal details:</strong> Name, email, phone number, and shipping address to deliver your orders.</li>
+      <li><strong>Order data:</strong> Purchase history, payment details, and invoices to help us manage your transactions.</li>
+      <li><strong>Technical data:</strong> IP address, browser type, and device information to improve site performance.</li>
+      <li><strong>Cookies:</strong> Used to remember your preferences and make your experience smoother.</li>
+    </ul>
+    <p>We may also collect optional details when you sign up for newsletters, promotions, or provide feedback.</p>
 
-      <section id="data-collected" class="section section-animate">
-        <h2 class="animate-heading">Data We Collect</h2>
-        <h3>Information You Provide</h3>
-        <p>We collect information you provide directly, such as:</p>
-        <ul>
-          <li>Name, email, address, phone number</li>
-          <li>Order & transaction details</li>
-          <li>Communications (feedback, support requests)</li>
-        </ul>
+    <h3>2. How We Use Your Information</h3>
+    <ul>
+      <li>To process, pack, and deliver your orders efficiently.</li>
+      <li>To personalize your shopping experience by recommending relevant products.</li>
+      <li>To improve our website design, speed, and usability.</li>
+      <li>To provide customer support and respond to your queries quickly.</li>
+      <li>To send important updates such as order confirmations, delivery status, or policy changes.</li>
+    </ul>
+    <p>Marketing emails are sent only if you have opted in, and you can unsubscribe at any time.</p>
 
-        <h3>Information Collected Automatically</h3>
-        <p>We collect data such as:</p>
-        <ul>
-          <li>Usage & log data (IP address, pages visited, timestamps)</li>
-          <li>Device & browser info</li>
-          <li>Cookies and tracking technologies</li>
-        </ul>
-      </section>
+    <h3>3. Sharing Your Data</h3>
+    <p>We do not sell your personal data. We may share it only in limited cases such as:</p>
+    <ul>
+      <li>With trusted partners who provide payment processing, shipping, and IT support.</li>
+      <li>When required by law, regulation, or legal proceedings.</li>
+      <li>In the event of a company merger, acquisition, or restructuring.</li>
+    </ul>
+    <p>All partners are required to use your data responsibly and protect it according to legal standards.</p>
 
-      <section id="use-of-data" class="section section-animate">
-        <h2 class="animate-heading">Use of Data</h2>
-        <p>We use your data to:</p>
-        <ul>
-          <li>Provide and maintain services</li>
-          <li>Communicate with you</li>
-          <li>Personalize content & improve user experience</li>
-          <li>Fraud prevention & security</li>
-          <li>Marketing (with opt-in)</li>
-        </ul>
-      </section>
+    <h3>4. Data Retention & Security</h3>
+    <p>Your data is stored only for as long as necessary to provide services, comply with legal obligations, or resolve disputes. Sensitive information such as payment details is encrypted. While we follow industry-standard safeguards, no method of storage or transfer is 100% secure.</p>
+    <p>We also review our systems regularly to identify and fix vulnerabilities.</p>
 
-      <section id="sharing-data" class="section section-animate">
-        <h2 class="animate-heading">Sharing & Disclosure</h2>
-        <p>We may share data with:</p>
-        <ul>
-          <li>Service providers & partners</li>
-          <li>Affiliates or internal entities</li>
-          <li>Legal and regulatory authorities</li>
-          <li>In connection with a business transfer</li>
-        </ul>
-        <p>We do <strong>not</strong> sell your personal data to third parties.</p>
-      </section>
+    <h3>5. Your Rights</h3>
+    <ul>
+      <li>Request access to the personal data we hold about you.</li>
+      <li>Update or correct your information at any time.</li>
+      <li>Request deletion of your account or data, where legally possible.</li>
+      <li>Opt-out of promotional messages without affecting service use.</li>
+      <li>Withdraw previously given consent for data processing.</li>
+    </ul>
+    <p>To exercise these rights, simply contact us via email or phone, and we will respond promptly.</p>
 
-      <section id="cookies" class="section section-animate">
-        <h2 class="animate-heading">Cookies & Tracking</h2>
-        <p>We use cookies, local storage, web beacons, etc. You can manage cookie settings via your browser. Disabling certain cookies may affect site functionality.</p>
-      </section>
+    <h3>6. Contact Us</h3>
+    <p>If you have any questions or concerns regarding this Privacy Policy or how your information is handled, please contact us:</p>
+    <p>
+      Email: <a href="mailto:privacy@agrimart.com">privacy@agrimart.com</a><br>
+      Phone: +91-XXXXXXXXXX<br>
+      Address: Agrimart HQ, Kochi, Kerala, India
+    </p>
+    <p>We take your concerns seriously and aim to resolve all requests within 7 working days.</p>
+  </main>
 
-      <section id="data-retention" class="section section-animate">
-        <h2 class="animate-heading">Data Retention & Security</h2>
-        <p>We retain personal data as needed to fulfill purposes and legal obligations. We implement technical and organizational safeguards to protect data, though no system is fully foolproof.</p>
-      </section>
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <span class="logo-icon">🌾</span>
+            <h3 class="footer-title">AgriMart</h3>
+            <p class="footer-description">
+              Your trusted source for fresh, organic produce. Farm to table,
+              quality to your doorstep.
+            </p>
+          </div>
 
-      <section id="your-rights" class="section section-animate">
-        <h2 class="animate-heading">Your Rights</h2>
-        <p>Depending on your location, you may have rights to:</p>
-        <ul>
-          <li>Access, correct, update your data</li>
-          <li>Request deletion or restriction</li>
-          <li>Object to processing (e.g. marketing)</li>
-          <li>Data portability</li>
-          <li>Withdraw consent</li>
-        </ul>
-      </section>
+          <div class="footer-section">
+            <h4 class="footer-heading">Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="#products">Products</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="terms_conditions.html">Terms & Conditions</a></li>
+              <li><a href="policy.html">Privacy Policy</a></li>
+            </ul>
+          </div>
 
-      <section id="children" class="section section-animate">
-        <h2 class="animate-heading">Children’s Privacy</h2>
-        <p>Our services are not intended for children under 13 (or legal minimum age). We do not knowingly collect data from children. If discovered, such data will be deleted.</p>
-      </section>
+          <div class="footer-section">
+            <h4 class="footer-heading">Categories</h4>
+            <ul class="footer-links">
+              <li><a href="#" data-category="fruits">Fruits</a></li>
+              <li><a href="#" data-category="vegetables">Vegetables</a></li>
+              <li><a href="#" data-category="cereals">Cereals</a></li>
+            </ul>
+          </div>
 
-      <section id="international" class="section section-animate">
-        <h2 class="animate-heading">International Transfers</h2>
-        <p>Your data may be transferred to countries other than your own. We ensure appropriate safeguards are in place when this occurs.</p>
-      </section>
+          <div class="footer-section">
+            <h4 class="footer-heading">Contact Info</h4>
+            <ul class="footer-contact">
+              <li>Email: agrimart@gmail.com</li>
+              <li>Phone: +91 9876543215</li>
+              <li>Address: 1-23 Farm Road, Green Valley,Bengaluru-56747</li>
+            </ul>
+          </div>
+        </div>
 
-      <section id="links" class="section section-animate">
-        <h2 class="animate-heading">Third-Party Links & Services</h2>
-        <p>Our site may contain links to third-party websites and services. Their practices and policies are separate; we encourage you to review them.</p>
-      </section>
+        <div class="footer-bottom">
+          <p>&copy; 2025 AgriMart. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
 
-      <section id="changes" class="section section-animate">
-        <h2 class="animate-heading">Changes to This Policy</h2>
-        <p>We may modify this Privacy Policy. We’ll update the “Last Updated” date and notify you of significant changes. Continued use implies acceptance.</p>
-      </section>
 
-      <section id="contact" class="section section-animate">
-        <h2 class="animate-heading">Contact Us</h2>
-        <p>If you have questions, concerns, or requests about this policy or your data, contact us:</p>
-        <address>
-          Agrimart<br />
-          [Address Line 1]<br />
-          [City, State, ZIP]<br />
-          Email: <a href="mailto:privacy@agrimart.com">privacy@agrimart.com</a><br />
-          Phone: +91-XXXXXXXXXX
-        </address>
-      </section>
-
-      
-    </main>
-  </div>
-  <footer class="footer">
-        <p>&copy; <span id="year"></span> Agrimart. All rights reserved.</p>
-  </footer>
-
+  <!-- Optional JS for mobile menu toggle -->
   <script src="js/privacy.js"></script>
+
 </body>
 </html>

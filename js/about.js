@@ -76,7 +76,7 @@ function updateProfileUI() {
 
 // Setup Event Listeners for Navigation
 function setupNavigationEventListeners() {
-  // --- DROPDOWN LOGIC FOR BOTH DESKTOP & MOBILE ---
+  // --- DROPDOWN LOGIC ---
   const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
 
   dropdownToggles.forEach(toggle => {
@@ -102,7 +102,7 @@ function setupNavigationEventListeners() {
   const mobileMenuToggle = document.getElementById("mobileMenuToggle");
   const navLinks = document.getElementById("navLinks");
   const mobileOverlay = document.getElementById("mobileOverlay");
-  const mobileCloseBtn = document.querySelector(".mobile-close-btn"); 
+  const mobileCloseBtn = document.querySelector(".mobile-close"); 
   const body = document.body;
 
   if (mobileMenuToggle && navLinks && mobileOverlay) {
@@ -112,6 +112,7 @@ function setupNavigationEventListeners() {
       mobileOverlay.classList.toggle("active");
       body.style.overflow = navLinks.classList.contains("active") ? "hidden" : "";
     };
+
     mobileMenuToggle.addEventListener("click", toggleMenu);
     mobileOverlay.addEventListener("click", toggleMenu);
     if (mobileCloseBtn) {
@@ -124,6 +125,6 @@ function setupNavigationEventListeners() {
 document.addEventListener("DOMContentLoaded", () => {
   setupDynamicLinks();
   updateCartCount();
-  updateProfileUI(); // ✅ added profile update
+  updateProfileUI(); // ✅ updates profile icon and user info
   setupNavigationEventListeners();
 });
