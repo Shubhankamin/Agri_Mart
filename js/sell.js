@@ -1,6 +1,84 @@
 // ===== sell.js =====
 
 // IndexedDB setup
+
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+console.log(currentUser, "current user");
+const users = JSON.parse(localStorage.getItem("users")) || [];
+
+if (!currentUser) {
+  showSnackbar("Please login first", "error");
+  setTimeout(() => (window.location.href = "login.html"), 1000);
+}
+
+// Find full user details from users array
+let user = users.find((u) => u.email === currentUser.email);
+
+if (!user) {
+  showSnackbar("User not found!", "error");
+  setTimeout(() => (window.location.href = "login.html"), 1000);
+}
+
+function setupDynamicLinks() {
+  const container = document.querySelector(".dynamic-links");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const productsLink = document.createElement("a");
+  productsLink.href = "/products.html";
+  productsLink.className = "nav-link";
+  productsLink.textContent = "Products";
+  container.appendChild(productsLink);
+
+  if (user && user.role === "farmer") {
+    const sellLink = document.createElement("a");
+    sellLink.href = "/sell.html";
+    sellLink.className = "nav-link";
+    sellLink.textContent = "Sell";
+    container.appendChild(sellLink);
+  }
+}
+
+// ===== DROPDOWN FUNCTIONALITY =====
+function setupDropdown() {
+  const dropdown = document.querySelector(".dropdown");
+  const dropdownToggle = document.querySelector(".dropdown-toggle");
+  const dropdownMenu = document.querySelector(".dropdown-menu");
+
+  if (dropdown && dropdownToggle && dropdownMenu) {
+    dropdownToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const isActive = dropdown.classList.contains("active");
+      dropdown.classList.toggle("active", !isActive);
+      dropdownToggle.setAttribute("aria-expanded", !isActive);
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", () => {
+      dropdown.classList.remove("active");
+      dropdownToggle.setAttribute("aria-expanded", "false");
+    });
+
+    // Handle category clicks
+    dropdownMenu.querySelectorAll(".dropdown-item").forEach((item) => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        const category = item.getAttribute("data-category"); // matches your HTML attribute
+        window.location.href = `/products.html?category=${category}`;
+      });
+    });
+  }
+}
+
+// ===== INITIALIZATION =====
+document.addEventListener("DOMContentLoaded", () => {
+  setupDynamicLinks();
+  setupDropdown();
+});
+
 let db;
 const request = indexedDB.open("AgriMartDB", 1);
 
@@ -31,7 +109,6 @@ const MAX_IMAGES = 3;
 let newProductTempImages = [null, null, null];
 
 // Get current farmer
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 if (!currentUser || currentUser.role !== "farmer") {
   alert("You must be logged in as a farmer to view this page.");
   window.location.href = "index.html";
@@ -398,7 +475,6 @@ function showSnackbar(message, color = "#4caf50") {
     snackbar.classList.remove("show");
   }, 3000); // visible for 3 seconds
 }
-
 
 // Submit edit form
 editForm.addEventListener("submit", (e) => {

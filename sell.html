@@ -9,12 +9,133 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <link rel="stylesheet" href="css/sell.css" />
+    <link rel="stylesheet" href="css/index.css" />
+
   </head>
   <body>
-    <header>
-      <h1>AgriMart</h1>
-      <button id="backToProfile">← Back to Profile</button>
-    </header>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="container">
+        <div class="nav-content">
+          <a href="index.html" class="logo" aria-label="AgriMart Home">
+            <span class="logo-icon">🌾</span>
+            <span class="logo-text">AgriMart</span>
+          </a>
+
+          <div class="nav-links">
+            <a href="index.html" class="nav-link active" aria-current="page"
+              >Home</a
+            >
+            <div class="dynamic-links"></div>
+
+            <div class="dropdown">
+              <button
+                class="nav-link dropdown-toggle"
+                aria-haspopup="true"
+                aria-expanded="false"
+                id="categoryDropdown"
+              >
+                Categories
+                <svg
+                  class="dropdown-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div
+                class="dropdown-menu"
+                role="menu"
+                aria-labelledby="categoryDropdown"
+              >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="all"
+                  >All Products</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="fruits"
+                  >Fruits</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="vegetables"
+                  >Vegetables</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-category="cereals"
+                  >Cereals</a
+                >
+              </div>
+            </div>
+
+            <a href="contact.html" class="nav-link">Contact</a>
+
+            <button
+              class="cart-button"
+              aria-label="Shopping cart"
+              onclick="window.location.href='/cart.html'"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path
+                  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                ></path>
+              </svg>
+              <span class="cart-count" id="cartCount">0</span>
+            </button>
+
+            <a
+              href="profile.html"
+              class="profile-link"
+              aria-label="Profile page"
+            >
+              <img
+                src="\Images\Profile.png"
+                alt="Profile"
+                class="profile-icon"
+              />
+            </a>
+          </div>
+
+          <button
+            class="mobile-menu-toggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
 
     <section id="addProductSection" class="add-product">
       <h2>Add New Product</h2>
@@ -270,7 +391,7 @@
         </form>
       </div>
     </div>
-<div id="snackbar"></div>
+    <div id="snackbar"></div>
 
     <footer>
       <p>© 2025 Agrimart | Empowering Farmers Through Technology 🌿</p>
@@ -278,5 +399,6 @@
     <script src="data/data.js"></script>
 
     <script src="js/sell.js"></script>
+    <script src="js/index.js" defer></script>
   </body>
 </html>
