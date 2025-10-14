@@ -76,47 +76,43 @@ function updateProfileUI() {
 
 // Setup Event Listeners for Navigation
 function setupNavigationEventListeners() {
-  // --- DROPDOWN LOGIC FOR BOTH DESKTOP & MOBILE ---
+  // --- Dropdown logic (desktop & mobile) ---
   const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
-
-  dropdownToggles.forEach(toggle => {
+  dropdownToggles.forEach((toggle) => {
     toggle.addEventListener("click", (event) => {
       event.stopPropagation();
       const dropdown = toggle.closest(".dropdown");
-      if (dropdown) {
-        document.querySelectorAll(".dropdown.active").forEach(openDropdown => {
-          if (openDropdown !== dropdown) openDropdown.classList.remove("active");
-        });
-        dropdown.classList.toggle("active");
-      }
+      document.querySelectorAll(".dropdown.active").forEach((open) => {
+        if (open !== dropdown) open.classList.remove("active");
+      });
+      dropdown.classList.toggle("active");
     });
   });
 
   document.addEventListener("click", () => {
-    document.querySelectorAll(".dropdown.active").forEach(dropdown => {
-      dropdown.classList.remove("active");
-    });
+    document.querySelectorAll(".dropdown.active").forEach((dropdown) =>
+      dropdown.classList.remove("active")
+    );
   });
 
   // --- MOBILE MENU TOGGLE LOGIC ---
   const mobileMenuToggle = document.getElementById("mobileMenuToggle");
   const navLinks = document.getElementById("navLinks");
   const mobileOverlay = document.getElementById("mobileOverlay");
-  const mobileCloseBtn = document.querySelector(".mobile-close-btn"); 
-  const body = document.body;
 
   if (mobileMenuToggle && navLinks && mobileOverlay) {
     const toggleMenu = () => {
       mobileMenuToggle.classList.toggle("active");
       navLinks.classList.toggle("active");
       mobileOverlay.classList.toggle("active");
-      body.style.overflow = navLinks.classList.contains("active") ? "hidden" : "";
+
+      document.body.style.overflow = navLinks.classList.contains("active")
+        ? "hidden"
+        : "auto";
     };
+
     mobileMenuToggle.addEventListener("click", toggleMenu);
     mobileOverlay.addEventListener("click", toggleMenu);
-    if (mobileCloseBtn) {
-      mobileCloseBtn.addEventListener("click", toggleMenu);
-    }
   }
 }
 

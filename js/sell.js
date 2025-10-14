@@ -1,3 +1,4 @@
+
 // ===== sell.js =====
 
 // IndexedDB setup
@@ -72,11 +73,53 @@ function setupDropdown() {
     });
   }
 }
+function setupNavigationEventListeners() {
+  // --- Dropdown logic (desktop & mobile) ---
+  const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+  dropdownToggles.forEach((toggle) => {
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const dropdown = toggle.closest(".dropdown");
+      document.querySelectorAll(".dropdown.active").forEach((open) => {
+        if (open !== dropdown) open.classList.remove("active");
+      });
+      dropdown.classList.toggle("active");
+    });
+  });
+
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".dropdown.active").forEach((dropdown) =>
+      dropdown.classList.remove("active")
+    );
+  });
+
+  // --- MOBILE MENU TOGGLE LOGIC ---
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const navLinks = document.getElementById("navLinks");
+  const mobileOverlay = document.getElementById("mobileOverlay");
+
+  if (mobileMenuToggle && navLinks && mobileOverlay) {
+    const toggleMenu = () => {
+      mobileMenuToggle.classList.toggle("active");
+      navLinks.classList.toggle("active");
+      mobileOverlay.classList.toggle("active");
+
+      document.body.style.overflow = navLinks.classList.contains("active")
+        ? "hidden"
+        : "auto";
+    };
+
+    mobileMenuToggle.addEventListener("click", toggleMenu);
+    mobileOverlay.addEventListener("click", toggleMenu);
+  }
+}
 
 // ===== INITIALIZATION =====
 document.addEventListener("DOMContentLoaded", () => {
   setupDynamicLinks();
   setupDropdown();
+    setupNavigationEventListeners();
+
 });
 
 let db;
