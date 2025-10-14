@@ -151,7 +151,7 @@ function setupEventListeners() {
   const navLinks = document.querySelector(".nav-links");
   if (mobileMenuToggle && navLinks) {
     mobileMenuToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
+      // navLinks.classList.toggle("active");
       const expanded =
         mobileMenuToggle.getAttribute("aria-expanded") === "true";
       mobileMenuToggle.setAttribute("aria-expanded", !expanded);
