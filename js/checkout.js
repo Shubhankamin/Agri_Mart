@@ -20,6 +20,18 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     const userEmail = currentUser.email || "";
     const userName = currentUser.name || "";
+    const phone = currentUser.phone || "";
+
+    // ✅ ADD THESE LINES (after line 23)
+    const mobileUserNameEl = document.getElementById("mobileUserName");
+    const mobileUserEmailEl = document.getElementById("mobileUserEmail");
+
+    if (mobileUserNameEl) {
+      mobileUserNameEl.textContent = userName || "Guest User";
+    }
+    if (mobileUserEmailEl) {
+      mobileUserEmailEl.textContent = userEmail || "guest@agrimart.com";
+    }
 
     // Get all addresses from localStorage
     const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
@@ -118,9 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
   renderBillingAddresses();
   setupEventListeners();
   setupKeyboardNavigation();
-  setupMobileMenu();
-  setupDynamicLinks();
-  updateCartCount();
 
   // FIX #2: Load cart data from localStorage
   function loadCartData() {
@@ -187,13 +196,18 @@ document.addEventListener("DOMContentLoaded", function () {
     cartItems.forEach((item) => {
       const cartItemElement = document.createElement("article");
       cartItemElement.className = "cart-item";
-
+      const imageSrc =
+        Array.isArray(item.image) && item.image.length > 0
+          ? item.image[0].src
+          : typeof item.image === "string" && item.image.trim() !== ""
+          ? item.image
+          : "assets/default-image.jpg";
       cartItemElement.innerHTML = `
                 <div class="item-image">
-                    <img src="${escapeHtml(item.image)}" alt="${escapeHtml(
-        item.title
-      )}" loading="lazy">
-                </div>
+    <img src="${escapeHtml(imageSrc)}"
+         alt="${escapeHtml(item.title)}"
+         loading="lazy">
+  </div>
                 <div class="item-details">
                     <h3>${escapeHtml(item.title)}</h3>
                     <p class="item-seller">Sold by: Local Farmer</p>
@@ -264,6 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
       billingSavedAddressesContainer.appendChild(addressCard);
     });
   }
+  // <p>${escapeHtml(address.phone)}</p>;
 
   function createAddressCard(address, type, index) {
     const card = document.createElement("div");
@@ -277,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     card.innerHTML = `
         <div class="address-card-header">
-            <div class="address-name">${escapeHtml(address.name)}</div>
+            <div class="address-name">${escapeHtml(address.type)} Address</div>
             <div class="address-type-badge">${typeLabel}</div>
         </div>
         <div class="address-details">
@@ -285,7 +300,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <p>${escapeHtml(address.city)}, ${getStateName(
       address.state
     )} - ${escapeHtml(address.pincode)}</p>
-            <p>${escapeHtml(address.phone)}</p>
             ${
               address.landmark
                 ? `<p>Landmark: ${escapeHtml(address.landmark)}</p>`
@@ -395,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     selectedDeliveryPreview.innerHTML = `
-            <p><strong>${escapeHtml(selectedShippingAddress.name)}</strong></p>
+            <p><strong>${escapeHtml(selectedShippingAddress.type)}</strong></p>
             <p>${escapeHtml(selectedShippingAddress.address)}</p>
             <p>${escapeHtml(selectedShippingAddress.city)}, ${getStateName(
       selectedShippingAddress.state
@@ -532,6 +546,7 @@ document.addEventListener("DOMContentLoaded", function () {
     closeModalBtn.addEventListener("click", () => {
       orderModal.style.display = "none";
       restoreFocus();
+      window.location.href = "profile.html";
     });
 
     printOrderBtn.addEventListener("click", () => {
@@ -840,14 +855,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!validateForm(editAddressForm)) return;
 
     const addressData = {
-      name: document.getElementById("edit-full-name").value.trim(),
-      phone: document.getElementById("edit-phone").value.trim(),
-      address: document.getElementById("edit-address").value.trim(),
-      city: document.getElementById("edit-city").value.trim(),
-      state: document.getElementById("edit-state").value,
-      pincode: document.getElementById("edit-pincode").value.trim(),
-      landmark: document.getElementById("edit-landmark").value.trim(),
-      type: document.querySelector('input[name="edit-address-type"]:checked').value,
+      /* ... */
     };
 
     if (isAddingNewAddress) {
@@ -858,7 +866,7 @@ document.addEventListener("DOMContentLoaded", function () {
       savedAddresses[index] = { ...savedAddresses[index], ...addressData };
     }
 
-    localStorage.setItem("savedAddresses", JSON.stringify(savedAddresses));
+    localStorage.setItem("savedAddresses", JSON.stringify(savedAddresses)); // <--- Save to localStorage
     renderSavedAddresses();
     closeEditModalFunc();
   }
@@ -903,7 +911,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     } else {
       const newAddress = {
-        id: Date.now(),
+        id: Date.now(), // unique ID
         ...addressData,
       };
       billingAddresses.push(newAddress);
@@ -915,6 +923,7 @@ document.addEventListener("DOMContentLoaded", function () {
       sameAddressDisplay.style.display = "none";
     }
 
+    // Save to localStorage
     localStorage.setItem("billingAddresses", JSON.stringify(billingAddresses));
 
     renderBillingAddresses();
@@ -977,6 +986,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    // Update payment amount
     if (paymentAmount) {
       paymentAmount.textContent = `₹${orderSummary.total.toFixed(2)}`;
     }
@@ -1010,6 +1020,7 @@ document.addEventListener("DOMContentLoaded", function () {
       minute: "2-digit",
     });
 
+    // Use selected shipping/billing address or default to first saved addresses
     const shippingAddr =
       selectedShippingAddress ||
       savedAddresses.find((a) => a.userEmail === currentUser.email) ||
@@ -1049,6 +1060,7 @@ document.addEventListener("DOMContentLoaded", function () {
     orders.push(order);
     localStorage.setItem("orders", JSON.stringify(orders));
 
+    // Clear cart after order
     localStorage.removeItem("agrimart_cart");
     localStorage.removeItem("agrimart_order_summary");
 
@@ -1070,37 +1082,43 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showOrderDetailsModal(order) {
+    // Populate order information
     modalOrderId.textContent = order.id;
     modalOrderDate.textContent = order.date;
     modalOrderTotal.textContent = `₹${order.total.toFixed(2)}`;
+    document.body.style.overflow = "hidden";
 
+    // Populate order items
     modalOrderItems.innerHTML = order.items
-      .map(
-        (item) => `
-            <div class="order-item-detail">
-                <div class="order-item-image">
-                    <img src="${escapeHtml(item.image)}" alt="${escapeHtml(
-          item.title
-        )}">
-                </div>
-                <div class="order-item-info">
-                    <h4>${escapeHtml(item.title)}</h4>
-                    <p class="order-item-seller">Sold by: Local Farmer</p>
-                    <p class="order-item-quantity">Quantity: ${
-                      item.quantity
-                    }</p>
-                </div>
-                <div class="order-item-price">₹${(
-                  item.price * item.quantity
-                ).toFixed(2)}</div>
-            </div>
-        `
-      )
+      .map((item) => {
+        const imageSrc = item.image ? item.image : "/images/placeholder.png";
+        console.log("Item Image:", imageSrc);
+        return `
+      <div class="order-item-detail">
+        <div class="order-item-image">
+          <img   src="${
+            item.image && item.image.length
+              ? item.image[0].src
+              : "/images/no-image.jpg"
+          }"  alt="${escapeHtml(item.title)}">
+        </div>
+        <div class="order-item-info">
+          <h4>${escapeHtml(item.title)}</h4>
+          <p class="order-item-seller">Sold by: Local Farmer</p>
+          <p class="order-item-quantity">Quantity: ${item.quantity}</p>
+        </div>
+        <div class="order-item-price">₹${(item.price * item.quantity).toFixed(
+          2
+        )}</div>
+      </div>
+    `;
+      })
       .join("");
 
+    // Populate delivery address
     const addr = order.shippingAddress;
     modalDeliveryAddress.innerHTML = `
-            <p><strong>${escapeHtml(addr.name)}</strong></p>
+            <p><strong>${escapeHtml(addr.type)}</strong></p>
             <p>${escapeHtml(addr.address)}</p>
             <p>${escapeHtml(addr.city)}, ${getStateName(
       addr.state
@@ -1113,9 +1131,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         `;
 
+    // Populate billing address
     const billingAddr = order.billingAddress;
     modalBillingAddress.innerHTML = `
-            <p><strong>${escapeHtml(billingAddr.name)}</strong></p>
+            <p><strong>${escapeHtml(billingAddr.type)}</strong></p>
             <p>${escapeHtml(billingAddr.address)}</p>
             <p>${escapeHtml(billingAddr.city)}, ${getStateName(
       billingAddr.state
@@ -1168,153 +1187,4 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 1000);
     }
   }
-
-  // Mobile menu functionality
-  function setupMobileMenu() {
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const navLinks = document.getElementById('navLinks');
-    const mobileOverlay = document.getElementById('mobileOverlay');
-    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
-
-    if (!mobileMenuToggle || !navLinks) return;
-
-    function toggleMenu() {
-      const isActive = navLinks.classList.toggle('active');
-      mobileMenuToggle.classList.toggle('active');
-      mobileOverlay?.classList.toggle('active');
-      document.body.style.overflow = isActive ? 'hidden' : '';
-      mobileMenuToggle.setAttribute('aria-expanded', isActive);
-    }
-
-    function closeMenu() {
-      navLinks.classList.remove('active');
-      mobileMenuToggle.classList.remove('active');
-      mobileOverlay?.classList.remove('active');
-      document.body.style.overflow = '';
-      mobileMenuToggle.setAttribute('aria-expanded', 'false');
-    }
-
-    mobileMenuToggle.addEventListener('click', toggleMenu);
-    mobileOverlay?.addEventListener('click', closeMenu);
-    mobileCloseBtn?.addEventListener('click', closeMenu);
-
-    navLinks.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-
-    const mobileProfile = document.querySelector('.mobile-profile-section');
-    if (mobileProfile) {
-      mobileProfile.style.cursor = 'pointer';
-      mobileProfile.addEventListener('click', () => {
-        closeMenu();
-        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-        if (!currentUser) {
-          window.location.href = '/login.html';
-        } else {
-          window.location.href = '/profile.html';
-        }
-      });
-    }
-
-    // Update user info
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    if (currentUser) {
-      const mobileUserName = document.getElementById('mobileUserName');
-      const mobileUserEmail = document.getElementById('mobileUserEmail');
-      if (mobileUserName) mobileUserName.textContent = currentUser.name || 'User';
-      if (mobileUserEmail) mobileUserEmail.textContent = currentUser.email || '';
-    } else {
-      const mobileUserName = document.getElementById('mobileUserName');
-      const mobileUserEmail = document.getElementById('mobileUserEmail');
-      if (mobileUserName) mobileUserName.textContent = 'Guest User';
-      if (mobileUserEmail) mobileUserEmail.textContent = 'Tap to login';
-    }
-
-    // Sync cart counts
-    const mobileCartCount = document.getElementById('mobileCartCount');
-    if (mobileCartCount) {
-      const observer = new MutationObserver(() => {
-        const cartCount = document.getElementById('cartCount');
-        if (cartCount) mobileCartCount.textContent = cartCount.textContent;
-      });
-      const cartCount = document.getElementById('cartCount');
-      if (cartCount) {
-        observer.observe(cartCount, { childList: true, characterData: true, subtree: true });
-        mobileCartCount.textContent = cartCount.textContent;
-      }
-    }
-// In /js/checkout.js (or shared index.js)
-document.addEventListener('DOMContentLoaded', function () {
-  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-  const navLinks = document.getElementById('navLinks');
-  const mobileCloseBtn = document.getElementById('mobileCloseBtn');
-  const mobileOverlay = document.getElementById('mobileOverlay');
-
-  function closeMobileMenu() {
-    mobileMenuToggle.setAttribute('aria-expanded', 'false');
-    navLinks.classList.remove('active');
-    mobileOverlay.classList.remove('active');
-    document.body.classList.remove('no-scroll');
-  }
-
-  function openMobileMenu() {
-    mobileMenuToggle.setAttribute('aria-expanded', 'true');
-    navLinks.classList.add('active');
-    mobileOverlay.classList.add('active');
-    document.body.classList.add('no-scroll');
-  }
-
-  mobileMenuToggle?.addEventListener('click', function () {
-    const isExpanded = this.getAttribute('aria-expanded') === 'true';
-    if (isExpanded) {
-      closeMobileMenu();
-    } else {
-      openMobileMenu();
-    }
-  });
-
-  mobileCloseBtn?.addEventListener('click', closeMobileMenu);
-  mobileOverlay?.addEventListener('click', closeMobileMenu);
-
-  // Escape key
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-      closeMobileMenu();
-    }
-  });
 });
-
-  function setupDynamicLinks() {
-    const container = document.querySelector(".dynamic-links");
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    const productsLink = document.createElement("a");
-    productsLink.href = "/products.html";
-    productsLink.className = "nav-link";
-    productsLink.textContent = "Products";
-    container.appendChild(productsLink);
-
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    if (currentUser && currentUser.role === "farmer") {
-      const sellLink = document.createElement("a");
-      sellLink.href = "/sell.html";
-      sellLink.className = "nav-link";
-      sellLink.textContent = "Sell";
-      container.appendChild(sellLink);
-    }
-  }
-
-  function updateCartCount() {
-    const cartCountElem = document.getElementById("cartCount");
-    const mobileCartCount = document.getElementById("mobileCartCount");
-    
-    const savedCart = localStorage.getItem("agrimart_cart");
-    const cartData = savedCart ? JSON.parse(savedCart) : [];
-    const totalItems = cartData.reduce((sum, item) => sum + item.quantity, 0);
-
-    if (cartCountElem) cartCountElem.textContent = totalItems;
-    if (mobileCartCount) mobileCartCount.textContent = totalItems;
-  }
-}});

@@ -1033,7 +1033,34 @@ select:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+.mobile-filter-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-green, #4caf50);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
 
+.mobile-filter-icon:hover {
+  background: #43a047; /* slightly darker green */
+}
 
+.filter-icon {
+  stroke: currentColor;
+}
+.close-drawer {
+  background: transparent;
+  border: none;
+  color: var(--text-dark);
+}
 
-
+.close-drawer:hover {
+  color: #000;
+  transform: rotate(90deg);
+}

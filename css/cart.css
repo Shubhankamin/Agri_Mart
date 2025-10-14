@@ -50,6 +50,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
+    width: 100%;
 }
 
 /* ===== NAVIGATION - SAME AS INDEX PAGE ===== */
@@ -350,15 +351,33 @@ main {
     font-weight: 500;
 }
 
+/* ===== CART LAYOUT - FIXED FOR LARGE SCREENS ===== */
 .cart-content {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 30px;
+    align-items: flex-start;
 }
 
+/* Cart Items Section Container */
+#cart-items-section {
+    flex: 1 1 auto;
+    min-width: 0;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 25px;
+    transition: box-shadow 0.3s ease;
+}
+
+#cart-items-section:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+/* Legacy support for .cart-items class */
 .cart-items {
-    flex: 1;
-    min-width: 280px;
+    flex: 1 1 auto;
+    min-width: 0;
     background: var(--card-bg);
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
@@ -523,15 +542,17 @@ main {
     color: var(--error-red);
 }
 
-/* Order Summary */
+/* ===== ORDER SUMMARY - FIXED FOR SIDE POSITIONING ===== */
 .order-summary {
-    width: 100%;
-    max-width: 380px;
+    flex: 0 0 350px;
+    width: 350px;
     background: var(--card-bg);
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
     padding: 25px;
     height: fit-content;
+    position: sticky;
+    top: 100px;
     transition: box-shadow 0.3s ease;
 }
 
@@ -885,6 +906,15 @@ select:focus-visible {
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet and smaller - Make order summary stack below */
+@media (max-width: 1024px) {
+  .order-summary {
+    flex: 0 0 320px;
+    width: 320px;
+  }
+}
+
 @media (max-width: 968px) {
   .mobile-menu-toggle {
     display: flex;
@@ -933,7 +963,6 @@ select:focus-visible {
 
   /* Show mobile elements */
   .mobile-profile-section,
-  
   .mobile-cart-section,
   .mobile-menu-footer {
     display: block;
@@ -1141,13 +1170,22 @@ select:focus-visible {
     margin: 0;
   }
 
-  /* Cart Content */
+  /* ===== CART LAYOUT - MOBILE STACKING ===== */
   .cart-content {
     flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  #cart-items-section {
+    width: 100%;
+    flex: 1 1 auto;
   }
   
   .order-summary {
-    max-width: 100%;
+    width: 100%;
+    flex: 1 1 auto;
+    position: static;
+    top: auto;
   }
 
   /* Footer - IMPROVED RESPONSIVENESS */
@@ -1177,7 +1215,8 @@ select:focus-visible {
         padding: 30px 0;
     }
     
-    .cart-items {
+    .cart-items,
+    #cart-items-section {
         padding: 20px;
     }
 }
@@ -1281,9 +1320,9 @@ select:focus-visible {
     }
     
     .cart-items,
+    #cart-items-section,
     .order-summary {
         box-shadow: none;
         border: 1px solid #000;
     }
 }
-

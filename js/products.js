@@ -182,9 +182,13 @@ mobileFilterBtn.addEventListener("click", () => {
   document.body.style.overflow = "hidden";
 });
 
+
+
 closeDrawer.addEventListener("click", () => {
   mobileFilterDrawer.classList.remove("open");
   document.body.style.overflow = "";
+  console.log("Close drawer clicked");
+
 });
 
 window.addEventListener("click", (e) => {
