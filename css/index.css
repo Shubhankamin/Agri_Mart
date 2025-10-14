@@ -101,8 +101,8 @@ body {
   gap: 6px;
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-link:hover
+/* .nav-link.active { */ {
   color: var(--primary-green);
 }
 
