@@ -333,8 +333,13 @@ body {
 }
 
 .btn-primary {
-  background-color: var(--primary-green);
+background-color: grey;
   color: #fff;
+}
+
+.btn-primary.active {
+  background-color: var(--primary-green);
+  pointer-events: auto;
 }
 
 .btn-primary:hover {
