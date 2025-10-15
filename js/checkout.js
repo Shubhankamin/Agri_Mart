@@ -2,8 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Sample saved addresses for delivery
   let savedAddresses = [];
   // Separate array for billing addresses
-  let billingAddresses =
-    JSON.parse(localStorage.getItem("billingAddresses")) || [];
+  let billingAddresses = JSON.parse(localStorage.getItem("billingAddresses")) || [];
 
   // FIX #2: Load cart items from localStorage
   let cartItems = [];
@@ -15,6 +14,85 @@ document.addEventListener("DOMContentLoaded", function () {
   };
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
+  function setupMobileMenu() {
+    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+    const navLinks = document.getElementById("navLinks");
+    const mobileOverlay = document.getElementById("mobileOverlay");
+    const mobileCloseBtn = document.getElementById("mobileCloseBtn");
+
+    if (!mobileMenuToggle || !navLinks) return;
+
+    function toggleMenu() {
+      const isActive = navLinks.classList.toggle("active");
+      mobileMenuToggle.classList.toggle("active");
+      mobileOverlay?.classList.toggle("active");
+      document.body.style.overflow = isActive ? "hidden" : "";
+      mobileMenuToggle.setAttribute("aria-expanded", isActive);
+    }
+
+    function closeMenu() {
+      navLinks.classList.remove("active");
+      mobileMenuToggle.classList.remove("active");
+      mobileOverlay?.classList.remove("active");
+      document.body.style.overflow = "";
+      mobileMenuToggle.setAttribute("aria-expanded", "false");
+    }
+
+    mobileMenuToggle.addEventListener("click", toggleMenu);
+    mobileOverlay?.addEventListener("click", closeMenu);
+    mobileCloseBtn?.addEventListener("click", closeMenu);
+
+    navLinks
+      .querySelectorAll(".nav-link:not(.dropdown-toggle)")
+      .forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
+
+    const mobileProfile = document.querySelector(".mobile-profile-section");
+    if (mobileProfile) {
+      mobileProfile.style.cursor = "pointer";
+      mobileProfile.addEventListener("click", () => {
+        closeMenu();
+        if (!user) {
+          window.location.href = "/login.html";
+        } else {
+          window.location.href = "/profile.html";
+        }
+      });
+    }
+
+    // Update user info
+    if (user) {
+      const mobileUserName = document.getElementById("mobileUserName");
+      const mobileUserEmail = document.getElementById("mobileUserEmail");
+      if (mobileUserName) mobileUserName.textContent = user.name || "User";
+      if (mobileUserEmail) mobileUserEmail.textContent = user.email || "";
+    } else {
+      const mobileUserName = document.getElementById("mobileUserName");
+      const mobileUserEmail = document.getElementById("mobileUserEmail");
+      if (mobileUserName) mobileUserName.textContent = "Guest User";
+      if (mobileUserEmail) mobileUserEmail.textContent = "Tap to login";
+    }
+
+    // Sync cart counts
+    const mobileCartCount = document.getElementById("mobileCartCount");
+    if (mobileCartCount) {
+      const observer = new MutationObserver(() => {
+        const cartCount = document.getElementById("cart-count");
+        if (cartCount) mobileCartCount.textContent = cartCount.textContent;
+      });
+      const cartCount = document.getElementById("cart-count");
+      if (cartCount) {
+        observer.observe(cartCount, {
+          childList: true,
+          characterData: true,
+          subtree: true,
+        });
+        mobileCartCount.textContent = cartCount.textContent;
+      }
+    }
+  }
+
   if (!currentUser) {
     console.error("No user logged in.");
   } else {
@@ -22,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const userName = currentUser.name || "";
     const phone = currentUser.phone || "";
 
-    // ✅ ADD THESE LINES (after line 23)
+    // ✅ FIX: Update mobile user info
     const mobileUserNameEl = document.getElementById("mobileUserName");
     const mobileUserEmailEl = document.getElementById("mobileUserEmail");
 
@@ -33,39 +111,19 @@ document.addEventListener("DOMContentLoaded", function () {
       mobileUserEmailEl.textContent = userEmail || "guest@agrimart.com";
     }
 
-    // Get all addresses from localStorage
+    // ✅ FIX: Load addresses from single source - localStorage "addresses"
     const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
-    savedAddresses = addresses.filter(
-      (addr) => addr.email === currentUser.email
-    );
+    savedAddresses = addresses.filter((addr) => addr.email === currentUser.email);
 
-    // Filter addresses by currentUser email
-    const userAddresses = addresses.filter((addr) => addr.email === userEmail);
-
-    if (userAddresses.length === 0) {
-      console.warn("No address found for this user.");
-    } else {
-      // Take the first address as delivery address
-      const deliveryAddress = userAddresses[0];
-
-      console.log("User Email:", userEmail);
-      console.log("User Name:", userName);
-      console.log("Delivery Address:", deliveryAddress);
-    }
+    console.log("Loaded addresses for user:", savedAddresses);
   }
 
   // DOM Elements
   const savedAddressesContainer = document.getElementById("saved-addresses");
-  const billingSavedAddressesContainer = document.getElementById(
-    "billing-saved-addresses"
-  );
-  const billingAddressSelection = document.getElementById(
-    "billing-address-selection"
-  );
+  const billingSavedAddressesContainer = document.getElementById("billing-saved-addresses");
+  const billingAddressSelection = document.getElementById("billing-address-selection");
   const addAddressBtn = document.getElementById("add-address-btn");
-  const addBillingAddressBtn = document.getElementById(
-    "add-billing-address-btn"
-  );
+  const addBillingAddressBtn = document.getElementById("add-billing-address-btn");
   const editAddressModal = document.getElementById("edit-address-modal");
   const billingAddressModal = document.getElementById("billing-address-modal");
   const closeEditModal = document.getElementById("close-edit-modal");
@@ -95,9 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalOrderDate = document.getElementById("modal-order-date");
   const modalOrderTotal = document.getElementById("modal-order-total");
   const modalOrderItems = document.getElementById("modal-order-items");
-  const modalDeliveryAddress = document.getElementById(
-    "modal-delivery-address"
-  );
+  const modalDeliveryAddress = document.getElementById("modal-delivery-address");
   const modalBillingAddress = document.getElementById("modal-billing-address");
   const checkoutCartItems = document.getElementById("checkout-cart-items");
   const summarySubtotal = document.getElementById("summary-subtotal");
@@ -106,9 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const summaryItemCount = document.getElementById("summary-item-count");
   const headerCartCount = document.getElementById("header-cart-count");
   const checkoutStatus = document.getElementById("checkout-status");
-  const selectedDeliveryPreview = document.getElementById(
-    "selected-delivery-preview"
-  );
+  const selectedDeliveryPreview = document.getElementById("selected-delivery-preview");
   const sameAddressDisplay = document.getElementById("same-address-display");
   const paymentAmount = document.getElementById("payment-amount");
   const successMessage = document.getElementById("success-message");
@@ -130,8 +184,16 @@ document.addEventListener("DOMContentLoaded", function () {
   renderBillingAddresses();
   setupEventListeners();
   setupKeyboardNavigation();
+  setupMobileMenu();
 
-  // FIX #2: Load cart data from localStorage
+  // ✅ FIX: Add function to refresh addresses from localStorage
+  function refreshAddresses() {
+    const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
+    savedAddresses = addresses.filter((addr) => addr.email === currentUser.email);
+    renderSavedAddresses();
+  }
+
+  // Load cart data function
   function loadCartData() {
     try {
       const savedCart = localStorage.getItem("agrimart_cart");
@@ -144,20 +206,15 @@ document.addEventListener("DOMContentLoaded", function () {
       if (savedOrderSummary) {
         orderSummary = JSON.parse(savedOrderSummary);
       } else {
-        // Calculate if not available
         calculateOrderSummary();
       }
 
-      // Update header cart count
       if (headerCartCount) {
         headerCartCount.textContent = orderSummary.itemCount;
       }
     } catch (e) {
       console.error("Error loading cart data:", e);
-      showNotification(
-        "Error loading cart data. Please return to cart.",
-        "error"
-      );
+      showNotification("Error loading cart data. Please return to cart.", "error");
     }
   }
 
@@ -171,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
       itemCount += item.quantity;
     });
 
-    const tax = subtotal * 0.05; // FIX #9: No discount, just tax
+    const tax = subtotal * 0.05;
     const total = subtotal + tax;
 
     orderSummary = {
@@ -182,11 +239,10 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }
 
-  // FIX #2: Render cart items from localStorage
+  // Render cart items
   function renderCartItems() {
     if (cartItems.length === 0) {
-      checkoutCartItems.innerHTML =
-        '<p class="no-addresses">No items in cart. Please add items first.</p>';
+      checkoutCartItems.innerHTML = '<p class="no-addresses">No items in cart. Please add items first.</p>';
       payNowBtn.disabled = true;
       return;
     }
@@ -196,12 +252,11 @@ document.addEventListener("DOMContentLoaded", function () {
     cartItems.forEach((item) => {
       const cartItemElement = document.createElement("article");
       cartItemElement.className = "cart-item";
-      const imageSrc =
-        Array.isArray(item.image) && item.image.length > 0
-          ? item.image[0].src
-          : typeof item.image === "string" && item.image.trim() !== ""
-          ? item.image
-          : "assets/default-image.jpg";
+      const imageSrc = Array.isArray(item.image) && item.image.length > 0
+        ? item.image[0].src
+        : typeof item.image === "string" && item.image.trim() !== ""
+        ? item.image
+        : "assets/default-image.jpg";
       cartItemElement.innerHTML = `
                 <div class="item-image">
     <img src="${escapeHtml(imageSrc)}"
@@ -215,15 +270,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         <span>Quantity: ${item.quantity}</span>
                     </div>
                 </div>
-                <div class="item-price">₹${(item.price * item.quantity).toFixed(
-                  2
-                )}</div>
+                <div class="item-price">₹${(item.price * item.quantity).toFixed(2)}</div>
             `;
 
       checkoutCartItems.appendChild(cartItemElement);
     });
 
-    // Update order summary display
     summarySubtotal.textContent = `₹${orderSummary.subtotal.toFixed(2)}`;
     summaryTax.textContent = `₹${orderSummary.tax.toFixed(2)}`;
     summaryTotal.textContent = `₹${orderSummary.total.toFixed(2)}`;
@@ -244,12 +296,18 @@ document.addEventListener("DOMContentLoaded", function () {
     return String(text).replace(/[&<>"']/g, (m) => map[m]);
   }
 
-  // Render saved addresses for delivery
+  // ✅ FIX: Render saved addresses with real-time updates
   function renderSavedAddresses() {
     savedAddressesContainer.innerHTML = "";
 
+    // Refresh addresses from localStorage to get latest changes
+    const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
+    savedAddresses = addresses.filter((addr) => addr.email === currentUser.email);
+
     if (savedAddresses.length === 0) {
       savedAddressesContainer.innerHTML = `<div class="no-addresses" role="status"><p>No saved addresses found. Please add a new address.</p></div>`;
+      selectedShippingAddress = null;
+      updateDeliveryAddressPreview();
       return;
     }
 
@@ -258,9 +316,16 @@ document.addEventListener("DOMContentLoaded", function () {
       savedAddressesContainer.appendChild(addressCard);
     });
 
-    // Select first shipping address by default
+    // Select first shipping address by default if none selected
     if (savedAddresses.length > 0 && !selectedShippingAddress) {
       selectShippingAddress(savedAddresses[0]);
+    } else if (selectedShippingAddress) {
+      // Check if selected address still exists
+      const addressExists = savedAddresses.find(addr => addr.id === selectedShippingAddress.id);
+      if (!addressExists) {
+        selectedShippingAddress = savedAddresses.length > 0 ? savedAddresses[0] : null;
+        selectShippingAddress(selectedShippingAddress);
+      }
     }
   }
 
@@ -278,8 +343,8 @@ document.addEventListener("DOMContentLoaded", function () {
       billingSavedAddressesContainer.appendChild(addressCard);
     });
   }
-  // <p>${escapeHtml(address.phone)}</p>;
 
+  // ✅ FIX: Updated createAddressCard to show "Home Address" or "Work Address"
   function createAddressCard(address, type, index) {
     const card = document.createElement("div");
     card.className = "address-card";
@@ -288,39 +353,33 @@ document.addEventListener("DOMContentLoaded", function () {
     card.setAttribute("aria-checked", "false");
     card.setAttribute("tabindex", index === 0 ? "0" : "-1");
 
-    const typeLabel = address.type === "Home" ? "Home" : "Work";
+    // ✅ FIX: Show "Home Address" or "Work Address" based on type
+    const typeLabel = address.type === "home" ? "Home Address" : 
+                     address.type === "work" ? "Work Address" : 
+                     "Home Address";
 
     card.innerHTML = `
         <div class="address-card-header">
-            <div class="address-name">${escapeHtml(address.type)} Address</div>
+            <div class="address-name">${typeLabel}</div>
             <div class="address-type-badge">${typeLabel}</div>
         </div>
         <div class="address-details">
-            <p>${escapeHtml(address.address)}</p>
-            <p>${escapeHtml(address.city)}, ${getStateName(
-      address.state
-    )} - ${escapeHtml(address.pincode)}</p>
-            ${
-              address.landmark
-                ? `<p>Landmark: ${escapeHtml(address.landmark)}</p>`
-                : ""
-            }
+            <p><strong>${escapeHtml(address.name || "User")}</strong></p>
+            <p>${escapeHtml(address.phone || "")}</p>
+            <p>${escapeHtml(address.address || "")}</p>
+            <p>${escapeHtml(address.city || "")}, ${getStateName(address.state)} - ${escapeHtml(address.pincode || "")}</p>
+            ${address.landmark ? `<p>Landmark: ${escapeHtml(address.landmark)}</p>` : ""}
         </div>
         <div class="address-actions">
-            <button class="address-action edit-address" data-id="${
-              address.id
-            }" data-type="${type}" type="button">
+            <button class="address-action edit-address" data-id="${address.id}" data-type="${type}" type="button">
                 <i class="fas fa-edit" aria-hidden="true"></i> <span>Edit</span>
             </button>
-            <button class="address-action delete-address" data-id="${
-              address.id
-            }" data-type="${type}" type="button">
+            <button class="address-action delete-address" data-id="${address.id}" data-type="${type}" type="button">
                 <i class="fas fa-trash" aria-hidden="true"></i> <span>Delete</span>
             </button>
         </div>
     `;
 
-    // Click to select
     card.addEventListener("click", function (e) {
       if (!e.target.closest(".address-actions")) {
         if (type === "shipping") {
@@ -331,7 +390,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // Keyboard navigation for address cards
     card.addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -346,11 +404,10 @@ document.addEventListener("DOMContentLoaded", function () {
     return card;
   }
 
-  // FIX #5: Select shipping address and update billing preview
+  // Select shipping address
   function selectShippingAddress(address) {
     selectedShippingAddress = address;
 
-    // Update UI
     const container = savedAddressesContainer;
     container.querySelectorAll(".address-card").forEach((c) => {
       c.classList.remove("selected");
@@ -365,22 +422,18 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedCard.setAttribute("tabindex", "0");
     }
 
-    // FIX #5: If same as shipping is selected, update billing and show preview
     if (sameAsShippingRadio.checked) {
       selectedBillingAddress = address;
       updateDeliveryAddressPreview();
     }
 
-    announceToScreenReader(
-      `Delivery address selected: ${address.name}, ${address.city}`
-    );
+    announceToScreenReader(`Delivery address selected: ${address.name}, ${address.city}`);
   }
 
   // Select billing address
   function selectBillingAddress(address) {
     selectedBillingAddress = address;
 
-    // Update UI
     const container = billingSavedAddressesContainer;
     container.querySelectorAll(".address-card").forEach((c) => {
       c.classList.remove("selected");
@@ -395,33 +448,28 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedCard.setAttribute("tabindex", "0");
     }
 
-    announceToScreenReader(
-      `Billing address selected: ${address.name}, ${address.city}`
-    );
+    announceToScreenReader(`Billing address selected: ${address.name}, ${address.city}`);
   }
 
-  // FIX #5: Update delivery address preview in billing section
+  // ✅ FIX: Updated delivery address preview to show proper labels
   function updateDeliveryAddressPreview() {
     if (!selectedShippingAddress) {
-      selectedDeliveryPreview.innerHTML =
-        '<p class="no-addresses">Please select a delivery address first.</p>';
+      selectedDeliveryPreview.innerHTML = '<p class="no-addresses">Please select a delivery address first.</p>';
       return;
     }
 
+    const addr = selectedShippingAddress;
+    const typeLabel = addr.type === "home" ? "Home Address" : 
+                     addr.type === "work" ? "Work Address" : 
+                     "Home Address";
+    
     selectedDeliveryPreview.innerHTML = `
-            <p><strong>${escapeHtml(selectedShippingAddress.type)}</strong></p>
-            <p>${escapeHtml(selectedShippingAddress.address)}</p>
-            <p>${escapeHtml(selectedShippingAddress.city)}, ${getStateName(
-      selectedShippingAddress.state
-    )} - ${escapeHtml(selectedShippingAddress.pincode)}</p>
-            <p>Phone: ${escapeHtml(selectedShippingAddress.phone)}</p>
-            ${
-              selectedShippingAddress.landmark
-                ? `<p>Landmark: ${escapeHtml(
-                    selectedShippingAddress.landmark
-                  )}</p>`
-                : ""
-            }
+            <p><strong>${typeLabel}</strong></p>
+            <p><strong>${escapeHtml(addr.name || "User")}</strong></p>
+            <p>${escapeHtml(addr.phone || "")}</p>
+            <p>${escapeHtml(addr.address || "")}</p>
+            <p>${escapeHtml(addr.city || "")}, ${getStateName(addr.state)} - ${escapeHtml(addr.pincode || "")}</p>
+            ${addr.landmark ? `<p>Landmark: ${escapeHtml(addr.landmark)}</p>` : ""}
         `;
   }
 
@@ -483,12 +531,18 @@ document.addEventListener("DOMContentLoaded", function () {
         billingAddressSelection.style.display = "block";
         sameAddressDisplay.style.display = "none";
 
+        // ✅ FIX: Clear the selected billing address and don't show delivery address preview
+        selectedBillingAddress = null;
+        
+        // ✅ FIX: Clear the delivery address preview when choosing different billing
+        selectedDeliveryPreview.innerHTML = '<p class="no-addresses">Please add a new billing address below.</p>';
+        
         // If no billing addresses exist yet, open the add billing address modal
         if (billingAddresses.length === 0) {
           setTimeout(() => openAddBillingAddressModal(), 300);
         }
 
-        announceToScreenReader("Use different billing address selected");
+        announceToScreenReader("Use different billing address selected. Please add a new billing address.");
       }
     });
 
@@ -552,12 +606,18 @@ document.addEventListener("DOMContentLoaded", function () {
     printOrderBtn.addEventListener("click", () => {
       window.print();
     });
+
+    // ✅ FIX: Listen for storage changes to sync addresses in real-time
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'addresses') {
+        refreshAddresses();
+      }
+    });
   }
 
   // Setup keyboard navigation
   function setupKeyboardNavigation() {
     document.addEventListener("keydown", function (e) {
-      // Escape key closes modals
       if (e.key === "Escape") {
         if (editAddressModal.style.display === "flex") {
           closeEditModalFunc();
@@ -579,8 +639,7 @@ document.addEventListener("DOMContentLoaded", function () {
     editingAddressId = null;
 
     editModalTitle.textContent = "Add New Address";
-    editModalSubmit.innerHTML =
-      '<i class="fas fa-save" aria-hidden="true"></i> Save Address';
+    editModalSubmit.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i> Save Address';
 
     editAddressForm.reset();
     clearFormErrors(editAddressForm);
@@ -588,14 +647,15 @@ document.addEventListener("DOMContentLoaded", function () {
     showModal(editAddressModal);
   }
 
+  // ✅ FIX: Open billing address modal with empty form
   function openAddBillingAddressModal() {
     isEditingBillingAddress = false;
     editingBillingAddressId = null;
 
     billingModalTitle.textContent = "Add Billing Address";
-    billingModalSubmit.innerHTML =
-      '<i class="fas fa-save" aria-hidden="true"></i> Save Billing Address';
+    billingModalSubmit.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i> Save Billing Address';
 
+    // ✅ FIX: Clear the form instead of auto-filling
     billingAddressForm.reset();
     clearFormErrors(billingAddressForm);
 
@@ -607,16 +667,15 @@ document.addEventListener("DOMContentLoaded", function () {
     editingAddressId = address.id;
 
     editModalTitle.textContent = "Edit Address";
-    editModalSubmit.innerHTML =
-      '<i class="fas fa-save" aria-hidden="true"></i> Update Address';
+    editModalSubmit.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i> Update Address';
 
     // Populate form
-    document.getElementById("edit-full-name").value = address.name;
-    document.getElementById("edit-phone").value = address.phone;
-    document.getElementById("edit-address").value = address.address;
-    document.getElementById("edit-city").value = address.city;
-    document.getElementById("edit-state").value = address.state;
-    document.getElementById("edit-pincode").value = address.pincode;
+    document.getElementById("edit-full-name").value = address.name || "";
+    document.getElementById("edit-phone").value = address.phone || "";
+    document.getElementById("edit-address").value = address.address || "";
+    document.getElementById("edit-city").value = address.city || "";
+    document.getElementById("edit-state").value = address.state || "";
+    document.getElementById("edit-pincode").value = address.pincode || "";
     document.getElementById("edit-landmark").value = address.landmark || "";
 
     const typeRadio = document.getElementById(`edit-${address.type}`);
@@ -631,16 +690,15 @@ document.addEventListener("DOMContentLoaded", function () {
     editingBillingAddressId = address.id;
 
     billingModalTitle.textContent = "Edit Billing Address";
-    billingModalSubmit.innerHTML =
-      '<i class="fas fa-save" aria-hidden="true"></i> Update Billing Address';
+    billingModalSubmit.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i> Update Billing Address';
 
     // Populate form
-    document.getElementById("billing-full-name").value = address.name;
-    document.getElementById("billing-phone").value = address.phone;
-    document.getElementById("billing-address").value = address.address;
-    document.getElementById("billing-city").value = address.city;
-    document.getElementById("billing-state").value = address.state;
-    document.getElementById("billing-pincode").value = address.pincode;
+    document.getElementById("billing-full-name").value = address.name || "";
+    document.getElementById("billing-phone").value = address.phone || "";
+    document.getElementById("billing-address").value = address.address || "";
+    document.getElementById("billing-city").value = address.city || "";
+    document.getElementById("billing-state").value = address.state || "";
+    document.getElementById("billing-pincode").value = address.pincode || "";
     document.getElementById("billing-landmark").value = address.landmark || "";
 
     const typeRadio = document.getElementById(`billing-${address.type}`);
@@ -655,15 +713,11 @@ document.addEventListener("DOMContentLoaded", function () {
     focusedElementBeforeModal = document.activeElement;
     modal.style.display = "flex";
 
-    // Focus first input
     setTimeout(() => {
-      const firstInput = modal.querySelector(
-        'input:not([type="radio"]), select, textarea'
-      );
+      const firstInput = modal.querySelector('input:not([type="radio"]), select, textarea');
       if (firstInput) firstInput.focus();
     }, 100);
 
-    // Trap focus
     trapFocus(modal);
   }
 
@@ -719,7 +773,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // FIX #7: Form validation
+  // Form validation
   function validateForm(form) {
     let isValid = true;
     clearFormErrors(form);
@@ -731,25 +785,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const nameInput = document.getElementById(`${prefix}-full-name`);
     const nameValue = nameInput.value.trim();
     if (nameValue.length < 2) {
-      showFieldError(
-        nameInput,
-        `${prefix}-name-error`,
-        "Name must be at least 2 characters"
-      );
+      showFieldError(nameInput, `${prefix}-name-error`, "Name must be at least 2 characters");
       isValid = false;
     } else if (nameValue.length > 50) {
-      showFieldError(
-        nameInput,
-        `${prefix}-name-error`,
-        "Name must not exceed 50 characters"
-      );
+      showFieldError(nameInput, `${prefix}-name-error`, "Name must not exceed 50 characters");
       isValid = false;
     } else if (!/^[a-zA-Z\s]+$/.test(nameValue)) {
-      showFieldError(
-        nameInput,
-        `${prefix}-name-error`,
-        "Name should only contain letters"
-      );
+      showFieldError(nameInput, `${prefix}-name-error`, "Name should only contain letters");
       isValid = false;
     }
 
@@ -757,11 +799,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const phoneInput = document.getElementById(`${prefix}-phone`);
     const phoneValue = phoneInput.value.trim();
     if (!/^[0-9]{10}$/.test(phoneValue)) {
-      showFieldError(
-        phoneInput,
-        `${prefix}-phone-error`,
-        "Phone must be exactly 10 digits"
-      );
+      showFieldError(phoneInput, `${prefix}-phone-error`, "Phone must be exactly 10 digits");
       isValid = false;
     }
 
@@ -769,18 +807,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const addressInput = document.getElementById(`${prefix}-address`);
     const addressValue = addressInput.value.trim();
     if (addressValue.length < 10) {
-      showFieldError(
-        addressInput,
-        `${prefix}-address-error`,
-        "Address must be at least 10 characters"
-      );
+      showFieldError(addressInput, `${prefix}-address-error`, "Address must be at least 10 characters");
       isValid = false;
     } else if (addressValue.length > 200) {
-      showFieldError(
-        addressInput,
-        `${prefix}-address-error`,
-        "Address must not exceed 200 characters"
-      );
+      showFieldError(addressInput, `${prefix}-address-error`, "Address must not exceed 200 characters");
       isValid = false;
     }
 
@@ -788,29 +818,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const cityInput = document.getElementById(`${prefix}-city`);
     const cityValue = cityInput.value.trim();
     if (cityValue.length < 2) {
-      showFieldError(
-        cityInput,
-        `${prefix}-city-error`,
-        "City must be at least 2 characters"
-      );
+      showFieldError(cityInput, `${prefix}-city-error`, "City must be at least 2 characters");
       isValid = false;
     } else if (!/^[a-zA-Z\s]+$/.test(cityValue)) {
-      showFieldError(
-        cityInput,
-        `${prefix}-city-error`,
-        "City should only contain letters"
-      );
+      showFieldError(cityInput, `${prefix}-city-error`, "City should only contain letters");
       isValid = false;
     }
 
     // State
     const stateInput = document.getElementById(`${prefix}-state`);
     if (!stateInput.value) {
-      showFieldError(
-        stateInput,
-        `${prefix}-state-error`,
-        "Please select a state"
-      );
+      showFieldError(stateInput, `${prefix}-state-error`, "Please select a state");
       isValid = false;
     }
 
@@ -818,11 +836,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const pincodeInput = document.getElementById(`${prefix}-pincode`);
     const pincodeValue = pincodeInput.value.trim();
     if (!/^[0-9]{6}$/.test(pincodeValue)) {
-      showFieldError(
-        pincodeInput,
-        `${prefix}-pincode-error`,
-        "PIN code must be exactly 6 digits"
-      );
+      showFieldError(pincodeInput, `${prefix}-pincode-error`, "PIN code must be exactly 6 digits");
       isValid = false;
     }
 
@@ -850,24 +864,62 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // ✅ FIX: Complete handleAddressSubmit function - save to central addresses list
   function handleAddressSubmit(e) {
     e.preventDefault();
     if (!validateForm(editAddressForm)) return;
 
     const addressData = {
-      /* ... */
+      name: document.getElementById("edit-full-name").value.trim(),
+      phone: document.getElementById("edit-phone").value.trim(),
+      address: document.getElementById("edit-address").value.trim(),
+      city: document.getElementById("edit-city").value.trim(),
+      state: document.getElementById("edit-state").value,
+      pincode: document.getElementById("edit-pincode").value.trim(),
+      landmark: document.getElementById("edit-landmark").value.trim(),
+      type: document.querySelector('input[name="edit-address-type"]:checked').value,
+      email: currentUser.email // Add user email to link address to user
     };
 
+    // ✅ FIX: Always save to central addresses list in localStorage
+    const allAddresses = JSON.parse(localStorage.getItem("addresses")) || [];
+
     if (isAddingNewAddress) {
-      const newAddress = { id: Date.now(), ...addressData };
+      const newAddress = { 
+        id: Date.now(), 
+        ...addressData 
+      };
       savedAddresses.push(newAddress);
+      allAddresses.push(newAddress);
+      
+      showNotification("Address added successfully!", "success");
     } else {
       const index = savedAddresses.findIndex((a) => a.id == editingAddressId);
-      savedAddresses[index] = { ...savedAddresses[index], ...addressData };
+      if (index !== -1) {
+        savedAddresses[index] = { ...savedAddresses[index], ...addressData };
+        
+        const profileIndex = allAddresses.findIndex((a) => a.id == editingAddressId);
+        if (profileIndex !== -1) {
+          allAddresses[profileIndex] = { ...allAddresses[profileIndex], ...addressData };
+        }
+        
+        showNotification("Address updated successfully!", "success");
+      }
     }
 
-    localStorage.setItem("savedAddresses", JSON.stringify(savedAddresses)); // <--- Save to localStorage
+    // ✅ FIX: Save to central addresses list
+    localStorage.setItem("addresses", JSON.stringify(allAddresses));
+    
     renderSavedAddresses();
+    
+    // Select the newly added/edited address
+    if (isAddingNewAddress) {
+      selectShippingAddress(savedAddresses[savedAddresses.length - 1]);
+    } else {
+      const updatedAddress = savedAddresses.find(a => a.id == editingAddressId);
+      if (updatedAddress) selectShippingAddress(updatedAddress);
+    }
+    
     closeEditModalFunc();
   }
 
@@ -887,14 +939,11 @@ document.addEventListener("DOMContentLoaded", function () {
       state: document.getElementById("billing-state").value,
       pincode: document.getElementById("billing-pincode").value.trim(),
       landmark: document.getElementById("billing-landmark").value.trim(),
-      type: document.querySelector('input[name="billing-address-type"]:checked')
-        .value,
+      type: document.querySelector('input[name="billing-address-type"]:checked').value,
     };
 
     if (isEditingBillingAddress) {
-      const index = billingAddresses.findIndex(
-        (a) => a.id == editingBillingAddressId
-      );
+      const index = billingAddresses.findIndex((a) => a.id == editingBillingAddressId);
       if (index !== -1) {
         billingAddresses[index] = {
           ...billingAddresses[index],
@@ -902,10 +951,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         showNotification("Billing address updated successfully!", "success");
 
-        if (
-          selectedBillingAddress &&
-          selectedBillingAddress.id == editingBillingAddressId
-        ) {
+        if (selectedBillingAddress && selectedBillingAddress.id == editingBillingAddressId) {
           selectedBillingAddress = billingAddresses[index];
         }
       }
@@ -930,18 +976,26 @@ document.addEventListener("DOMContentLoaded", function () {
     closeBillingModalFunc();
   }
 
+  // ✅ FIX: Updated deleteAddress function to delete from central addresses list
   function deleteAddress(addressId) {
     if (confirm("Are you sure you want to delete this address?")) {
       const index = savedAddresses.findIndex((a) => a.id == addressId);
       if (index !== -1) {
         savedAddresses.splice(index, 1);
+        
+        // ✅ FIX: Also delete from central addresses list
+        const allAddresses = JSON.parse(localStorage.getItem("addresses")) || [];
+        const profileIndex = allAddresses.findIndex((a) => a.id == addressId);
+        if (profileIndex !== -1) {
+          allAddresses.splice(profileIndex, 1);
+          localStorage.setItem("addresses", JSON.stringify(allAddresses));
+        }
+        
+        localStorage.setItem("savedAddresses", JSON.stringify(savedAddresses));
         renderSavedAddresses();
         showNotification("Address deleted successfully!", "success");
 
-        if (
-          selectedShippingAddress &&
-          selectedShippingAddress.id == addressId
-        ) {
+        if (selectedShippingAddress && selectedShippingAddress.id == addressId) {
           selectedShippingAddress = null;
           updateDeliveryAddressPreview();
         }
@@ -949,11 +1003,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // ✅ FIX: Updated deleteBillingAddress function
   function deleteBillingAddress(addressId) {
     if (confirm("Are you sure you want to delete this billing address?")) {
       const index = billingAddresses.findIndex((a) => a.id == addressId);
       if (index !== -1) {
         billingAddresses.splice(index, 1);
+        localStorage.setItem("billingAddresses", JSON.stringify(billingAddresses));
         renderBillingAddresses();
         showNotification("Billing address deleted successfully!", "success");
 
@@ -986,7 +1042,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // Update payment amount
     if (paymentAmount) {
       paymentAmount.textContent = `₹${orderSummary.total.toFixed(2)}`;
     }
@@ -1020,27 +1075,15 @@ document.addEventListener("DOMContentLoaded", function () {
       minute: "2-digit",
     });
 
-    // Use selected shipping/billing address or default to first saved addresses
-    const shippingAddr =
-      selectedShippingAddress ||
-      savedAddresses.find((a) => a.userEmail === currentUser.email) ||
-      null;
-    const billingAddr =
-      selectedBillingAddress ||
-      billingAddresses.find((a) => a.userEmail === currentUser.email) ||
-      shippingAddr;
+    const shippingAddr = selectedShippingAddress || savedAddresses.find((a) => a.email === currentUser.email) || null;
+    const billingAddr = selectedBillingAddress || billingAddresses.find((a) => a.email === currentUser.email) || shippingAddr;
 
     if (!shippingAddr || !billingAddr) {
-      showNotification(
-        "Please select delivery and billing addresses.",
-        "error"
-      );
+      showNotification("Please select delivery and billing addresses.", "error");
       return;
     }
 
-    const farmerEmails = [
-      ...new Set(cartItems.map((item) => item.farmerEmail)),
-    ];
+    const farmerEmails = [...new Set(cartItems.map((item) => item.farmerEmail))];
 
     const order = {
       id: orderId,
@@ -1060,7 +1103,6 @@ document.addEventListener("DOMContentLoaded", function () {
     orders.push(order);
     localStorage.setItem("orders", JSON.stringify(orders));
 
-    // Clear cart after order
     localStorage.removeItem("agrimart_cart");
     localStorage.removeItem("agrimart_order_summary");
 
@@ -1072,9 +1114,7 @@ document.addEventListener("DOMContentLoaded", function () {
     successOrderDate.textContent = order.date;
 
     if (successMessage) {
-      successMessage.textContent = `Your payment of ₹${order.total.toFixed(
-        2
-      )} has been processed successfully.`;
+      successMessage.textContent = `Your payment of ₹${order.total.toFixed(2)} has been processed successfully.`;
     }
 
     showModal(successModal);
@@ -1082,17 +1122,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showOrderDetailsModal(order) {
-    // Populate order information
     modalOrderId.textContent = order.id;
     modalOrderDate.textContent = order.date;
     modalOrderTotal.textContent = `₹${order.total.toFixed(2)}`;
     document.body.style.overflow = "hidden";
 
-    // Populate order items
     modalOrderItems.innerHTML = order.items
       .map((item) => {
         const imageSrc = item.image ? item.image : "/images/placeholder.png";
-        console.log("Item Image:", imageSrc);
         return `
       <div class="order-item-detail">
         <div class="order-item-image">
@@ -1107,44 +1144,38 @@ document.addEventListener("DOMContentLoaded", function () {
           <p class="order-item-seller">Sold by: Local Farmer</p>
           <p class="order-item-quantity">Quantity: ${item.quantity}</p>
         </div>
-        <div class="order-item-price">₹${(item.price * item.quantity).toFixed(
-          2
-        )}</div>
+        <div class="order-item-price">₹${(item.price * item.quantity).toFixed(2)}</div>
       </div>
     `;
       })
       .join("");
 
-    // Populate delivery address
     const addr = order.shippingAddress;
+    const typeLabel = addr.type === "home" ? "Home Address" : 
+                     addr.type === "work" ? "Work Address" : 
+                     "Home Address";
+    
     modalDeliveryAddress.innerHTML = `
-            <p><strong>${escapeHtml(addr.type)}</strong></p>
-            <p>${escapeHtml(addr.address)}</p>
-            <p>${escapeHtml(addr.city)}, ${getStateName(
-      addr.state
-    )} - ${escapeHtml(addr.pincode)}</p>
-            <p>Phone: ${escapeHtml(addr.phone)}</p>
-            ${
-              addr.landmark
-                ? `<p>Landmark: ${escapeHtml(addr.landmark)}</p>`
-                : ""
-            }
+            <p><strong>${typeLabel}</strong></p>
+            <p><strong>${escapeHtml(addr.name || "User")}</strong></p>
+            <p>${escapeHtml(addr.phone || "")}</p>
+            <p>${escapeHtml(addr.address || "")}</p>
+            <p>${escapeHtml(addr.city || "")}, ${getStateName(addr.state)} - ${escapeHtml(addr.pincode || "")}</p>
+            ${addr.landmark ? `<p>Landmark: ${escapeHtml(addr.landmark)}</p>` : ""}
         `;
 
-    // Populate billing address
     const billingAddr = order.billingAddress;
+    const billingTypeLabel = billingAddr.type === "home" ? "Home Address" : 
+                           billingAddr.type === "work" ? "Work Address" : 
+                           "Home Address";
+    
     modalBillingAddress.innerHTML = `
-            <p><strong>${escapeHtml(billingAddr.type)}</strong></p>
-            <p>${escapeHtml(billingAddr.address)}</p>
-            <p>${escapeHtml(billingAddr.city)}, ${getStateName(
-      billingAddr.state
-    )} - ${escapeHtml(billingAddr.pincode)}</p>
-            <p>Phone: ${escapeHtml(billingAddr.phone)}</p>
-            ${
-              billingAddr.landmark
-                ? `<p>Landmark: ${escapeHtml(billingAddr.landmark)}</p>`
-                : ""
-            }
+            <p><strong>${billingTypeLabel}</strong></p>
+            <p><strong>${escapeHtml(billingAddr.name || "User")}</strong></p>
+            <p>${escapeHtml(billingAddr.phone || "")}</p>
+            <p>${escapeHtml(billingAddr.address || "")}</p>
+            <p>${escapeHtml(billingAddr.city || "")}, ${getStateName(billingAddr.state)} - ${escapeHtml(billingAddr.pincode || "")}</p>
+            ${billingAddr.landmark ? `<p>Landmark: ${escapeHtml(billingAddr.landmark)}</p>` : ""}
         `;
 
     showModal(orderModal);
