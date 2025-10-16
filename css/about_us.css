@@ -58,7 +58,7 @@ body {
   z-index: 1000;
 }
 
-.nav-content {
+.nav-content { 
   display: flex;
   justify-content: space-between;
   align-items: center;
