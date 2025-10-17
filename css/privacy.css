@@ -563,8 +563,7 @@ body {
 
   /* Mobile profile/cart/footer */
   .mobile-profile-section,
-  .mobile-cart-section,
-  .mobile-menu-footer {
+  .mobile-cart-section{
     display: block;
     width: 100%;
   }
