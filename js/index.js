@@ -5,6 +5,11 @@ let cart = [];
 // Get current user from localStorage
 const currentUser = localStorage.getItem("currentUser");
 const user = currentUser ? JSON.parse(currentUser) : null;
+// common.js
+function truncateText(text, maxLength = 55) {
+  if (!text) return "";
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+}
 
 // Add dynamic navbar links
 function setupDynamicLinks() {
@@ -66,8 +71,7 @@ function renderProducts(filter = "all") {
         <div class="product-info">
           <span class="product-category">${product.category}</span>
           <h3 class="product-name">${product.name}</h3>
-          <p class="product-description">${product.description}</p>
-          <div class="product-footer">
+ <p class="product-description">${truncateText(product.description)}</p>          <div class="product-footer">
             <span class="product-price">₹${product.price.toFixed(2)}</span>
             <button class="add-to-cart-btn" onclick="addToCart(${
               product.id
