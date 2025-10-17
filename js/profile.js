@@ -47,7 +47,7 @@ function setupDropdown() {
     dropdownMenu.querySelectorAll(".dropdown-item").forEach((item) => {
       item.addEventListener("click", (e) => {
         e.preventDefault();
-        const category = item.getAttribute("data-category"); // matches your HTML attribute
+        const category = item.getAttribute("data-category");
         window.location.href = `/products.html?category=${category}`;
       });
     });
@@ -174,10 +174,12 @@ const contentSections = {
   <div id="addressList"></div>
 
   <!-- Hidden modal/dialog for adding address -->
-  <div id="addressModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
-    <div style="background:#fff; padding:20px; border-radius:10px; min-width:400px; position:relative;">
-      <span id="closeModal" style="position:absolute; right:10px; top:10px; cursor:pointer;">✖</span>
+  <div id="addressModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
+    <div style="background:#fff; padding:20px; border-radius:10px; min-width:400px; max-width:500px; position:relative;">
+      <span id="closeModal" style="position:absolute; right:10px; top:10px; cursor:pointer; font-size:24px; color:#999;">✖</span>
+      <h3 id="modalTitle" style="margin-top:0;">Add New Address</h3>
       <form id="addressFormModal" class="address-form">
+        <input type="hidden" id="editAddressId" value="">
         <div class="form-group">
           <label>Address *</label>
           <textarea id="modalAddress" placeholder="House/Flat No., Building, Street, Area" required></textarea>
@@ -191,18 +193,22 @@ const contentSections = {
             <label>State *</label>
             <select id="modalState" required>
               <option value="">Select State</option>
-              <option>Karnataka</option>
-              <option>Maharashtra</option>
-              <option>Tamil Nadu</option>
-              <option>Kerala</option>
-              <option>Delhi</option>
+              <option value="KA">Karnataka</option>
+              <option value="MH">Maharashtra</option>
+              <option value="TN">Tamil Nadu</option>
+              <option value="KL">Kerala</option>
+              <option value="DL">Delhi</option>
+              <option value="UP">Uttar Pradesh</option>
+              <option value="RJ">Rajasthan</option>
+              <option value="GJ">Gujarat</option>
+              <option value="WB">West Bengal</option>
             </select>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>PIN Code *</label>
-            <input type="text" id="modalPincode" placeholder="6-digit PIN code" required />
+            <input type="text" id="modalPincode" placeholder="6-digit PIN code" required maxlength="6" />
           </div>
           <div class="form-group">
             <label>Landmark (Optional)</label>
@@ -212,11 +218,14 @@ const contentSections = {
         <div class="form-group">
           <label>Address Type</label>
           <div class="address-type">
-            <button type="button" class="type-btn active" data-type="Home">🏠 Home</button>
-            <button type="button" class="type-btn" data-type="Work">🏢 Work</button>
+            <button type="button" class="type-btn active" data-type="home">🏠 Home</button>
+            <button type="button" class="type-btn" data-type="work">🏢 Work</button>
           </div>
         </div>
-        <button type="submit" class="update-btn">Save Address</button>
+        <div style="display:flex; gap:10px; margin-top:15px;">
+          <button type="submit" id="submitAddressBtn" class="update-btn" style="flex:1;">Save Address</button>
+          <button type="button" id="cancelAddressBtn" class="update-btn" style="flex:1; background:#6c757d;">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
@@ -251,7 +260,6 @@ menuItems.forEach((item, index) => {
 });
 
 // Handle tab switching
-// Handle tab switching
 function handleTabClick(tabName, clickedBtn) {
   sidebarMenu
     .querySelectorAll("button")
@@ -274,15 +282,15 @@ function handleTabClick(tabName, clickedBtn) {
 
   // Farmer's Sales History table
   if (tabName === "Sales History") {
-    contentContainer.innerHTML = contentHTML; // Clear old content
-    renderSalesHistory(); // Only call when tab is clicked
+    contentContainer.innerHTML = contentHTML;
+    renderSalesHistory();
     return;
   }
 
   // Regular user My Orders
   if (tabName === "My Orders") {
-    contentContainer.innerHTML = contentHTML; // Clear old content
-    renderOrders(); // Only call when tab is clicked
+    contentContainer.innerHTML = contentHTML;
+    renderOrders();
     return;
   }
 
@@ -367,6 +375,7 @@ function attachProfileHandler() {
   });
 }
 
+// ✅ COMPLETE FIXED: Address Handler with Edit & Delete + Cancel Button
 function attachAddressHandler() {
   const container = document.getElementById("manageAddressContainer");
   const addBtn = document.getElementById("addAddressBtn");
@@ -374,15 +383,87 @@ function attachAddressHandler() {
   const closeModal = document.getElementById("closeModal");
   const form = document.getElementById("addressFormModal");
   const addressListContainer = document.getElementById("addressList");
+  const modalTitle = document.getElementById("modalTitle");
+  const submitBtn = document.getElementById("submitAddressBtn");
+  const editAddressIdInput = document.getElementById("editAddressId");
+  const cancelBtn = document.getElementById("cancelAddressBtn");
 
-  // Open/close modal
-  addBtn.addEventListener("click", () => (modal.style.display = "flex"));
-  closeModal.addEventListener("click", () => (modal.style.display = "none"));
+  let isEditMode = false;
+
+  // ✅ FIX: Migrate old addresses without IDs
+  function ensureAllAddressesHaveIds() {
+    let addresses = JSON.parse(localStorage.getItem("addresses")) || [];
+    let needsUpdate = false;
+
+    addresses = addresses.map((addr, index) => {
+      if (
+        !addr.id ||
+        addr.id === undefined ||
+        addr.id === null ||
+        addr.id === "undefined" ||
+        addr.id === ""
+      ) {
+        needsUpdate = true;
+        return {
+          ...addr,
+          id: Date.now() + index + Math.floor(Math.random() * 10000),
+        };
+      }
+      return addr;
+    });
+
+    if (needsUpdate) {
+      localStorage.setItem("addresses", JSON.stringify(addresses));
+    }
+
+    return addresses;
+  }
+
+  // Function to close modal and reset
+  function closeModalAndReset() {
+    modal.style.display = "none";
+    isEditMode = false;
+    form.reset();
+    editAddressIdInput.value = "";
+    const typeButtons = form.querySelectorAll(".type-btn");
+    typeButtons.forEach((b) => b.classList.remove("active"));
+    typeButtons[0].classList.add("active");
+  }
+
+  // Open modal for ADD
+  addBtn.addEventListener("click", () => {
+    isEditMode = false;
+    editAddressIdInput.value = "";
+    modalTitle.textContent = "Add New Address";
+    submitBtn.textContent = "Save Address";
+
+    modal.style.display = "flex";
+    form.reset();
+    const typeButtons = form.querySelectorAll(".type-btn");
+    typeButtons.forEach((b) => b.classList.remove("active"));
+    typeButtons[0].classList.add("active");
+  });
+
+  // Close modal (X button)
+  closeModal.addEventListener("click", closeModalAndReset);
+
+  // ✅ Cancel button handler
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", closeModalAndReset);
+  }
+
+  // Close modal on outside click
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModalAndReset();
+    }
+  });
 
   // Type buttons in modal
   const typeButtons = form.querySelectorAll(".type-btn");
   typeButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
       typeButtons.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
     });
@@ -390,8 +471,8 @@ function attachAddressHandler() {
 
   // Render addresses
   function renderAddresses() {
-    const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
-    const userAddresses = addresses.filter(
+    const allAddresses = ensureAllAddressesHaveIds();
+    const userAddresses = allAddresses.filter(
       (addr) => addr.email === currentUser.email
     );
 
@@ -414,11 +495,16 @@ function attachAddressHandler() {
             align-items:flex-start;
             box-shadow:0 2px 6px rgba(0,0,0,0.05);
             position:relative;
+            margin-bottom:15px;
         ">
           <div>
             <strong style="font-size:16px; color:#333;">${
-              addr.type
+              addr.type || "Home"
             } Address</strong>
+            <p style="margin:4px 0; color:#555;"><strong>${
+              addr.name || ""
+            }</strong></p>
+            <p style="margin:4px 0; color:#555;">${addr.phone || ""}</p>
             <p style="margin:4px 0; color:#555;">${addr.address}</p>
             <p style="margin:4px 0; color:#555;">${addr.city}, ${
           addr.state
@@ -429,61 +515,181 @@ function attachAddressHandler() {
                 : ""
             }
           </div>
-          <span style="
-              cursor:pointer; 
-              color:#e74c3c; 
-              font-size:18px; 
-              margin-left:10px;
-          " onclick="deleteAddress('${addr.type}')">❌</span>
+          <div style="display:flex; gap:15px; align-items:center;">
+            <span class="edit-address-btn" data-address-id="${
+              addr.id
+            }" style="cursor:pointer; color:#3498db; font-size:16px;" title="Edit">✏️</span>
+            <span class="delete-address-btn" data-address-id="${
+              addr.id
+            }" style="cursor:pointer; color:#e74c3c; font-size:18px;" title="Delete">❌</span>
+          </div>
         </div>
       `
       )
       .join("");
   }
 
+  // Initial render
   renderAddresses();
 
-  // Save new address
-  // Save new address
+  // ✅ Event delegation for EDIT and DELETE
+  addressListContainer.addEventListener("click", function (e) {
+    // Handle DELETE
+    const deleteBtn = e.target.closest(".delete-address-btn");
+    if (deleteBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const addressId = deleteBtn.getAttribute("data-address-id");
+
+      if (
+        !addressId ||
+        addressId === "null" ||
+        addressId === "undefined" ||
+        addressId === ""
+      ) {
+        showSnackbar("Error: Invalid address ID", "error");
+        return;
+      }
+
+      if (confirm("Are you sure you want to delete this address?")) {
+        let addresses = JSON.parse(localStorage.getItem("addresses")) || [];
+
+        const beforeLength = addresses.length;
+        addresses = addresses.filter(
+          (addr) => String(addr.id) !== String(addressId)
+        );
+
+        if (beforeLength === addresses.length) {
+          showSnackbar("Error: Address not found", "error");
+          return;
+        }
+
+        localStorage.setItem("addresses", JSON.stringify(addresses));
+        showSnackbar("Address deleted successfully!", "success");
+        renderAddresses();
+      }
+    }
+
+    // Handle EDIT
+    const editBtn = e.target.closest(".edit-address-btn");
+    if (editBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const addressId = editBtn.getAttribute("data-address-id");
+
+      if (
+        !addressId ||
+        addressId === "null" ||
+        addressId === "undefined" ||
+        addressId === ""
+      ) {
+        showSnackbar("Error: Invalid address ID", "error");
+        return;
+      }
+
+      const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
+      const addressToEdit = addresses.find(
+        (addr) => String(addr.id) === String(addressId)
+      );
+
+      if (!addressToEdit) {
+        showSnackbar("Error: Address not found", "error");
+        return;
+      }
+
+      // Populate form
+      isEditMode = true;
+      editAddressIdInput.value = addressId;
+      modalTitle.textContent = "Edit Address";
+      submitBtn.textContent = "Update Address";
+
+      document.getElementById("modalAddress").value =
+        addressToEdit.address || "";
+      document.getElementById("modalCity").value = addressToEdit.city || "";
+      document.getElementById("modalState").value = addressToEdit.state || "";
+      document.getElementById("modalPincode").value =
+        addressToEdit.pincode || "";
+      document.getElementById("modalLandmark").value =
+        addressToEdit.landmark || "";
+
+      // Set type button
+      const typeButtons = form.querySelectorAll(".type-btn");
+      typeButtons.forEach((btn) => {
+        btn.classList.remove("active");
+        if (btn.getAttribute("data-type") === (addressToEdit.type || "home")) {
+          btn.classList.add("active");
+        }
+      });
+
+      modal.style.display = "flex";
+    }
+  });
+
+  // Save/Update address
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const addressData = {
-      email: currentUser.email, // user's email
-      name: currentUser.name, // user's name
-      address: document.getElementById("modalAddress").value.trim(),
-      city: document.getElementById("modalCity").value.trim(),
-      state: document.getElementById("modalState").value,
-      pincode: document.getElementById("modalPincode").value.trim(),
-      landmark: document.getElementById("modalLandmark").value.trim(),
-      // type is optional now
-    };
+    const activeTypeBtn = form.querySelector(".type-btn.active");
+    const selectedType = activeTypeBtn
+      ? activeTypeBtn.getAttribute("data-type").toLowerCase()
+      : "home";
 
-    if (!/^\d{6}$/.test(addressData.pincode)) {
+    const fullName =
+      user.firstName && user.lastName
+        ? `${user.firstName} ${user.lastName}`.trim()
+        : user.firstName || user.lastName || "User";
+
+    const pincode = document.getElementById("modalPincode").value.trim();
+    if (!/^\d{6}$/.test(pincode)) {
       showSnackbar("PIN code must be 6 digits", "error");
       return;
     }
 
-    const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
-    addresses.push(addressData);
-    localStorage.setItem("addresses", JSON.stringify(addresses));
-    showSnackbar("Address added successfully!", "success");
+    const addressData = {
+      email: currentUser.email,
+      name: fullName,
+      phone: user.phone || "",
+      address: document.getElementById("modalAddress").value.trim(),
+      city: document.getElementById("modalCity").value.trim(),
+      state: document.getElementById("modalState").value,
+      pincode: pincode,
+      landmark: document.getElementById("modalLandmark").value.trim(),
+      type: selectedType,
+    };
 
-    form.reset();
-    modal.style.display = "none";
+    let addresses = JSON.parse(localStorage.getItem("addresses")) || [];
+
+    if (isEditMode) {
+      // UPDATE
+      const editId = editAddressIdInput.value;
+      const index = addresses.findIndex(
+        (addr) => String(addr.id) === String(editId)
+      );
+
+      if (index !== -1) {
+        addresses[index] = {
+          ...addresses[index],
+          ...addressData,
+        };
+        showSnackbar("Address updated successfully!", "success");
+      }
+    } else {
+      // ADD
+      const newAddress = {
+        id: Date.now() + Math.floor(Math.random() * 1000),
+        ...addressData,
+      };
+      addresses.push(newAddress);
+      showSnackbar("Address added successfully!", "success");
+    }
+
+    localStorage.setItem("addresses", JSON.stringify(addresses));
+
+    closeModalAndReset();
     renderAddresses();
   });
-
-  // Delete address
-  window.deleteAddress = function (type) {
-    const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
-    const filtered = addresses.filter(
-      (addr) => !(addr.email === currentUser.email && addr.type === type)
-    );
-    localStorage.setItem("addresses", JSON.stringify(filtered));
-    showSnackbar("Address deleted successfully!", "success");
-    renderAddresses();
-  };
 }
 
 function renderOrders() {
@@ -493,17 +699,15 @@ function renderOrders() {
 
   const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-  console.log(orders, "all orders");
-
   let userOrders = [];
 
   if (user.role === "farmer") {
-    userOrders = orders.filter((o) => o.farmers.includes(currentUser.email));
+    userOrders = orders.filter(
+      (o) => o.farmers && o.farmers.includes(currentUser.email)
+    );
   } else {
     userOrders = orders.filter((o) => o.userEmail === currentUser.email);
   }
-
-  console.log(userOrders, "user orders");
 
   if (userOrders.length === 0) {
     ordersContainer.innerHTML = `
@@ -524,9 +728,7 @@ function renderOrders() {
           user.role === "farmer"
             ? o.items.filter((i) => i.farmerEmail === currentUser.email)
             : o.items;
-        console.log(items, "order imahe");
 
-        // Status indicator
         const statusColor =
           o.status === "Delivered"
             ? "#388e3c"
@@ -545,7 +747,6 @@ function renderOrders() {
           overflow:hidden;
           box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         ">
-          <!-- Order Header -->
           <div style="
             background:#f8f8f8;
             padding:12px 16px;
@@ -575,8 +776,6 @@ function renderOrders() {
               }</div>
             </div>
           </div>
-
-          <!-- Order Status -->
           <div style="
             padding:12px 16px;
             background:#fff;
@@ -595,8 +794,6 @@ function renderOrders() {
               ${o.status}
             </div>
           </div>
-
-          <!-- Order Items -->
           <div style="padding:16px;">
          ${items
            .map(
@@ -608,7 +805,6 @@ function renderOrders() {
     margin-bottom:16px;
     border-bottom:1px solid #f0f0f0;
   ">
-    <!-- Product Image -->
     <div style="flex-shrink:0;">
       <img 
         src="${
@@ -626,8 +822,6 @@ function renderOrders() {
         "
       />
     </div>
-
-    <!-- Product Details -->
     <div style="flex:1;">
       <h4 style="
         margin:0 0 8px 0;
@@ -666,7 +860,6 @@ function renderOrders() {
 `
            )
            .join("")}
-
           </div>
         </div>
       `;
@@ -765,11 +958,6 @@ function renderSalesHistory() {
   contentContainer.appendChild(salesContainer);
 }
 
-// Call it for farmers
-if (user.role === "farmer") {
-  renderSalesHistory();
-}
-
 function attachPasswordHandler() {
   const form = document.getElementById("passwordForm");
   form?.addEventListener("submit", (e) => {
@@ -783,8 +971,15 @@ function attachPasswordHandler() {
     }
 
     user.password = newPass;
-    localStorage.setItem("currentUser", JSON.stringify(user));
+
+    const userIndex = users.findIndex((u) => u.email === user.email);
+    if (userIndex !== -1) {
+      users[userIndex] = user;
+      localStorage.setItem("users", JSON.stringify(users));
+    }
+
     showSnackbar("Password updated successfully!", "success");
+    form.reset();
   });
 }
 
