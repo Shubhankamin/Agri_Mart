@@ -97,8 +97,13 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("No user logged in.");
   } else {
     const userEmail = currentUser.email || "";
-    const userName = currentUser.name || "";
-    const phone = currentUser.phone || "";
+    
+    // ✅ FIX: Get user data from users array
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find((u) => u.email === currentUser.email);
+    
+    const userName = user ? `${user.firstName || ""} ${user.lastName || ""}`.trim() : "";
+    const phone = user ? user.phone || "" : "";
 
     // ✅ FIX: Update mobile user info
     const mobileUserNameEl = document.getElementById("mobileUserName");
@@ -344,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ✅ FIX: Updated createAddressCard to show "Home Address" or "Work Address"
+  // ✅ FIX: Updated createAddressCard with safe fallbacks
   function createAddressCard(address, type, index) {
     const card = document.createElement("div");
     card.className = "address-card";
@@ -353,9 +358,10 @@ document.addEventListener("DOMContentLoaded", function () {
     card.setAttribute("aria-checked", "false");
     card.setAttribute("tabindex", index === 0 ? "0" : "-1");
 
-    // ✅ FIX: Show "Home Address" or "Work Address" based on type
-    const typeLabel = address.type === "home" ? "Home Address" : 
-                     address.type === "work" ? "Work Address" : 
+    // ✅ FIX: Safe fallback for address type
+    const addressType = address.type || "home";
+    const typeLabel = addressType === "home" ? "Home Address" : 
+                     addressType === "work" ? "Work Address" : 
                      "Home Address";
 
     card.innerHTML = `
@@ -365,7 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         <div class="address-details">
             <p><strong>${escapeHtml(address.name || "User")}</strong></p>
-            <p>${escapeHtml(address.phone || "")}</p>
+            <p>${escapeHtml(address.phone || "N/A")}</p>
             <p>${escapeHtml(address.address || "")}</p>
             <p>${escapeHtml(address.city || "")}, ${getStateName(address.state)} - ${escapeHtml(address.pincode || "")}</p>
             ${address.landmark ? `<p>Landmark: ${escapeHtml(address.landmark)}</p>` : ""}
@@ -451,7 +457,7 @@ document.addEventListener("DOMContentLoaded", function () {
     announceToScreenReader(`Billing address selected: ${address.name}, ${address.city}`);
   }
 
-  // ✅ FIX: Updated delivery address preview to show proper labels
+  // ✅ FIX: Updated delivery address preview with safe fallbacks
   function updateDeliveryAddressPreview() {
     if (!selectedShippingAddress) {
       selectedDeliveryPreview.innerHTML = '<p class="no-addresses">Please select a delivery address first.</p>';
@@ -459,14 +465,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const addr = selectedShippingAddress;
-    const typeLabel = addr.type === "home" ? "Home Address" : 
-                     addr.type === "work" ? "Work Address" : 
+    // ✅ FIX: Safe fallback for type
+    const addressType = addr.type || "home";
+    const typeLabel = addressType === "home" ? "Home Address" : 
+                     addressType === "work" ? "Work Address" : 
                      "Home Address";
     
     selectedDeliveryPreview.innerHTML = `
             <p><strong>${typeLabel}</strong></p>
             <p><strong>${escapeHtml(addr.name || "User")}</strong></p>
-            <p>${escapeHtml(addr.phone || "")}</p>
+            <p>${escapeHtml(addr.phone || "N/A")}</p>
             <p>${escapeHtml(addr.address || "")}</p>
             <p>${escapeHtml(addr.city || "")}, ${getStateName(addr.state)} - ${escapeHtml(addr.pincode || "")}</p>
             ${addr.landmark ? `<p>Landmark: ${escapeHtml(addr.landmark)}</p>` : ""}
@@ -483,6 +491,7 @@ document.addEventListener("DOMContentLoaded", function () {
       RJ: "Rajasthan",
       GJ: "Gujarat",
       WB: "West Bengal",
+      KL: "Kerala",
     };
     return states[code] || code;
   }
@@ -526,23 +535,29 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+    // ✅ FIX: Improved different billing address handler
     differentBillingRadio.addEventListener("change", function () {
       if (this.checked) {
         billingAddressSelection.style.display = "block";
         sameAddressDisplay.style.display = "none";
 
-        // ✅ FIX: Clear the selected billing address and don't show delivery address preview
+        // ✅ FIX: Clear selected billing address
         selectedBillingAddress = null;
         
-        // ✅ FIX: Clear the delivery address preview when choosing different billing
-        selectedDeliveryPreview.innerHTML = '<p class="no-addresses">Please add a new billing address below.</p>';
+        // ✅ FIX: Show proper message instead of delivery address
+        selectedDeliveryPreview.innerHTML = '<p class="no-addresses">Please select or add a billing address below.</p>';
         
-        // If no billing addresses exist yet, open the add billing address modal
+        // ✅ FIX: If no billing addresses exist, show message instead of auto-opening modal
         if (billingAddresses.length === 0) {
-          setTimeout(() => openAddBillingAddressModal(), 300);
+          billingSavedAddressesContainer.innerHTML = `
+            <div class="no-addresses" role="status">
+              <p>No billing addresses found.</p>
+              <p>Click "Add Billing Address" button to add one.</p>
+            </div>
+          `;
         }
 
-        announceToScreenReader("Use different billing address selected. Please add a new billing address.");
+        announceToScreenReader("Use different billing address selected. Please add a billing address if needed.");
       }
     });
 
@@ -678,7 +693,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("edit-pincode").value = address.pincode || "";
     document.getElementById("edit-landmark").value = address.landmark || "";
 
-    const typeRadio = document.getElementById(`edit-${address.type}`);
+    const typeRadio = document.getElementById(`edit-${address.type || "home"}`);
     if (typeRadio) typeRadio.checked = true;
 
     clearFormErrors(editAddressForm);
@@ -701,7 +716,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("billing-pincode").value = address.pincode || "";
     document.getElementById("billing-landmark").value = address.landmark || "";
 
-    const typeRadio = document.getElementById(`billing-${address.type}`);
+    const typeRadio = document.getElementById(`billing-${address.type || "home"}`);
     if (typeRadio) typeRadio.checked = true;
 
     clearFormErrors(billingAddressForm);
@@ -991,7 +1006,6 @@ document.addEventListener("DOMContentLoaded", function () {
           localStorage.setItem("addresses", JSON.stringify(allAddresses));
         }
         
-        localStorage.setItem("savedAddresses", JSON.stringify(savedAddresses));
         renderSavedAddresses();
         showNotification("Address deleted successfully!", "success");
 
@@ -1133,11 +1147,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return `
       <div class="order-item-detail">
         <div class="order-item-image">
-          <img   src="${
+          <img src="${
             item.image && item.image.length
               ? item.image[0].src
               : "/images/no-image.jpg"
-          }"  alt="${escapeHtml(item.title)}">
+          }" alt="${escapeHtml(item.title)}">
         </div>
         <div class="order-item-info">
           <h4>${escapeHtml(item.title)}</h4>
@@ -1151,28 +1165,30 @@ document.addEventListener("DOMContentLoaded", function () {
       .join("");
 
     const addr = order.shippingAddress;
-    const typeLabel = addr.type === "home" ? "Home Address" : 
-                     addr.type === "work" ? "Work Address" : 
+    const addressType = addr.type || "home";
+    const typeLabel = addressType === "home" ? "Home Address" : 
+                     addressType === "work" ? "Work Address" : 
                      "Home Address";
     
     modalDeliveryAddress.innerHTML = `
             <p><strong>${typeLabel}</strong></p>
             <p><strong>${escapeHtml(addr.name || "User")}</strong></p>
-            <p>${escapeHtml(addr.phone || "")}</p>
+            <p>${escapeHtml(addr.phone || "N/A")}</p>
             <p>${escapeHtml(addr.address || "")}</p>
             <p>${escapeHtml(addr.city || "")}, ${getStateName(addr.state)} - ${escapeHtml(addr.pincode || "")}</p>
             ${addr.landmark ? `<p>Landmark: ${escapeHtml(addr.landmark)}</p>` : ""}
         `;
 
     const billingAddr = order.billingAddress;
-    const billingTypeLabel = billingAddr.type === "home" ? "Home Address" : 
-                           billingAddr.type === "work" ? "Work Address" : 
+    const billingAddressType = billingAddr.type || "home";
+    const billingTypeLabel = billingAddressType === "home" ? "Home Address" : 
+                           billingAddressType === "work" ? "Work Address" : 
                            "Home Address";
     
     modalBillingAddress.innerHTML = `
             <p><strong>${billingTypeLabel}</strong></p>
             <p><strong>${escapeHtml(billingAddr.name || "User")}</strong></p>
-            <p>${escapeHtml(billingAddr.phone || "")}</p>
+            <p>${escapeHtml(billingAddr.phone || "N/A")}</p>
             <p>${escapeHtml(billingAddr.address || "")}</p>
             <p>${escapeHtml(billingAddr.city || "")}, ${getStateName(billingAddr.state)} - ${escapeHtml(billingAddr.pincode || "")}</p>
             ${billingAddr.landmark ? `<p>Landmark: ${escapeHtml(billingAddr.landmark)}</p>` : ""}
