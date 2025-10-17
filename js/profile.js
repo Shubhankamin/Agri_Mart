@@ -394,22 +394,28 @@ function attachAddressHandler() {
   function ensureAllAddressesHaveIds() {
     let addresses = JSON.parse(localStorage.getItem("addresses")) || [];
     let needsUpdate = false;
-    
+
     addresses = addresses.map((addr, index) => {
-      if (!addr.id || addr.id === undefined || addr.id === null || addr.id === "undefined" || addr.id === "") {
+      if (
+        !addr.id ||
+        addr.id === undefined ||
+        addr.id === null ||
+        addr.id === "undefined" ||
+        addr.id === ""
+      ) {
         needsUpdate = true;
         return {
           ...addr,
-          id: Date.now() + index + Math.floor(Math.random() * 10000)
+          id: Date.now() + index + Math.floor(Math.random() * 10000),
         };
       }
       return addr;
     });
-    
+
     if (needsUpdate) {
       localStorage.setItem("addresses", JSON.stringify(addresses));
     }
-    
+
     return addresses;
   }
 
@@ -430,7 +436,7 @@ function attachAddressHandler() {
     editAddressIdInput.value = "";
     modalTitle.textContent = "Add New Address";
     submitBtn.textContent = "Save Address";
-    
+
     modal.style.display = "flex";
     form.reset();
     const typeButtons = form.querySelectorAll(".type-btn");
@@ -492,16 +498,30 @@ function attachAddressHandler() {
             margin-bottom:15px;
         ">
           <div>
-            <strong style="font-size:16px; color:#333;">${addr.type || "Home"} Address</strong>
-            <p style="margin:4px 0; color:#555;"><strong>${addr.name || ""}</strong></p>
+            <strong style="font-size:16px; color:#333;">${
+              addr.type || "Home"
+            } Address</strong>
+            <p style="margin:4px 0; color:#555;"><strong>${
+              addr.name || ""
+            }</strong></p>
             <p style="margin:4px 0; color:#555;">${addr.phone || ""}</p>
             <p style="margin:4px 0; color:#555;">${addr.address}</p>
-            <p style="margin:4px 0; color:#555;">${addr.city}, ${addr.state} - ${addr.pincode}</p>
-            ${addr.landmark ? `<p style="margin:4px 0; color:#555;">Landmark: ${addr.landmark}</p>` : ""}
+            <p style="margin:4px 0; color:#555;">${addr.city}, ${
+          addr.state
+        } - ${addr.pincode}</p>
+            ${
+              addr.landmark
+                ? `<p style="margin:4px 0; color:#555;">Landmark: ${addr.landmark}</p>`
+                : ""
+            }
           </div>
           <div style="display:flex; gap:15px; align-items:center;">
-            <span class="edit-address-btn" data-address-id="${addr.id}" style="cursor:pointer; color:#3498db; font-size:16px;" title="Edit">✏️</span>
-            <span class="delete-address-btn" data-address-id="${addr.id}" style="cursor:pointer; color:#e74c3c; font-size:18px;" title="Delete">❌</span>
+            <span class="edit-address-btn" data-address-id="${
+              addr.id
+            }" style="cursor:pointer; color:#3498db; font-size:16px;" title="Edit">✏️</span>
+            <span class="delete-address-btn" data-address-id="${
+              addr.id
+            }" style="cursor:pointer; color:#e74c3c; font-size:18px;" title="Delete">❌</span>
           </div>
         </div>
       `
@@ -513,31 +533,38 @@ function attachAddressHandler() {
   renderAddresses();
 
   // ✅ Event delegation for EDIT and DELETE
-  addressListContainer.addEventListener("click", function(e) {
+  addressListContainer.addEventListener("click", function (e) {
     // Handle DELETE
     const deleteBtn = e.target.closest(".delete-address-btn");
     if (deleteBtn) {
       e.preventDefault();
       e.stopPropagation();
-      
+
       const addressId = deleteBtn.getAttribute("data-address-id");
-      
-      if (!addressId || addressId === "null" || addressId === "undefined" || addressId === "") {
+
+      if (
+        !addressId ||
+        addressId === "null" ||
+        addressId === "undefined" ||
+        addressId === ""
+      ) {
         showSnackbar("Error: Invalid address ID", "error");
         return;
       }
-      
+
       if (confirm("Are you sure you want to delete this address?")) {
         let addresses = JSON.parse(localStorage.getItem("addresses")) || [];
-        
+
         const beforeLength = addresses.length;
-        addresses = addresses.filter((addr) => String(addr.id) !== String(addressId));
-        
+        addresses = addresses.filter(
+          (addr) => String(addr.id) !== String(addressId)
+        );
+
         if (beforeLength === addresses.length) {
           showSnackbar("Error: Address not found", "error");
           return;
         }
-        
+
         localStorage.setItem("addresses", JSON.stringify(addresses));
         showSnackbar("Address deleted successfully!", "success");
         renderAddresses();
@@ -549,16 +576,23 @@ function attachAddressHandler() {
     if (editBtn) {
       e.preventDefault();
       e.stopPropagation();
-      
+
       const addressId = editBtn.getAttribute("data-address-id");
-      
-      if (!addressId || addressId === "null" || addressId === "undefined" || addressId === "") {
+
+      if (
+        !addressId ||
+        addressId === "null" ||
+        addressId === "undefined" ||
+        addressId === ""
+      ) {
         showSnackbar("Error: Invalid address ID", "error");
         return;
       }
 
       const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
-      const addressToEdit = addresses.find((addr) => String(addr.id) === String(addressId));
+      const addressToEdit = addresses.find(
+        (addr) => String(addr.id) === String(addressId)
+      );
 
       if (!addressToEdit) {
         showSnackbar("Error: Address not found", "error");
@@ -571,11 +605,14 @@ function attachAddressHandler() {
       modalTitle.textContent = "Edit Address";
       submitBtn.textContent = "Update Address";
 
-      document.getElementById("modalAddress").value = addressToEdit.address || "";
+      document.getElementById("modalAddress").value =
+        addressToEdit.address || "";
       document.getElementById("modalCity").value = addressToEdit.city || "";
       document.getElementById("modalState").value = addressToEdit.state || "";
-      document.getElementById("modalPincode").value = addressToEdit.pincode || "";
-      document.getElementById("modalLandmark").value = addressToEdit.landmark || "";
+      document.getElementById("modalPincode").value =
+        addressToEdit.pincode || "";
+      document.getElementById("modalLandmark").value =
+        addressToEdit.landmark || "";
 
       // Set type button
       const typeButtons = form.querySelectorAll(".type-btn");
@@ -595,13 +632,14 @@ function attachAddressHandler() {
     e.preventDefault();
 
     const activeTypeBtn = form.querySelector(".type-btn.active");
-    const selectedType = activeTypeBtn 
-      ? activeTypeBtn.getAttribute("data-type").toLowerCase() 
+    const selectedType = activeTypeBtn
+      ? activeTypeBtn.getAttribute("data-type").toLowerCase()
       : "home";
 
-    const fullName = user.firstName && user.lastName 
-      ? `${user.firstName} ${user.lastName}`.trim()
-      : user.firstName || user.lastName || "User";
+    const fullName =
+      user.firstName && user.lastName
+        ? `${user.firstName} ${user.lastName}`.trim()
+        : user.firstName || user.lastName || "User";
 
     const pincode = document.getElementById("modalPincode").value.trim();
     if (!/^\d{6}$/.test(pincode)) {
@@ -626,12 +664,14 @@ function attachAddressHandler() {
     if (isEditMode) {
       // UPDATE
       const editId = editAddressIdInput.value;
-      const index = addresses.findIndex((addr) => String(addr.id) === String(editId));
-      
+      const index = addresses.findIndex(
+        (addr) => String(addr.id) === String(editId)
+      );
+
       if (index !== -1) {
         addresses[index] = {
           ...addresses[index],
-          ...addressData
+          ...addressData,
         };
         showSnackbar("Address updated successfully!", "success");
       }
@@ -639,7 +679,7 @@ function attachAddressHandler() {
       // ADD
       const newAddress = {
         id: Date.now() + Math.floor(Math.random() * 1000),
-        ...addressData
+        ...addressData,
       };
       addresses.push(newAddress);
       showSnackbar("Address added successfully!", "success");
@@ -662,7 +702,9 @@ function renderOrders() {
   let userOrders = [];
 
   if (user.role === "farmer") {
-    userOrders = orders.filter((o) => o.farmers && o.farmers.includes(currentUser.email));
+    userOrders = orders.filter(
+      (o) => o.farmers && o.farmers.includes(currentUser.email)
+    );
   } else {
     userOrders = orders.filter((o) => o.userEmail === currentUser.email);
   }
@@ -717,15 +759,21 @@ function renderOrders() {
           ">
             <div>
               <div style="font-size:12px; color:#666;">ORDER PLACED</div>
-              <div style="font-size:13px; font-weight:500; color:#222;">${o.date}</div>
+              <div style="font-size:13px; font-weight:500; color:#222;">${
+                o.date
+              }</div>
             </div>
             <div>
               <div style="font-size:12px; color:#666;">TOTAL</div>
-              <div style="font-size:13px; font-weight:500; color:#222;">₹${o.total.toFixed(2)}</div>
+              <div style="font-size:13px; font-weight:500; color:#222;">₹${o.total.toFixed(
+                2
+              )}</div>
             </div>
             <div>
               <div style="font-size:12px; color:#666;">ORDER ID</div>
-              <div style="font-size:13px; font-weight:500; color:#222;">#${o.id}</div>
+              <div style="font-size:13px; font-weight:500; color:#222;">#${
+                o.id
+              }</div>
             </div>
           </div>
           <div style="
@@ -790,11 +838,15 @@ function renderOrders() {
       ">
         <div>
           <span style="color:#666; font-size:13px;">Quantity:</span>
-          <span style="color:#222; font-weight:500; font-size:13px;"> ${item.quantity}</span>
+          <span style="color:#222; font-weight:500; font-size:13px;"> ${
+            item.quantity
+          }</span>
         </div>
         <div>
           <span style="color:#666; font-size:13px;">Price:</span>
-          <span style="color:#222; font-weight:500; font-size:13px;"> ₹${item.price.toFixed(2)}</span>
+          <span style="color:#222; font-weight:500; font-size:13px;"> ₹${item.price.toFixed(
+            2
+          )}</span>
         </div>
         <div>
           <span style="color:#666; font-size:13px;">Subtotal:</span>
@@ -828,8 +880,10 @@ function renderSalesHistory() {
 
   const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
+  // Filter sales for the current farmer
   const sales = orders
     .map((o) => {
+      // Only items sold by this farmer
       const soldItems = o.items.filter(
         (i) => i.farmerEmail === currentUser.email
       );
@@ -860,10 +914,18 @@ function renderSalesHistory() {
           box-shadow:0 2px 6px rgba(0,0,0,0.05);
         ">
           <h4 style="margin:0 0 10px 0;">Order #${sale.orderId}</h4>
-          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Date: ${sale.date}</p>
-          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Buyer: <strong>${sale.buyerEmail}</strong></p>
-          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Status: <strong>${sale.status}</strong></p>
-          <p style="margin:0 0 10px 0; font-size:14px; color:#555;">Total Earnings: ₹${sale.total.toFixed(2)}</p>
+          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Date: ${
+            sale.date
+          }</p>
+          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Buyer: <strong>${
+            sale.buyerEmail
+          }</strong></p>
+          <p style="margin:0 0 5px 0; font-size:14px; color:#555;">Status: <strong>${
+            sale.status
+          }</strong></p>
+          <p style="margin:0 0 10px 0; font-size:14px; color:#555;">Total Earnings: ₹${sale.total.toFixed(
+            2
+          )}</p>
           <div>
             <strong>Products Sold:</strong>
             <ul style="margin:5px 0 0 0; padding:0; list-style-type:none;">
@@ -871,14 +933,14 @@ function renderSalesHistory() {
                 .map(
                   (i) => `
                   <li style="display:flex; align-items:center; margin-bottom:10px;">
-                    <img src="${
-                      i.image && i.image.length
-                        ? i.image[0].src
-                        : "/images/no-image.jpg"
-                    }" alt="${i.title}" style="width:60px; height:60px; object-fit:cover; border-radius:6px; margin-right:10px;">
+                    <img src="${i.image}" alt="${
+                    i.title
+                  }" style="width:60px; height:60px; object-fit:cover; border-radius:6px; margin-right:10px;">
                     <div>
                       <div>${i.title}</div>
-                      <div style="font-size:13px; color:#555;">Quantity Sold: ${i.quantity}, Price: ₹${i.price.toFixed(2)}, Subtotal: ₹${(
+                      <div style="font-size:13px; color:#555;">Quantity Sold: ${
+                        i.quantity
+                      }, Price: ₹${i.price.toFixed(2)}, Subtotal: ₹${(
                     i.price * i.quantity
                   ).toFixed(2)}</div>
                     </div>
@@ -909,13 +971,13 @@ function attachPasswordHandler() {
     }
 
     user.password = newPass;
-    
+
     const userIndex = users.findIndex((u) => u.email === user.email);
     if (userIndex !== -1) {
       users[userIndex] = user;
       localStorage.setItem("users", JSON.stringify(users));
     }
-    
+
     showSnackbar("Password updated successfully!", "success");
     form.reset();
   });
