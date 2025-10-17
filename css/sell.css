@@ -1191,3 +1191,62 @@ body {
 }
 
 
+/* ===== MOBILE MENU SLIDE ANIMATION ===== */
+.nav-links {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Hidden off-screen initially */
+  width: 80%;
+  max-width: 320px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  transition: right 0.4s ease-in-out; /* Smooth slide animation */
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav-links.active {
+  right: 0; /* Slide in from the right */
+}
+
+/* Optional overlay (if you want a dimmed background) */
+body.menu-open::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 998;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+body.menu-open .nav-links.active {
+  right: 0;
+}
+
+body.menu-open::before {
+  opacity: 1;
+}
+
+/* Smooth "X" button appearance */
+.mobile-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  padding: 8px;
+  transition: transform 0.2s ease, color 0.2s ease;
+  z-index: 1000;
+}
+
+.mobile-close-btn:hover {
+  transform: rotate(90deg);
+  color: #2e8b57;
+}
