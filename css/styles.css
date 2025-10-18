@@ -306,7 +306,7 @@ body {
   border-radius: 0 16px 16px 0;
   padding: 20px;
   transition: left 0.3s ease;
-  z-index: 9999;
+  z-index: 99999999;
   overflow-y: auto;
 }
 
@@ -428,7 +428,7 @@ body {
   border-radius: 0 16px 16px 0;
   padding: 20px;
   transition: left 0.3s ease;
-  z-index: 999;
+  z-index: 99999;
   overflow-y: auto;
 }
 
