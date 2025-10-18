@@ -360,7 +360,7 @@ body {
   }
 
   .search-bar {
-    min-width: 100%; /* Full width on mobile */
+    min-width: 80%; /* Full width on mobile */
     max-width: 500px;
     margin: 0 auto;
     display: block;
@@ -389,10 +389,11 @@ body {
   }
 
   .mobile-filter-icon {
-    display: block;
+    display: flex;
     font-size: 26px;
     cursor: pointer;
-    align-self: flex-end; /* moves icon to right side */
+    justify-content: end;
+    margin-right: 20px;
     margin-top: -10px; /* adjust to float icon top-right */
   }
 }

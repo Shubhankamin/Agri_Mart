@@ -16,7 +16,7 @@ body {
   color: #2d2d2d;
   background-color: #fafaf8;
   /* overflow-x: hidden; is kept to prevent horizontal scroll issues */
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 /* CSS Variables for Theme Colors */
@@ -496,6 +496,13 @@ body {
   }
 }
 
+.btn-secondary {
+  background-color: transparent;
+  color: var(--primary-green);
+  border: 2px solid var(--primary-green);
+  width: 80%;
+}
+
 .filter-btn {
   padding: 10px 24px;
   background-color: transparent;
@@ -525,14 +532,13 @@ body {
 
 /* Adjust dynamic links for mobile */
 @media (max-width: 767px) {
-    .dynamic-links {
-        flex-direction: column;
-        gap: 0;
-        width: 100%;
-        align-items: flex-start;
-    }
+  .dynamic-links {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    align-items: flex-start;
+  }
 }
-
 
 /* Individual links */
 .dynamic-links .nav-link {
@@ -895,14 +901,14 @@ body {
 
 /* Utility to hide elements on specific screens (for mobile-only cart button) */
 @media (max-width: 767px) {
-    .hide-on-mobile {
-        display: none !important;
-    }
+  .hide-on-mobile {
+    display: none !important;
+  }
 }
 @media (min-width: 768px) {
-    .show-on-mobile {
-        display: none !important;
-    }
+  .show-on-mobile {
+    display: none !important;
+  }
 }
 
 /* Responsive */
@@ -918,100 +924,96 @@ body {
     border-radius: 50%;
   }
   #backToProfile::before {
-    content: '←';
+    content: "←";
     font-size: 18px;
     color: white;
   }
 }
 
-
 /* --- 1. CRITICAL MOBILE SLIDE-OUT DRAWER AND OVERLAY --- */
 
 /* Base Overlay State (Desktop: hidden, Mobile: ready) */
 .mobile-overlay {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 998; /* Below the menu */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998; /* Below the menu */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 /* Active Overlay State (Mobile only) */
 .mobile-overlay.active {
-    display: block;
-    opacity: 1;
-    visibility: visible;
+  display: block;
+  opacity: 1;
+  visibility: visible;
 }
 
 @media (min-width: 768px) {
-    /* Hide overlay on desktop */
-    .mobile-overlay {
-        display: none !important;
-    }
-    /* Show desktop nav links */
-    .nav-content > .nav-links {
-        display: flex; /* Show flex layout on desktop */
-    }
+  /* Hide overlay on desktop */
+  .mobile-overlay {
+    display: none !important;
+  }
+  /* Show desktop nav links */
+  .nav-content > .nav-links {
+    display: flex; /* Show flex layout on desktop */
+  }
 }
-
 
 @media (max-width: 767px) {
-    /* Hide desktop nav links */
-    .nav-content > .nav-links { 
-        display: none; 
-    }
+  /* Hide desktop nav links */
+  .nav-content > .nav-links {
+    display: none;
+  }
 
-    /* 2. CONFIGURE THE MOBILE DRAWER PANEL (#navLinks) */
-    /* This overrides the .nav-links display: none rule above */
-    .nav-links {
-        display: flex;
-        flex-direction: column;
-        position: fixed; 
-        top: 0;
-        right: 0; 
-        height: 100vh;
-        width: 80%;
-        max-width: 320px; 
-        background-color: #fff;
-        box-shadow: var(--shadow-lg);
-        z-index: 999; /* Above the overlay */
-        padding: 24px;
-        align-items: flex-start;
-        gap: 0; /* Resetting gap for flex content */
-        
-        /* HIDDEN STATE: Pushed off the right edge */
-        transform: translateX(100%);
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-        overflow-y: auto;
-    }
+  /* 2. CONFIGURE THE MOBILE DRAWER PANEL (#navLinks) */
+  /* This overrides the .nav-links display: none rule above */
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 80%;
+    max-width: 320px;
+    background-color: #fff;
+    box-shadow: var(--shadow-lg);
+    z-index: 999; /* Above the overlay */
+    padding: 24px;
+    align-items: flex-start;
+    gap: 0; /* Resetting gap for flex content */
 
-    /* VISIBLE STATE: Slid into view (when JS adds the active class) */
-    .nav-links.active {
-        transform: translateX(0);
-    }
-    
-    /* Ensure the mobile profile section is visible inside the drawer */
-    .mobile-profile-section {
-        display: flex; 
-        width: 100%;
-        align-items: center;
-        gap: 12px;
-        padding-bottom: 16px;
-        margin-bottom: 16px;
-        border-bottom: 1px solid var(--border-color);
-    }
+    /* HIDDEN STATE: Pushed off the right edge */
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+  }
+
+  /* VISIBLE STATE: Slid into view (when JS adds the active class) */
+  .nav-links.active {
+    transform: translateX(0);
+  }
+
+  /* Ensure the mobile profile section is visible inside the drawer */
+  .mobile-profile-section {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+  }
 }
 
-
-
 #closeDrawer {
-  background-color: transparent;        /* bright green */
+  background-color: transparent; /* bright green */
   color: black;
   border: none;
   padding: 8px 16px;
@@ -1023,12 +1025,12 @@ body {
 }
 
 #closeDrawer:hover {
-  background-color: #27ae60;        /* darker green on hover */
+  background-color: #27ae60; /* darker green on hover */
   transform: scale(1.05);
 }
 
 #closeDrawer:active {
-  background-color: #1e8449;        /* pressed effect */
+  background-color: #1e8449; /* pressed effect */
   transform: scale(0.97);
 }
 
@@ -1122,158 +1124,157 @@ body {
     font-size: 20px;
   }
   /* RESPONSIVE */
-@media (max-width: 1024px) {
-  .wrap {
-    padding: 0 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  .control-group {
-    width: 100%;
-  }
-  .controls {
-    gap: 12px;
-  }
-  .control-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-  .control-row #clear-btn {
-    width: 100%;
+  @media (max-width: 1024px) {
+    .wrap {
+      padding: 0 15px;
+    }
   }
 
-  /* Mobile Slide-out Menu */
-  .mobile-menu-toggle {
-    display: flex; /* show toggle */
-    z-index: 999999999999;
-  }
-  .desktop-nav-links,
-  .desktop-actions {
-    display: none; /* hide desktop nav on mobile */
-  }
+  @media (max-width: 768px) {
+    .control-group {
+      width: 100%;
+    }
+    .controls {
+      gap: 12px;
+    }
+    .control-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+    .control-row #clear-btn {
+      width: 100%;
+    }
 
-  .nav-links {
-    margin: 0;
-    display: flex;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 280px;
-    height: 100%;
-    background: #fff;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 24px;
-    gap: 0;
-    box-shadow: var(--shadow-lg);
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 999;
-  }
-  .nav-links.active {
-    transform: translateX(0);
-  }
-  .nav-links .nav-link {
-    width: 100%;
-    padding: 16px 0;
-    font-size: 16px;
-    border-bottom: 1px solid var(--border-color);
-  }
-  .nav-links .nav-link::after {
-    display: none;
-  }
-  .nav-links .dynamic-links {
-    flex-direction: column;
-    width: 100%;
-    gap: 0;
-  }
-  .nav-links .dropdown {
-    width: 100%;
-    border-bottom: 1px solid var(--border-color);
-  }
-  .nav-links .dropdown-toggle {
-    justify-content: space-between;
-    width: 100%;
-    padding: 16px 0;
-  }
-  .nav-links .dropdown-menu {
-    position: static;
-    box-shadow: none;
-    border: none;
-    transform: none !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    max-height: 0;
-    overflow: hidden;
-    padding: 0;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-  }
-  .nav-links .dropdown.active .dropdown-menu {
-    max-height: 500px;
-    padding: 8px 0;
-  }
-  .nav-links .dropdown-item {
-    padding: 12px 16px;
-    background-color: var(--light-beige);
-  }
-  .mobile-profile-section,
-  .mobile-cart-section,
-  .mobile-menu-footer {
-    display: block;
-    width: 100%;
-  }
-  .mobile-profile-section {
-    padding-bottom: 16px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid var(--border-color);
-  }
-  .profile-link-mobile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: inherit;
-  }
-  .mobile-profile-info h3 {
-    font-size: 16px;
-    font-weight: 600;
-  }
-  .mobile-profile-info p {
-    font-size: 13px;
-    color: var(--text-light);
-  }
-  .mobile-cart-section {
-    margin-top: auto;
-    padding-top: 24px;
-  }
-  .mobile-cart-btn {
-    width: 100%;
-    padding: 14px;
-    background-color: var(--primary-green);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: var(--transition);
-  }
-  .mobile-cart-btn:hover {
-    background-color: var(--light-green);
-  }
-  .mobile-cart-btn .cart-count {
-    position: static;
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 2px 8px;
-  }
-}
+    /* Mobile Slide-out Menu */
+    .mobile-menu-toggle {
+      display: flex; /* show toggle */
+      z-index: 999999999999;
+    }
+    .desktop-nav-links,
+    .desktop-actions {
+      display: none; /* hide desktop nav on mobile */
+    }
 
+    .nav-links {
+      margin: 0;
+      display: flex;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 280px;
+      height: 100%;
+      background: #fff;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 24px;
+      gap: 0;
+      box-shadow: var(--shadow-lg);
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 999;
+    }
+    .nav-links.active {
+      transform: translateX(0);
+    }
+    .nav-links .nav-link {
+      width: 100%;
+      padding: 16px 0;
+      font-size: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .nav-links .nav-link::after {
+      display: none;
+    }
+    .nav-links .dynamic-links {
+      flex-direction: column;
+      width: 100%;
+      gap: 0;
+    }
+    .nav-links .dropdown {
+      width: 100%;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .nav-links .dropdown-toggle {
+      justify-content: space-between;
+      width: 100%;
+      padding: 16px 0;
+    }
+    .nav-links .dropdown-menu {
+      position: static;
+      box-shadow: none;
+      border: none;
+      transform: none !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .nav-links .dropdown.active .dropdown-menu {
+      max-height: 500px;
+      padding: 8px 0;
+    }
+    .nav-links .dropdown-item {
+      padding: 12px 16px;
+      background-color: var(--light-beige);
+    }
+    .mobile-profile-section,
+    .mobile-cart-section,
+    .mobile-menu-footer {
+      display: block;
+      width: 100%;
+    }
+    .mobile-profile-section {
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .profile-link-mobile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .mobile-profile-info h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .mobile-profile-info p {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+    .mobile-cart-section {
+      margin-top: auto;
+      padding-top: 24px;
+    }
+    .mobile-cart-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--primary-green);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: var(--transition);
+    }
+    .mobile-cart-btn:hover {
+      background-color: var(--light-green);
+    }
+    .mobile-cart-btn .cart-count {
+      position: static;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 2px 8px;
+    }
+  }
 }
 
 .mobile-overlay {
@@ -1282,7 +1283,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 5;
   opacity: 0;
   visibility: hidden;
