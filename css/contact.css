@@ -235,9 +235,9 @@
 
 /* Responsive Design */
 @media (max-width: 968px) {
-  .nav-links {
+  /* .nav-links {
     display: none;
-  }
+  } */
 
   .mobile-menu-toggle {
     display: flex;

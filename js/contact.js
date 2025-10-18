@@ -2,11 +2,19 @@
 const currentUser = localStorage.getItem("currentUser");
 const user = currentUser ? JSON.parse(currentUser) : null;
 
+// --- SHARED NAVIGATION & CART LOGIC ---
+
+// Get current user from localStorage
+// const currentUser = localStorage.getItem("currentUser");
+// const user = currentUser ? JSON.parse(currentUser) : null;
+
+// Add dynamic navbar links
 function setupDynamicLinks() {
   const containers = document.querySelectorAll(".dynamic-links");
   if (containers.length === 0) return;
-  containers.forEach(container => {
-    container.innerHTML = "";
+
+  containers.forEach((container) => {
+    container.innerHTML = ""; // Clear existing links
     const productsLink = document.createElement("a");
     productsLink.href = "/products.html";
     productsLink.className = "nav-link";
@@ -23,66 +31,184 @@ function setupDynamicLinks() {
   });
 }
 
+// Update Cart Count
 function updateCartCount() {
   const cartCountElem = document.getElementById("cartCount");
-  if (!cartCountElem) return;
+  const mobileCartCountElem = document.getElementById("mobileCartCount");
+  if (!cartCountElem || !mobileCartCountElem) return;
+
   const savedCart = localStorage.getItem("agrimart_cart");
   const cartData = savedCart ? JSON.parse(savedCart) : [];
   const totalItems = cartData.reduce((sum, item) => sum + item.quantity, 0);
+
   cartCountElem.textContent = totalItems;
+  mobileCartCountElem.textContent = totalItems;
 }
 
+// --- PROFILE DISPLAY LOGIC ---
 function updateProfileUI() {
   const desktopProfile = document.querySelector(".profile-link img");
+  const mobileUserName = document.getElementById("mobileUserName");
+  const mobileUserEmail = document.getElementById("mobileUserEmail");
+
   if (user) {
+    // Logged-in user
     if (desktopProfile) {
-      desktopProfile.src = user.image || "/Images/Profile.png";
+      desktopProfile.src = user.image || "/Images/Profile.png"; // fallback image
       desktopProfile.alt = user.name || "Profile";
     }
+    if (mobileUserName) {
+      mobileUserName.textContent = user.name || "User";
+    }
+    if (mobileUserEmail) {
+      mobileUserEmail.textContent = user.email || "No email provided";
+    }
   } else {
+    // Guest user
     if (desktopProfile) {
       desktopProfile.src = "/Images/Profile.png";
       desktopProfile.alt = "Guest";
     }
+    if (mobileUserName) {
+      mobileUserName.textContent = "Guest User";
+    }
+    if (mobileUserEmail) {
+      mobileUserEmail.textContent = "Login or Sign Up";
+    }
   }
 }
 
+// Setup Event Listeners for Navigation
 function setupNavigationEventListeners() {
+  // --- Dropdown logic (desktop & mobile) ---
   const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
-  dropdownToggles.forEach(toggle => {
+  dropdownToggles.forEach((toggle) => {
     toggle.addEventListener("click", (event) => {
       event.stopPropagation();
       const dropdown = toggle.closest(".dropdown");
-      if (dropdown) {
-        document.querySelectorAll(".dropdown.active").forEach(openDropdown => {
-          if (openDropdown !== dropdown) openDropdown.classList.remove("active");
-        });
-        dropdown.classList.toggle("active");
-      }
+      document.querySelectorAll(".dropdown.active").forEach((open) => {
+        if (open !== dropdown) open.classList.remove("active");
+      });
+      dropdown.classList.toggle("active");
     });
   });
 
   document.addEventListener("click", () => {
-    document.querySelectorAll(".dropdown.active").forEach(dropdown => {
-      dropdown.classList.remove("active");
-    });
+    document
+      .querySelectorAll(".dropdown.active")
+      .forEach((dropdown) => dropdown.classList.remove("active"));
   });
 
-  const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-  const body = document.body;
+  // --- MOBILE MENU TOGGLE LOGIC ---
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const navLinks = document.getElementById("navLinks");
+  const mobileOverlay = document.getElementById("mobileOverlay");
 
-  if (mobileMenuToggle && navLinks) {
+  if (mobileMenuToggle && navLinks && mobileOverlay) {
     const toggleMenu = () => {
-      const expanded = mobileMenuToggle.getAttribute("aria-expanded") === "true";
-      mobileMenuToggle.setAttribute("aria-expanded", !expanded);
       mobileMenuToggle.classList.toggle("active");
       navLinks.classList.toggle("active");
-      body.style.overflow = navLinks.classList.contains("active") ? "hidden" : "";
+      mobileOverlay.classList.toggle("active");
+
+      document.body.style.overflow = navLinks.classList.contains("active")
+        ? "hidden"
+        : "auto";
     };
+
     mobileMenuToggle.addEventListener("click", toggleMenu);
+    mobileOverlay.addEventListener("click", toggleMenu);
   }
 }
+
+// --- MAIN INITIALIZATION SCRIPT ---
+document.addEventListener("DOMContentLoaded", () => {
+  setupDynamicLinks();
+  updateCartCount();
+  updateProfileUI(); // ✅ added profile update
+  setupNavigationEventListeners();
+});
+
+// function setupDynamicLinks() {
+//   const containers = document.querySelectorAll(".dynamic-links");
+//   if (containers.length === 0) return;
+//   containers.forEach(container => {
+//     container.innerHTML = "";
+//     const productsLink = document.createElement("a");
+//     productsLink.href = "/products.html";
+//     productsLink.className = "nav-link";
+//     productsLink.textContent = "Products";
+//     container.appendChild(productsLink);
+
+//     if (user && user.role === "farmer") {
+//       const sellLink = document.createElement("a");
+//       sellLink.href = "/sell.html";
+//       sellLink.className = "nav-link";
+//       sellLink.textContent = "Sell";
+//       container.appendChild(sellLink);
+//     }
+//   });
+// }
+
+// function updateCartCount() {
+//   const cartCountElem = document.getElementById("cartCount");
+//   if (!cartCountElem) return;
+//   const savedCart = localStorage.getItem("agrimart_cart");
+//   const cartData = savedCart ? JSON.parse(savedCart) : [];
+//   const totalItems = cartData.reduce((sum, item) => sum + item.quantity, 0);
+//   cartCountElem.textContent = totalItems;
+// }
+
+// function updateProfileUI() {
+//   const desktopProfile = document.querySelector(".profile-link img");
+//   if (user) {
+//     if (desktopProfile) {
+//       desktopProfile.src = user.image || "/Images/Profile.png";
+//       desktopProfile.alt = user.name || "Profile";
+//     }
+//   } else {
+//     if (desktopProfile) {
+//       desktopProfile.src = "/Images/Profile.png";
+//       desktopProfile.alt = "Guest";
+//     }
+//   }
+// }
+
+// function setupNavigationEventListeners() {
+//   const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+//   dropdownToggles.forEach(toggle => {
+//     toggle.addEventListener("click", (event) => {
+//       event.stopPropagation();
+//       const dropdown = toggle.closest(".dropdown");
+//       if (dropdown) {
+//         document.querySelectorAll(".dropdown.active").forEach(openDropdown => {
+//           if (openDropdown !== dropdown) openDropdown.classList.remove("active");
+//         });
+//         dropdown.classList.toggle("active");
+//       }
+//     });
+//   });
+
+//   document.addEventListener("click", () => {
+//     document.querySelectorAll(".dropdown.active").forEach(dropdown => {
+//       dropdown.classList.remove("active");
+//     });
+//   });
+
+//   const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+//   const navLinks = document.querySelector(".nav-links");
+//   const body = document.body;
+
+//   if (mobileMenuToggle && navLinks) {
+//     const toggleMenu = () => {
+//       const expanded = mobileMenuToggle.getAttribute("aria-expanded") === "true";
+//       mobileMenuToggle.setAttribute("aria-expanded", !expanded);
+//       mobileMenuToggle.classList.toggle("active");
+//       navLinks.classList.toggle("active");
+//       body.style.overflow = navLinks.classList.contains("active") ? "hidden" : "";
+//     };
+//     mobileMenuToggle.addEventListener("click", toggleMenu);
+//   }
+// }
 
 // ===== FORM VALIDATION & SNACKBAR =====
 function setupContactFormValidation() {
@@ -104,7 +230,7 @@ function setupContactFormValidation() {
   const patterns = {
     name: /^[A-Za-z\s]{3,}$/,
     email: /^[a-z0-9._]+@gmail\.com$/i,
-    phone: /^[0-9]{10}$/
+    phone: /^[0-9]{10}$/,
   };
 
   // Restrict invalid input while typing
@@ -115,7 +241,8 @@ function setupContactFormValidation() {
 
   phoneField.addEventListener("input", (e) => {
     e.target.value = e.target.value.replace(/[^0-9]/g, "");
-    if (e.target.value.length > 10) e.target.value = e.target.value.slice(0, 10);
+    if (e.target.value.length > 10)
+      e.target.value = e.target.value.slice(0, 10);
     validateForm();
   });
 
@@ -142,14 +269,16 @@ function setupContactFormValidation() {
     switch (field.name) {
       case "name":
         if (!value) return "Full name is required.";
-        if (!patterns.name.test(value)) return "Name must be at least 3 letters.";
+        if (!patterns.name.test(value))
+          return "Name must be at least 3 letters.";
         break;
       case "email":
         if (!value) return "Email is required.";
         if (!patterns.email.test(value)) return "Enter a valid Gmail address.";
         break;
       case "phone":
-        if (value && !patterns.phone.test(value)) return "Phone must be exactly 10 digits.";
+        if (value && !patterns.phone.test(value))
+          return "Phone must be exactly 10 digits.";
         break;
       case "subject":
         if (!value || value === "none") return "Please select a subject.";
@@ -170,20 +299,34 @@ function setupContactFormValidation() {
     const subjectMsg = validateField(subjectField);
     const messageMsg = validateField(messageField);
 
-    if (nameMsg) { showError(nameError, nameMsg); valid = false; } else clearError(nameError);
-    if (emailMsg) { showError(emailError, emailMsg); valid = false; } else clearError(emailError);
-    if (phoneMsg) { showError(phoneError, phoneMsg); valid = false; } else clearError(phoneError);
-    if (subjectMsg) { showError(subjectError, subjectMsg); valid = false; } else clearError(subjectError);
-    if (messageMsg) { showError(messageError, messageMsg); valid = false; } else clearError(messageError);
+    if (nameMsg) {
+      showError(nameError, nameMsg);
+      valid = false;
+    } else clearError(nameError);
+    if (emailMsg) {
+      showError(emailError, emailMsg);
+      valid = false;
+    } else clearError(emailError);
+    if (phoneMsg) {
+      showError(phoneError, phoneMsg);
+      valid = false;
+    } else clearError(phoneError);
+    if (subjectMsg) {
+      showError(subjectError, subjectMsg);
+      valid = false;
+    } else clearError(subjectError);
+    if (messageMsg) {
+      showError(messageError, messageMsg);
+      valid = false;
+    } else clearError(messageError);
 
- if (valid) {
-    sendButton.classList.add("active");
-    sendButton.disabled = false;
-  } else {
-    sendButton.classList.remove("active");
-    sendButton.disabled = true;
-  }
-
+    if (valid) {
+      sendButton.classList.add("active");
+      sendButton.disabled = false;
+    } else {
+      sendButton.classList.remove("active");
+      sendButton.disabled = true;
+    }
 
     sendButton.disabled = !valid;
     return valid;
@@ -199,7 +342,7 @@ function setupContactFormValidation() {
       phone: phoneField.value.trim(),
       subject: subjectField.value,
       message: messageField.value.trim(),
-      submittedAt: new Date().toLocaleString()
+      submittedAt: new Date().toLocaleString(),
     };
 
     localStorage.setItem("contactFormData", JSON.stringify(data));
@@ -230,7 +373,9 @@ function showSnackbar(message) {
   snackbar.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
   snackbar.style.transition = "0.5s";
 
-  setTimeout(() => { snackbar.style.bottom = "30px"; }, 50);
+  setTimeout(() => {
+    snackbar.style.bottom = "30px";
+  }, 50);
 
   setTimeout(() => {
     snackbar.style.bottom = "-50px";
@@ -240,9 +385,9 @@ function showSnackbar(message) {
 
 // ===== INIT =====
 document.addEventListener("DOMContentLoaded", () => {
-  setupDynamicLinks();
-  updateCartCount();
-  updateProfileUI();
-  setupNavigationEventListeners();
+  // setupDynamicLinks();
+  // updateCartCount();
+  // updateProfileUI();
+  // setupNavigationEventListeners();
   setupContactFormValidation();
 });
