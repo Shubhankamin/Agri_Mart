@@ -251,21 +251,40 @@ body {
 }
 .gender-options {
   display: flex;
-  gap: 20px; /* space between options */
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping if needed on small screens */
 }
 
-/* Each label acts as a flex container */
 .gender-options label {
   display: flex;
   align-items: center;
-  gap: 6px; /* space between radio button and text */
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+/* Make radio buttons slightly larger and vertically centered */
+.gender-options input[type="radio"] {
+  accent-color: var(--btn-bg); /* modern browsers support */
+  transform: scale(1.2);
   cursor: pointer;
 }
 
-/* Stack vertically on mobile */
+/* Responsive: stack vertically on small screens */
 @media (max-width: 480px) {
   .gender-options {
     flex-direction: column;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .gender-options label {
+    font-size: 15px;
+  }
+
+  .gender-options input[type="radio"] {
+    transform: scale(1.3);
   }
 }
