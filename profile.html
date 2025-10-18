@@ -5,37 +5,208 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Profile</title>
     <link rel="stylesheet" href="/css/profile.css" />
-    <link rel="stylesheet" href="/css/index.css" />
+    <!-- <link rel="stylesheet" href="/css/index.css" /> -->
+    <link rel="stylesheet" href="/css/privacy.css" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-p6d0T3+u8iI68F5W1gkB7l1kzG0Fv+2Hb81n1r5e1uUEkWvG8ZkF3+EzGk6z7dBnx1H+TpJ7r9RJ7N/6eC2x1w=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
     />
   </head>
   <body>
+    <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+
+    <!-- Navigation -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="container">
-        <div class="nav-content">
-          <a href="index.html" class="logo" aria-label="AgriMart Home">
-            <span class="logo-icon">🌾</span>
+        <div class="logo-toggle-wrapper">
+          <a
+            href="/index.html"
+            class="logo"
+            role="link"
+            aria-label="AgriMart Home"
+          >
+            <span class="logo-icon" aria-hidden="true">🌾</span>
             <span class="logo-text">AgriMart</span>
           </a>
 
-          <div class="nav-links">
-            <a href="index.html" class="nav-link active" aria-current="page"
-              >Home</a
+          <div class="nav-right-section">
+            <!-- Desktop Navigation Links -->
+            <div
+              class="desktop-nav-links"
+              role="menubar"
+              aria-label="Primary menu"
             >
-            <div class="dynamic-links"></div>
+              <a
+                href="/index.html"
+                class="nav-link active"
+                aria-current="page"
+                role="menuitem"
+                >Home</a
+              >
+              <div class="dynamic-links" role="presentation"></div>
+              <div class="dropdown" role="presentation">
+                <button
+                  class="nav-link dropdown-toggle"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  role="menuitem"
+                  id="categoryDropdown"
+                >
+                  Categories
+                  <svg
+                    class="dropdown-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div
+                  class="dropdown-menu"
+                  role="menu"
+                  aria-labelledby="categoryDropdown"
+                >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="all"
+                    >All Products</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="fruits"
+                    >Fruits</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="vegetables"
+                    >Vegetables</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="cereals"
+                    >Cereals</a
+                  >
+                </div>
+              </div>
+              <a href="contact.html" class="nav-link" role="menuitem"
+                >Contact</a
+              >
+            </div>
 
-            <div class="dropdown">
+            <!-- Desktop Actions -->
+            <div class="desktop-actions" role="group" aria-label="User actions">
+              <button
+                class="cart-button"
+                onclick="window.location.href='/cart.html'"
+                aria-label="Shopping cart"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path
+                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                  ></path>
+                </svg>
+                <span class="cart-count" id="cartCount" aria-live="polite"
+                  >0</span
+                >
+              </button>
+              <a
+                href="/profile.html"
+                class="profile-link"
+                aria-label="Profile page"
+              >
+                <img
+                  src="/Images/Profile.png"
+                  alt="Profile"
+                  class="profile-icon"
+                />
+              </a>
+            </div>
+          </div>
+
+          <!-- Mobile Menu Toggle Button -->
+          <button
+            class="mobile-menu-toggle"
+            id="mobileMenuToggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+
+        <!-- Mobile Slide-Out Menu Panel -->
+        <div
+          class="nav-links"
+          id="navLinks"
+          role="menu"
+          aria-label="Mobile menu"
+        >
+          <div class="mobile-menu-header" role="presentation">
+            <div
+              class="mobile-profile-section"
+              role="group"
+              aria-label="Mobile profile"
+            >
+              <a
+                href="/profile.html"
+                class="profile-link-mobile"
+                role="menuitem"
+                aria-label="Mobile profile link"
+              >
+                <img
+                  src="/Images/Profile.png"
+                  alt="Profile"
+                  class="profile-icon"
+                />
+                <div class="mobile-profile-info">
+                  <h3 id="mobileUserName">Guest User</h3>
+                  <p id="mobileUserEmail">Login or Sign Up</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="mobile-menu-body" role="presentation">
+            <a href="/index.html" class="nav-link" role="menuitem">Home</a>
+            <div class="dynamic-links" role="presentation"></div>
+            <div class="dropdown" role="presentation">
               <button
                 class="nav-link dropdown-toggle"
                 aria-haspopup="true"
                 aria-expanded="false"
-                id="categoryDropdown"
+                role="menuitem"
               >
                 Categories
                 <svg
@@ -48,52 +219,54 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
+                  aria-hidden="true"
                 >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </button>
-              <div
-                class="dropdown-menu"
-                role="menu"
-                aria-labelledby="categoryDropdown"
-              >
+              <div class="dropdown-menu" role="menu">
                 <a
                   href="#"
                   class="dropdown-item"
                   role="menuitem"
-                  data-category="all"
+                  data-filter="all"
                   >All Products</a
                 >
                 <a
                   href="#"
                   class="dropdown-item"
                   role="menuitem"
-                  data-category="fruits"
+                  data-filter="fruits"
                   >Fruits</a
                 >
                 <a
                   href="#"
                   class="dropdown-item"
                   role="menuitem"
-                  data-category="vegetables"
+                  data-filter="vegetables"
                   >Vegetables</a
                 >
                 <a
                   href="#"
                   class="dropdown-item"
                   role="menuitem"
-                  data-category="cereals"
+                  data-filter="cereals"
                   >Cereals</a
                 >
               </div>
             </div>
+            <a href="contact.html" class="nav-link" role="menuitem">Contact</a>
+          </div>
 
-            <a href="contact.html" class="nav-link">Contact</a>
-
+          <div
+            class="mobile-cart-section"
+            role="group"
+            aria-label="Mobile cart"
+          >
             <button
-              class="cart-button"
-              aria-label="Shopping cart"
+              class="mobile-cart-btn"
               onclick="window.location.href='/cart.html'"
+              aria-label="View cart"
             >
               <svg
                 width="24"
@@ -104,6 +277,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
+                aria-hidden="true"
               >
                 <circle cx="9" cy="21" r="1"></circle>
                 <circle cx="20" cy="21" r="1"></circle>
@@ -111,31 +285,12 @@
                   d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
                 ></path>
               </svg>
-              <span class="cart-count" id="cartCount">0</span>
+              View Cart
+              <span class="cart-count" id="mobileCartCount" aria-live="polite"
+                >0</span
+              >
             </button>
-
-            <a
-              href="profile.html"
-              class="profile-link"
-              aria-label="Profile page"
-            >
-              <img
-                src="\Images\Profile.png"
-                alt="Profile"
-                class="profile-icon"
-              />
-            </a>
           </div>
-
-          <button
-            class="mobile-menu-toggle"
-            aria-label="Toggle mobile menu"
-            aria-expanded="false"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
         </div>
       </div>
     </nav>
@@ -143,7 +298,7 @@
     <div class="profile-page">
       <aside class="sidebar" id="sidebarMenu"></aside>
 
-      <main class="content">
+      <main class="profile-content">
         <header>
           <h3>Personal Information</h3>
           <p>Home / My Account / Personal Information</p>
@@ -306,6 +461,7 @@
     <div id="snackbar"></div>
     <script src="/data/data.js"></script>
     <script src="/js/profile.js"></script>
-    <script src="js/index.js" defer></script>
+    <!-- <script src="js/index.js" defer></script> -->
+    <!-- <script src="js/privacy.js" defer></script> -->
   </body>
 </html>

@@ -1,89 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terms & Conditions — Agrimart</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms & Conditions — Agrimart</title>
 
-  <!-- External CSS -->
-  <link rel="stylesheet" href="css/terms_conditions.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
-</head>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/terms_conditions.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <link rel="stylesheet" href="css/privacy.css" /> -->
+    <link rel="stylesheet" href="css/terms_conditions.css" />
+  </head>
 
-<body>
-  <!-- Mobile Overlay -->
-  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <body>
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
 
-  <!-- Navigation -->
-  <nav class="navbar" role="navigation" aria-label="Main navigation">
-    <div class="container">
-      <div class="nav-content">
-        <!-- Logo -->
-        <a href="/index.html" class="logo" aria-label="AgriMart Home">
-          <span class="logo-icon">🌾</span>
-          <span class="logo-text">AgriMart</span>
-        </a>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="container">
+        <div class="logo-toggle-wrapper">
+          <a
+            href="/index.html"
+            class="logo"
+            role="link"
+            aria-label="AgriMart Home"
+          >
+            <span class="logo-icon" aria-hidden="true">🌾</span>
+            <span class="logo-text">AgriMart</span>
+          </a>
 
-        <div class="nav-right-section">
-          <!-- Desktop Navigation Links -->
-          <div class="desktop-nav-links">
-            <a href="/index.html" class="nav-link active" aria-current="page">Home</a>
-            <div class="dynamic-links"></div>
-            <div class="dropdown">
-              <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-                Categories
-                <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </button>
-              <div class="dropdown-menu">
-                <a href="#" class="dropdown-item" data-filter="all">All Products</a>
-                <a href="#" class="dropdown-item" data-filter="fruits">Fruits</a>
-                <a href="#" class="dropdown-item" data-filter="vegetables">Vegetables</a>
-                <a href="#" class="dropdown-item" data-filter="cereals">Cereals</a>
+          <div class="nav-right-section">
+            <!-- Desktop Navigation Links -->
+            <div
+              class="desktop-nav-links"
+              role="menubar"
+              aria-label="Primary menu"
+            >
+              <a
+                href="/index.html"
+                class="nav-link active"
+                aria-current="page"
+                role="menuitem"
+                >Home</a
+              >
+              <div class="dynamic-links" role="presentation"></div>
+              <div class="dropdown" role="presentation">
+                <button
+                  class="nav-link dropdown-toggle"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  role="menuitem"
+                  id="categoryDropdown"
+                >
+                  Categories
+                  <svg
+                    class="dropdown-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div
+                  class="dropdown-menu"
+                  role="menu"
+                  aria-labelledby="categoryDropdown"
+                >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="all"
+                    >All Products</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="fruits"
+                    >Fruits</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="vegetables"
+                    >Vegetables</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="cereals"
+                    >Cereals</a
+                  >
+                </div>
               </div>
+              <a href="contact.html" class="nav-link" role="menuitem"
+                >Contact</a
+              >
             </div>
-            <a href="contact.html" class="nav-link">Contact</a>
+
+            <!-- Desktop Actions -->
+            <div class="desktop-actions" role="group" aria-label="User actions">
+              <button
+                class="cart-button"
+                onclick="window.location.href='/cart.html'"
+                aria-label="Shopping cart"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path
+                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                  ></path>
+                </svg>
+                <span class="cart-count" id="cartCount" aria-live="polite"
+                  >0</span
+                >
+              </button>
+              <a
+                href="/profile.html"
+                class="profile-link"
+                aria-label="Profile page"
+              >
+                <img
+                  src="/Images/Profile.png"
+                  alt="Profile"
+                  class="profile-icon"
+                />
+              </a>
+            </div>
           </div>
 
-          <!-- Desktop Actions -->
-          <div class="desktop-actions">
-            <button class="cart-button" onclick="window.location.href='/cart.html'">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              <span class="cart-count" id="cartCount">0</span>
-            </button>
-            <a href="/profile.html" class="profile-link">
-              <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
-            </a>
-          </div>
+          <!-- Mobile Menu Toggle Button -->
+          <button
+            class="mobile-menu-toggle"
+            id="mobileMenuToggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
 
-        <!-- Mobile Menu Toggle -->
-       <div>
-         <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
-       </div>
-        <!-- Mobile Menu -->
-        <div class="nav-links" id="navLinks">
-          
-          <div class="mobile-menu-header">
-            <div class="mobile-profile-section">
-              <div style="display: flex; justify-content: end;">
-                              <button id="closeDrawer">X</button>
-
-              </div>
-              <a href="/profile.html" class="profile-link-mobile">
-                <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
+        <!-- Mobile Slide-Out Menu Panel -->
+        <div
+          class="nav-links"
+          id="navLinks"
+          role="menu"
+          aria-label="Mobile menu"
+        >
+          <div class="mobile-menu-header" role="presentation">
+            <div
+              class="mobile-profile-section"
+              role="group"
+              aria-label="Mobile profile"
+            >
+              <a
+                href="/profile.html"
+                class="profile-link-mobile"
+                role="menuitem"
+                aria-label="Mobile profile link"
+              >
+                <img
+                  src="/Images/Profile.png"
+                  alt="Profile"
+                  class="profile-icon"
+                />
                 <div class="mobile-profile-info">
                   <h3 id="mobileUserName">Guest User</h3>
                   <p id="mobileUserEmail">Login or Sign Up</p>
@@ -91,145 +200,247 @@
               </a>
             </div>
           </div>
-          <div class="mobile-menu-body">
-            <a href="/index.html" class="nav-link">Home</a>
-            <div class="dynamic-links"></div>
-            <div class="dropdown">
-              <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+
+          <div class="mobile-menu-body" role="presentation">
+            <a href="/index.html" class="nav-link" role="menuitem">Home</a>
+            <div class="dynamic-links" role="presentation"></div>
+            <div class="dropdown" role="presentation">
+              <button
+                class="nav-link dropdown-toggle"
+                aria-haspopup="true"
+                aria-expanded="false"
+                role="menuitem"
+              >
                 Categories
-                <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg
+                  class="dropdown-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </button>
               <div class="dropdown-menu" role="menu">
-                <a href="#" class="dropdown-item" data-filter="all">All Products</a>
-                <a href="#" class="dropdown-item" data-filter="fruits">Fruits</a>
-                <a href="#" class="dropdown-item" data-filter="vegetables">Vegetables</a>
-                <a href="#" class="dropdown-item" data-filter="cereals">Cereals</a>
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="all"
+                  >All Products</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="fruits"
+                  >Fruits</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="vegetables"
+                  >Vegetables</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="cereals"
+                  >Cereals</a
+                >
               </div>
             </div>
-            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="contact.html" class="nav-link" role="menuitem">Contact</a>
           </div>
-          <div class="mobile-cart-section">
-            <button class="mobile-cart-btn" onclick="window.location.href='/cart.html'">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+
+          <div
+            class="mobile-cart-section"
+            role="group"
+            aria-label="Mobile cart"
+          >
+            <button
+              class="mobile-cart-btn"
+              onclick="window.location.href='/cart.html'"
+              aria-label="View cart"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path
+                  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                ></path>
               </svg>
               View Cart
-              <span class="cart-count" id="mobileCartCount">0</span>
+              <span class="cart-count" id="mobileCartCount" aria-live="polite"
+                >0</span
+              >
             </button>
           </div>
         </div>
       </div>
-    </div>
-  </nav>
-<!-- Mobile overlay -->
-<div id="mobileOverlay" class="mobile-overlay"></div>
+    </nav>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-inner">
-      <h1 class="site-title">Agrimart - Terms & Conditions</h1>
-      <button id="backToProfile">← Back to Home</button>
-    </div>
-  </header>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <h1 class="site-title">Agrimart - Terms & Conditions</h1>
+        <button id="backToProfile">← Back to Home</button>
+      </div>
+    </header>
 
-  <!-- Main Content -->
-  <main class="content">
-    <h2>Terms and Conditions</h2>
-    <p>Welcome to Agrimart! By accessing and using our website, you agree to the terms outlined below. Please read them carefully before making a purchase.</p>
+    <!-- Main Content -->
+    <main class="content">
+      <h2>Terms and Conditions</h2>
+      <p>
+        Welcome to Agrimart! By accessing and using our website, you agree to
+        the terms outlined below. Please read them carefully before making a
+        purchase.
+      </p>
 
-    <h3>1. Acceptance of Terms</h3>
-    <p>By using this website, you acknowledge that you have read, understood, and agreed to comply with our Terms & Conditions. If you do not agree, please refrain from using our site.</p>
+      <h3>1. Acceptance of Terms</h3>
+      <p>
+        By using this website, you acknowledge that you have read, understood,
+        and agreed to comply with our Terms & Conditions. If you do not agree,
+        please refrain from using our site.
+      </p>
 
-    <h3>2. Use of Our Website</h3>
-    <ul>
-      <li>You must be at least 18 years old or under parental supervision to make purchases.</li>
-      <li>Users must provide accurate and up-to-date information when registering or placing orders.</li>
-      <li>Unauthorized use of this website may result in legal action.</li>
-    </ul>
+      <h3>2. Use of Our Website</h3>
+      <ul>
+        <li>
+          You must be at least 18 years old or under parental supervision to
+          make purchases.
+        </li>
+        <li>
+          Users must provide accurate and up-to-date information when
+          registering or placing orders.
+        </li>
+        <li>Unauthorized use of this website may result in legal action.</li>
+      </ul>
 
-    <h3>3. Product Information</h3>
-    <p>We strive to ensure all product details, images, and prices are accurate. However, minor variations may occur due to lighting or availability. Prices are subject to change without prior notice.</p>
+      <h3>3. Product Information</h3>
+      <p>
+        We strive to ensure all product details, images, and prices are
+        accurate. However, minor variations may occur due to lighting or
+        availability. Prices are subject to change without prior notice.
+      </p>
 
-    <h3>4. Orders and Payments</h3>
-    <ul>
-      <li>All orders are subject to acceptance and availability.</li>
-      <li>Payments must be made via our approved payment gateways.</li>
-      <li>We reserve the right to cancel orders for reasons including pricing errors or stock issues.</li>
-    </ul>
+      <h3>4. Orders and Payments</h3>
+      <ul>
+        <li>All orders are subject to acceptance and availability.</li>
+        <li>Payments must be made via our approved payment gateways.</li>
+        <li>
+          We reserve the right to cancel orders for reasons including pricing
+          errors or stock issues.
+        </li>
+      </ul>
 
-    <h3>5. Shipping and Delivery</h3>
-    <p>Delivery times may vary depending on location and availability. Agrimart is not responsible for delays due to courier or unforeseen circumstances.</p>
+      <h3>5. Shipping and Delivery</h3>
+      <p>
+        Delivery times may vary depending on location and availability. Agrimart
+        is not responsible for delays due to courier or unforeseen
+        circumstances.
+      </p>
 
-    <h3>6. Returns and Refunds</h3>
-    <p>If you receive a damaged or incorrect item, please contact us within 48 hours. Refunds or replacements will be processed as per our policy.</p>
+      <h3>6. Returns and Refunds</h3>
+      <p>
+        If you receive a damaged or incorrect item, please contact us within 48
+        hours. Refunds or replacements will be processed as per our policy.
+      </p>
 
-    <h3>7. Intellectual Property</h3>
-    <p>All content on this site, including text, images, and logos, is owned by Agrimart and protected by copyright laws.</p>
+      <h3>7. Intellectual Property</h3>
+      <p>
+        All content on this site, including text, images, and logos, is owned by
+        Agrimart and protected by copyright laws.
+      </p>
 
-    <h3>8. Limitation of Liability</h3>
-    <p>Agrimart shall not be held liable for any indirect or incidental damages arising from the use of this website or its products.</p>
+      <h3>8. Limitation of Liability</h3>
+      <p>
+        Agrimart shall not be held liable for any indirect or incidental damages
+        arising from the use of this website or its products.
+      </p>
 
-    <h3>9. Policy Updates</h3>
-    <p>We reserve the right to modify these terms at any time. Continued use of the site after changes implies acceptance of the new terms.</p>
+      <h3>9. Policy Updates</h3>
+      <p>
+        We reserve the right to modify these terms at any time. Continued use of
+        the site after changes implies acceptance of the new terms.
+      </p>
 
-    <h3>10. Contact Us</h3>
-    <p>If you have questions or concerns about our Terms & Conditions, please contact:</p>
-    <p>
-      Email: <a href="mailto:support@agrimart.com">support@agrimart.com</a><br>
-      Phone: +91-XXXXXXXXXX<br>
-      Address: Agrimart HQ, Kochi, Kerala, India
-    </p>
-  </main>
+      <h3>10. Contact Us</h3>
+      <p>
+        If you have questions or concerns about our Terms & Conditions, please
+        contact:
+      </p>
+      <p>
+        Email: <a href="mailto:support@agrimart.com">support@agrimart.com</a
+        ><br />
+        Phone: +91-XXXXXXXXXX<br />
+        Address: Agrimart HQ, Kochi, Kerala, India
+      </p>
+    </main>
 
-  <!-- Footer -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <span class="logo-icon">🌾</span>
-          <h3 class="footer-title">AgriMart</h3>
-          <p class="footer-description">
-            Your trusted source for fresh, organic produce. Farm to table, quality to your doorstep.
-          </p>
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <span class="logo-icon">🌾</span>
+            <h3 class="footer-title">AgriMart</h3>
+            <p class="footer-description">
+              Your trusted source for fresh, organic produce. Farm to table,
+              quality to your doorstep.
+            </p>
+          </div>
+          <div class="footer-section">
+            <h4 class="footer-heading">Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">Products</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4 class="footer-heading">About AgriMart</h4>
+            <ul class="footer-links">
+              <li><a href="about_us.html">About Us</a></li>
+              <li><a href="blogs.html">Blog</a></li>
+              <li><a href="terms_conditions.html">Terms & Conditions</a></li>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4 class="footer-heading">Contact Info</h4>
+            <ul class="footer-contact">
+              <li>Email: agrimart@gmail.com</li>
+              <li>Phone: +91 9876543215</li>
+              <li>Address: 1-23 Farm Road, Green Valley,Bengaluru-56747</li>
+            </ul>
+          </div>
         </div>
-        <div class="footer-section">
-          <h4 class="footer-heading">Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#products">Products</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="terms_conditions.html">Terms & Conditions</a></li>
-            <li><a href="policy.html">Privacy Policy</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h4 class="footer-heading">Categories</h4>
-          <ul class="footer-links">
-            <li><a href="#" data-category="fruits">Fruits</a></li>
-            <li><a href="#" data-category="vegetables">Vegetables</a></li>
-            <li><a href="#" data-category="cereals">Cereals</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h4 class="footer-heading">Contact Info</h4>
-          <ul class="footer-contact">
-            <li>Email: agrimart@gmail.com</li>
-            <li>Phone: +91 9876543215</li>
-            <li>Address: 1-23 Farm Road, Green Valley, Bengaluru-56747</li>
-          </ul>
+        <div class="footer-bottom">
+          <p>&copy; 2025 AgriMart. All rights reserved.</p>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 AgriMart. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+    </footer>
 
-  <!-- JS -->
-  <script src="js/terms.js"></script>
-</body>
+    <!-- JS -->
+    <script src="js/terms.js"></script>
+  </body>
 </html>

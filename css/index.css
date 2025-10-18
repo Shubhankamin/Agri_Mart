@@ -36,20 +36,18 @@ body {
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Container */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-/* Navigation */
-.navbar {
+/* .navbar {
   background-color: #fff;
   box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 999;
   transition: var(--transition);
 }
 
@@ -105,7 +103,7 @@ body {
 }
 @media (max-width: 767px) {
     .nav-link {
-        width: 100%; /* Full width for mobile links */
+        width: 100%; 
         padding: 8px 0;
     }
 }
@@ -120,11 +118,10 @@ body {
   margin-left: 2rem;
   text-decoration: none;
 }
-/* Adjust margin for mobile */
 @media (max-width: 767px) {
     .profile-link {
         margin-left: 0;
-        margin-top: 10px; /* Separates it from other links in mobile menu */
+        margin-top: 10px; 
     }
 }
 
@@ -142,26 +139,23 @@ body {
   border-color: #4caf50;
 }
 
-/* Dropdown */
 .dropdown {
   position: relative;
 }
-/* Ensure dropdown works well within the mobile menu */
 @media (max-width: 767px) {
     .dropdown {
         width: 100%;
     }
     .dropdown-menu {
-        position: static; /* Stack dropdown items inside the mobile menu */
+        position: static; 
         width: 100%;
         min-width: 100%;
         margin-top: 8px;
         box-shadow: none;
         border: 1px solid var(--border-color);
         border-radius: 8px;
-        transform: translateY(0); /* Reset transform */
+        transform: translateY(0); 
     }
-    /* Hide by default on mobile menu, show when active */
     .dropdown-menu {
         display: none;
     }
@@ -224,7 +218,6 @@ body {
   color: var(--primary-green);
 }
 
-/* Cart Button */
 .cart-button {
   position: relative;
   background-color: var(--primary-green);
@@ -259,7 +252,6 @@ body {
   text-align: center;
 }
 
-/* --- MOBILE NAVIGATION STYLES --- */
 .mobile-menu-toggle {
   display: none;
   flex-direction: column;
@@ -291,7 +283,6 @@ body {
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* Hide hamburger when drawer is open */
 .mobile-menu-toggle.active {
   display: none;
 }
@@ -321,7 +312,7 @@ body {
 .mobile-profile-section {
   display: none;
 }
-
+ */
 
 /* Hero Section */
 .hero {
@@ -1020,7 +1011,7 @@ body {
 
 
 #closeDrawer {
-  background-color: #2ecc71;        /* bright green */
+  background-color: transparent;        /* bright green */
   color: black;
   border: none;
   padding: 8px 16px;

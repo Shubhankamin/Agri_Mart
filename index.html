@@ -2,103 +2,298 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <meta name="description" content="Fresh organic fruits, vegetables, and cereals delivered to your doorstep" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <meta
+      name="description"
+      content="Fresh organic fruits, vegetables, and cereals delivered to your doorstep"
+    />
     <title>AgriMart - Fresh Organic Produce</title>
     <link rel="stylesheet" href="/css/index.css" />
-   
+    <link rel="stylesheet" href="/css/privacy.css" />
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <!-- Navigation -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="container">
-        <div class="nav-content">
-          <a href="/index.html" class="logo" aria-label="AgriMart Home">
-            <span class="logo-icon">🌾</span>
+        <div class="logo-toggle-wrapper">
+          <a
+            href="/index.html"
+            class="logo"
+            role="link"
+            aria-label="AgriMart Home"
+          >
+            <span class="logo-icon" aria-hidden="true">🌾</span>
             <span class="logo-text">AgriMart</span>
           </a>
-         <div class="nav-links">
-            <a href="/index.html" class="nav-link active" aria-current="page">Home</a>
-            <div class="dynamic-links"></div>
-            <div class="dropdown">
-              <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" id="categoryDropdown" >Categories
-                <svg class="dropdown-icon"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" >
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </button>
-              <div class="dropdown-menu" role="menu" aria-labelledby="categoryDropdown" >
-                <a href="#" class="dropdown-item" role="menuite" data-filter="all">All Products</a>
-                <a href="#" class="dropdown-item" role="menuitem" data-filter="fruits">Fruits</a>
-                <a href="#" class="dropdown-item" role="menuitem" data-filter="vegetables">Vegetables</a>
-		<a href="#" class="dropdown-item" role="menuitem" data-filter="cereals">Cereals</a>
+
+          <div class="nav-right-section">
+            <!-- Desktop Navigation Links -->
+            <div
+              class="desktop-nav-links"
+              role="menubar"
+              aria-label="Primary menu"
+            >
+              <a
+                href="/index.html"
+                class="nav-link active"
+                aria-current="page"
+                role="menuitem"
+                >Home</a
+              >
+              <div class="dynamic-links" role="presentation"></div>
+              <div class="dropdown" role="presentation">
+                <button
+                  class="nav-link dropdown-toggle"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  role="menuitem"
+                  id="categoryDropdown"
+                >
+                  Categories
+                  <svg
+                    class="dropdown-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div
+                  class="dropdown-menu"
+                  role="menu"
+                  aria-labelledby="categoryDropdown"
+                >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="all"
+                    >All Products</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="fruits"
+                    >Fruits</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="vegetables"
+                    >Vegetables</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="cereals"
+                    >Cereals</a
+                  >
+                </div>
               </div>
+              <a href="contact.html" class="nav-link" role="menuitem"
+                >Contact</a
+              >
             </div>
-            <a href="contact.html" class="nav-link">Contact</a>
-            <button class="cart-button" aria-label="Shopping cart" onclick="window.location.href='/cart.html'">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" ></path>
-              </svg>
-              <span class="cart-count" id="cartCount">0</span>
-            </button>
-            <a href="/profile.html" class="profile-link" aria-label="Profile page">
-             <img src="\Images\Profile.png" alt="Profile" class="profile-icon" />
-            </a>
-         </div>
-          <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+
+            <!-- Desktop Actions -->
+            <div class="desktop-actions" role="group" aria-label="User actions">
+              <button
+                class="cart-button"
+                onclick="window.location.href='/cart.html'"
+                aria-label="Shopping cart"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path
+                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                  ></path>
+                </svg>
+                <span class="cart-count" id="cartCount" aria-live="polite"
+                  >0</span
+                >
+              </button>
+              <a
+                href="/profile.html"
+                class="profile-link"
+                aria-label="Profile page"
+              >
+                <img
+                  src="/Images/Profile.png"
+                  alt="Profile"
+                  class="profile-icon"
+                />
+              </a>
+            </div>
+          </div>
+
+          <!-- Mobile Menu Toggle Button -->
+          <button
+            class="mobile-menu-toggle"
+            id="mobileMenuToggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
             <span></span>
             <span></span>
             <span></span>
           </button>
         </div>
-        <!-- Mobile Menu -->
-        <div class="nav-links" id="navLinks">
-          
-          <div class="mobile-menu-header">
-            <div class="mobile-profile-section">
-              <div style="display: flex; justify-content: end;">
-                <button id="closeDrawer">X</button>
 
-              </div>
-              <a href="/profile.html" class="profile-link-mobile">
-                <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
+        <!-- Mobile Slide-Out Menu Panel -->
+        <div
+          class="nav-links"
+          id="navLinks"
+          role="menu"
+          aria-label="Mobile menu"
+        >
+          <div class="mobile-menu-header" role="presentation">
+            <div
+              class="mobile-profile-section"
+              role="group"
+              aria-label="Mobile profile"
+            >
+              <a
+                href="/profile.html"
+                class="profile-link-mobile"
+                role="menuitem"
+                aria-label="Mobile profile link"
+              >
+                <img
+                  src="/Images/Profile.png"
+                  alt="Profile"
+                  class="profile-icon"
+                />
                 <div class="mobile-profile-info">
-                  <h3 id="mobileUserName"></h3>
+                  <h3 id="mobileUserName">Guest User</h3>
                   <p id="mobileUserEmail">Login or Sign Up</p>
                 </div>
               </a>
             </div>
           </div>
-          <div class="mobile-menu-body">
-            <a href="/index.html" class="nav-link">Home</a>
-            <div class="dynamic-links"></div>
-            <div class="dropdown">
-              <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+
+          <div class="mobile-menu-body" role="presentation">
+            <a href="/index.html" class="nav-link" role="menuitem">Home</a>
+            <div class="dynamic-links" role="presentation"></div>
+            <div class="dropdown" role="presentation">
+              <button
+                class="nav-link dropdown-toggle"
+                aria-haspopup="true"
+                aria-expanded="false"
+                role="menuitem"
+              >
                 Categories
-                <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg
+                  class="dropdown-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </button>
               <div class="dropdown-menu" role="menu">
-                <a href="#" class="dropdown-item" data-filter="all">All Products</a>
-                <a href="#" class="dropdown-item" data-filter="fruits">Fruits</a>
-                <a href="#" class="dropdown-item" data-filter="vegetables">Vegetables</a>
-                <a href="#" class="dropdown-item" data-filter="cereals">Cereals</a>
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="all"
+                  >All Products</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="fruits"
+                  >Fruits</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="vegetables"
+                  >Vegetables</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="cereals"
+                  >Cereals</a
+                >
               </div>
             </div>
-            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="contact.html" class="nav-link" role="menuitem">Contact</a>
           </div>
-          <div class="mobile-cart-section">
-            <button class="mobile-cart-btn" onclick="window.location.href='/cart.html'">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+
+          <div
+            class="mobile-cart-section"
+            role="group"
+            aria-label="Mobile cart"
+          >
+            <button
+              class="mobile-cart-btn"
+              onclick="window.location.href='/cart.html'"
+              aria-label="View cart"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path
+                  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                ></path>
               </svg>
               View Cart
-              <span class="cart-count" id="mobileCartCount">0</span>
+              <span class="cart-count" id="mobileCartCount" aria-live="polite"
+                >0</span
+              >
             </button>
           </div>
         </div>
@@ -110,14 +305,18 @@
       <div class="container">
         <div class="hero-content">
           <h1 class="hero-title">
-            Fresh Organic Produce <br> Delivered to Your Door
+            Fresh Organic Produce <br />
+            Delivered to Your Door
           </h1>
           <p class="hero-description">
             Experience the finest selection of farm-fresh fruits, vegetables,
             and cereals. Quality you can taste, freshness you can trust.
           </p>
           <div class="hero-actions">
-            <button class="btn btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
+            <button
+              class="btn btn-primary"
+              onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})"
+            >
               Shop Now
             </button>
             <a href="/about_us.html" class="btn btn-secondary">Learn More</a>
@@ -130,17 +329,37 @@
     <!-- Category Filter -->
     <section class="category-filter">
       <div class="container">
-        <div class="filter-buttons" role="group" aria-label="Product category filters">
-          <button class="filter-btn active" data-filter="all" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
+        <div
+          class="filter-buttons"
+          role="group"
+          aria-label="Product category filters"
+        >
+          <button
+            class="filter-btn active"
+            data-filter="all"
+            onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})"
+          >
             All Products
           </button>
-          <button class="filter-btn" data-filter="fruits" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
+          <button
+            class="filter-btn"
+            data-filter="fruits"
+            onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})"
+          >
             Fruits
           </button>
-          <button class="filter-btn" data-filter="vegetables" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
+          <button
+            class="filter-btn"
+            data-filter="vegetables"
+            onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})"
+          >
             Vegetables
           </button>
-          <button class="filter-btn" data-filter="cereals" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
+          <button
+            class="filter-btn"
+            data-filter="cereals"
+            onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})"
+          >
             Cereals
           </button>
         </div>
@@ -162,7 +381,9 @@
       </div>
     </section>
     <div class="section-footer centered-footer">
-      <a href="/products.html" class="btn btn-secondary" >View All Products >>> </a>
+      <a href="/products.html" class="btn btn-secondary"
+        >View All Products >>>
+      </a>
     </div>
 
     <!-- Features Section -->
@@ -171,7 +392,16 @@
         <div class="features-grid">
           <div class="feature-card">
             <div class="feature-icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
                 <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
                 <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
               </svg>
@@ -183,12 +413,21 @@
           </div>
           <div class="feature-card">
             <div class="feature-icon">
-		<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                	<rect x="1" y="3" width="15" height="13"></rect>
-                	<polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-               		<circle cx="5.5" cy="18.5" r="2.5"></circle>
-                	<circle cx="18.5" cy="18.5" r="2.5"></circle>
-                </svg>
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="1" y="3" width="15" height="13"></rect>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+              </svg>
             </div>
             <h3 class="feature-title">Fast Delivery</h3>
             <p class="feature-description">
@@ -197,7 +436,16 @@
           </div>
           <div class="feature-card">
             <div class="feature-icon">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
@@ -229,13 +477,12 @@
               <li><a href="index.html">Home</a></li>
               <li><a href="products.html">Products</a></li>
               <li><a href="contact.html">Contact Us</a></li>
-              
             </ul>
           </div>
           <div class="footer-section">
             <h4 class="footer-heading">About AgriMart</h4>
             <ul class="footer-links">
-             <li><a href="about_us.html">About Us</a></li>
+              <li><a href="about_us.html">About Us</a></li>
               <li><a href="blogs.html">Blog</a></li>
               <li><a href="terms_conditions.html">Terms & Conditions</a></li>
               <li><a href="privacy.html">Privacy Policy</a></li>
@@ -258,7 +505,16 @@
 
     <!-- Cart Notification -->
     <div class="cart-notification" id="cartNotification">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
         <polyline points="22 4 12 14.01 9 11.01"></polyline>
       </svg>
@@ -266,8 +522,7 @@
     </div>
     <script src="/data/data.js"></script>
     <script src="/js/index.js"></script>
-    <script src="/js/terms.js"></script>
-    
-    
+    <script src="/js/privacy.js"></script>
+
   </body>
 </html>

@@ -1,10 +1,9 @@
-
 // Cart state
 let cart = [];
 
 // Get current user from localStorage
-const currentUser = localStorage.getItem("currentUser");
-const user = currentUser ? JSON.parse(currentUser) : null;
+// const currentUser = localStorage.getItem("currentUser");
+// const user = currentUser ? JSON.parse(currentUser) : null;
 // common.js
 function truncateText(text, maxLength = 55) {
   if (!text) return "";
@@ -52,6 +51,10 @@ function updateCartCount() {
   cartCountElem.textContent = totalItems;
 }
 
+function goToProductDetails(id) {
+  window.location.href = `/product_details.html?id=${id}`;
+}
+
 // Render Products (only on pages with #productsGrid)
 function renderProducts(filter = "all") {
   const productsGrid = document.getElementById("productsGrid");
@@ -63,25 +66,25 @@ function renderProducts(filter = "all") {
   productsGrid.innerHTML = filteredProducts
     .map(
       (product) => `
-      <article class="product-card" data-product-id="${product.id}">
-    <img src="${product.img[0].src}" alt="${
+ <article class="product-card" data-product-id="${
+   product.id
+ }" onclick="goToProductDetails(${product.id})">
+     <img src="${product.img[0].src}" alt="${
         product.name
       }" class="product-image" loading="lazy">
 
         <div class="product-info">
           <span class="product-category">${product.category}</span>
           <h3 class="product-name">${product.name}</h3>
- <p class="product-description">${truncateText(product.description)}</p>          <div class="product-footer">
+ <p class="product-description">${truncateText(
+   product.description
+ )}</p>          <div class="product-footer">
             <span class="product-price">₹${product.price.toFixed(2)}</span>
-            <button class="add-to-cart-btn" onclick="addToCart(${
+            <button class="add-to-cart-btn" onclick="goToProductDetails(${
               product.id
-            })" aria-label="Add ${product.name} to cart">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              Add to Cart
+            })" aria-label="View ${product.name}">
+            
+              View Product
             </button>
           </div>
         </div>

@@ -21,11 +21,15 @@ if (!user) {
   setTimeout(() => (window.location.href = "login.html"), 1000);
 }
 
+// const currentUser = localStorage.getItem("currentUser");
+// const user = currentUser ? JSON.parse(currentUser) : null;
+
+// Add dynamic navbar links
 function setupDynamicLinks() {
   const containers = document.querySelectorAll(".dynamic-links");
   if (containers.length === 0) return;
 
-  containers.forEach(container => {
+  containers.forEach((container) => {
     container.innerHTML = ""; // Clear existing links
     const productsLink = document.createElement("a");
     productsLink.href = "/products.html";
@@ -92,7 +96,7 @@ function updateProfileUI() {
 
 // Setup Event Listeners for Navigation
 function setupNavigationEventListeners() {
-  // --- DROPDOWN LOGIC ---
+  // --- Dropdown logic (desktop & mobile) ---
   const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
   dropdownToggles.forEach((toggle) => {
     toggle.addEventListener("click", (event) => {
@@ -106,39 +110,40 @@ function setupNavigationEventListeners() {
   });
 
   document.addEventListener("click", () => {
-    document.querySelectorAll(".dropdown.active").forEach((dropdown) =>
-      dropdown.classList.remove("active")
-    );
+    document
+      .querySelectorAll(".dropdown.active")
+      .forEach((dropdown) => dropdown.classList.remove("active"));
   });
 
-  // --- MOBILE MENU LOGIC ---
+  // --- MOBILE MENU TOGGLE LOGIC ---
   const mobileMenuToggle = document.getElementById("mobileMenuToggle");
   const navLinks = document.getElementById("navLinks");
-  const mobileCloseBtn = document.getElementById("mobileCloseBtn"); // new close button
+  const mobileOverlay = document.getElementById("mobileOverlay");
 
-  if (mobileMenuToggle && navLinks) {
-  const toggleMenu = () => {
-    mobileMenuToggle.classList.toggle("active");
-    navLinks.classList.toggle("active");
-    document.body.classList.toggle("menu-open", navLinks.classList.contains("active")); // ✅ for overlay fade
-    document.body.style.overflow = navLinks.classList.contains("active")
-      ? "hidden"
-      : "auto";
-  };
+  if (mobileMenuToggle && navLinks && mobileOverlay) {
+    const toggleMenu = () => {
+      mobileMenuToggle.classList.toggle("active");
+      navLinks.classList.toggle("active");
+      mobileOverlay.classList.toggle("active");
 
-  mobileMenuToggle.addEventListener("click", toggleMenu);
-  if (mobileCloseBtn) mobileCloseBtn.addEventListener("click", toggleMenu);
-}
+      document.body.style.overflow = navLinks.classList.contains("active")
+        ? "hidden"
+        : "auto";
+    };
 
+    mobileMenuToggle.addEventListener("click", toggleMenu);
+    mobileOverlay.addEventListener("click", toggleMenu);
+  }
 }
 
 // --- MAIN INITIALIZATION SCRIPT ---
 document.addEventListener("DOMContentLoaded", () => {
   setupDynamicLinks();
   updateCartCount();
-  updateProfileUI();
+  updateProfileUI(); // ✅ added profile update
   setupNavigationEventListeners();
 });
+
 
 
 let db;
@@ -449,24 +454,24 @@ document.getElementById("closeModal").onclick = () =>
   editModal.classList.add("hidden");
 
 // Add new image in edit
-addNewImageInput.addEventListener("change", async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const base64 = await getBase64(file);
-  editTempImages.push(base64);
+// addNewImageInput.addEventListener("change", async (e) => {
+//   const file = e.target.files[0];
+//   if (!file) return;
+//   const base64 = await getBase64(file);
+//   editTempImages.push(base64);
 
-  const div = document.createElement("div");
-  div.classList.add("edit-img-box");
-  div.innerHTML = `<img src="${base64}" alt="Product Image"><button type="button" class="remove-img-btn">x</button>`;
-  editImageContainer.appendChild(div);
+//   const div = document.createElement("div");
+//   div.classList.add("edit-img-box");
+//   div.innerHTML = `<img src="${base64}" alt="Product Image"><button type="button" class="remove-img-btn">x</button>`;
+//   editImageContainer.appendChild(div);
 
-  div.querySelector(".remove-img-btn").onclick = () => {
-    editTempImages = editTempImages.filter((img) => img !== base64);
-    div.remove();
-  };
+//   div.querySelector(".remove-img-btn").onclick = () => {
+//     editTempImages = editTempImages.filter((img) => img !== base64);
+//     div.remove();
+//   };
 
-  addNewImageInput.value = "";
-});
+//   addNewImageInput.value = "";
+// });
 
 let editTempImages = [null, null, null]; // temporary storage for edit modal
 

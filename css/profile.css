@@ -60,18 +60,18 @@ body {
 }
 
 /* ===== Content ===== */
-.content {
+.profile-content {
   flex: 1;
   padding: 40px 50px;
 }
 
-.content header h3 {
+.profile-content header h3 {
   font-size: 24px;
   margin-bottom: 4px;
   color: #222;
 }
 
-.content header p {
+.profile-content header p {
   font-size: 14px;
   color: #888;
   margin-bottom: 30px;
@@ -244,7 +244,7 @@ textarea {
     font-weight: 300;
   }
 
-  .content {
+  .profile-content {
     padding: 30px 20px;
   }
 
@@ -273,15 +273,15 @@ textarea {
     font-size: 14px;
   }
 
-  .content {
+  .profile-content {
     padding: 20px 15px;
   }
 
-  .content header h3 {
+  .profile-content header h3 {
     font-size: 20px;
   }
 
-  .content header p {
+  .profile-content header p {
     font-size: 13px;
   }
 }
@@ -294,11 +294,11 @@ textarea {
     font-size: 13px;
   }
 
-  .content {
+  .profile-content {
     padding: 15px 10px;
   }
 
-  .content header h3 {
+  .profile-content header h3 {
     font-size: 18px;
   }
 
