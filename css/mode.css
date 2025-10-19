@@ -1,0 +1,70 @@
+/* === CSS Variables === */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #1a1a1a;
+  --primary-color: #2d5016;
+  --secondary-color: #f5f5f5;
+  --card-bg: #f9f9f9;
+  --link-color: #2d5016;
+  --transition-speed: 0.3s;
+}
+
+/* === Dark Theme === */
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --primary-color: #4caf50;
+  --secondary-color: #1e1e1e;
+  --card-bg: #1f1f1f;
+  --link-color: #90ee90;
+}
+
+/* === Apply Variables === */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+a {
+  color: var(--link-color);
+  transition: color var(--transition-speed);
+}
+
+.navbar, .footer, .product-card, .feature-card {
+  background-color: var(--card-bg);
+  transition: background-color var(--transition-speed);
+}
+
+/* === Primary Buttons === */
+.btn-primary1 {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color var(--transition-speed);
+}
+
+.btn-primary1:hover {
+  opacity: 0.9;
+}
+
+/* === Theme Toggle Button === */
+.theme-toggle-btn {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 10px;
+  transition: background-color var(--transition-speed), transform 0.2s;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
