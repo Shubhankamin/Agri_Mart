@@ -9,7 +9,7 @@ function setupDynamicLinks() {
   const containers = document.querySelectorAll(".dynamic-links");
   if (containers.length === 0) return;
 
-  containers.forEach(container => {
+  containers.forEach((container) => {
     container.innerHTML = ""; // Clear existing links
     const productsLink = document.createElement("a");
     productsLink.href = "/products.html";
@@ -76,48 +76,59 @@ function updateProfileUI() {
 
 // Setup Event Listeners for Navigation
 function setupNavigationEventListeners() {
-  // --- DROPDOWN LOGIC ---
+  // --- Dropdown logic (desktop & mobile) ---
   const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
 
-  dropdownToggles.forEach(toggle => {
+  dropdownToggles.forEach((toggle) => {
     toggle.addEventListener("click", (event) => {
       event.stopPropagation();
       const dropdown = toggle.closest(".dropdown");
-      if (dropdown) {
-        document.querySelectorAll(".dropdown.active").forEach(openDropdown => {
-          if (openDropdown !== dropdown) openDropdown.classList.remove("active");
-        });
-        dropdown.classList.toggle("active");
+      document.querySelectorAll(".dropdown.active").forEach((open) => {
+        if (open !== dropdown) open.classList.remove("active");
+      });
+      dropdown.classList.toggle("active");
+    });
+  });
+
+  // ✅ CATEGORY CLICK HANDLER (for dropdown items)
+  document.querySelectorAll(".dropdown-item").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation(); // prevent dropdown from closing before click registers
+      const category = item.getAttribute("data-filter");
+      if (category) {
+        window.location.href = `products.html?category=${encodeURIComponent(
+          category
+        )}`;
       }
     });
   });
 
+  // Close dropdown on outside click
   document.addEventListener("click", () => {
-    document.querySelectorAll(".dropdown.active").forEach(dropdown => {
-      dropdown.classList.remove("active");
-    });
+    document
+      .querySelectorAll(".dropdown.active")
+      .forEach((dropdown) => dropdown.classList.remove("active"));
   });
 
   // --- MOBILE MENU TOGGLE LOGIC ---
   const mobileMenuToggle = document.getElementById("mobileMenuToggle");
   const navLinks = document.getElementById("navLinks");
   const mobileOverlay = document.getElementById("mobileOverlay");
-  const mobileCloseBtn = document.querySelector(".mobile-close"); 
-  const body = document.body;
 
   if (mobileMenuToggle && navLinks && mobileOverlay) {
     const toggleMenu = () => {
       mobileMenuToggle.classList.toggle("active");
       navLinks.classList.toggle("active");
       mobileOverlay.classList.toggle("active");
-      body.style.overflow = navLinks.classList.contains("active") ? "hidden" : "";
+
+      document.body.style.overflow = navLinks.classList.contains("active")
+        ? "hidden"
+        : "auto";
     };
 
     mobileMenuToggle.addEventListener("click", toggleMenu);
     mobileOverlay.addEventListener("click", toggleMenu);
-    if (mobileCloseBtn) {
-      mobileCloseBtn.addEventListener("click", toggleMenu);
-    }
   }
 }
 

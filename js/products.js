@@ -59,14 +59,20 @@ function setupDynamicLinks() {
 function updateCartCount() {
   const cartCountElem = document.getElementById("cartCount");
   const mobileCartCountElem = document.getElementById("mobileCartCount");
-  if (!cartCountElem || !mobileCartCountElem) return;
 
   const savedCart = localStorage.getItem("agrimart_cart");
   const cartData = savedCart ? JSON.parse(savedCart) : [];
-  const totalItems = cartData.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = cartData.reduce(
+    (sum, item) => sum + (item.quantity || 0),
+    0
+  );
 
-  cartCountElem.textContent = totalItems;
-  mobileCartCountElem.textContent = totalItems;
+  // Update DOM
+  if (cartCountElem) cartCountElem.textContent = totalItems;
+  if (mobileCartCountElem) mobileCartCountElem.textContent = totalItems;
+
+  // ✅ Store count in localStorage
+  localStorage.setItem("agrimart_cart_count", totalItems);
 }
 
 // --- PROFILE DISPLAY LOGIC ---
@@ -106,6 +112,7 @@ function updateProfileUI() {
 function setupNavigationEventListeners() {
   // --- Dropdown logic (desktop & mobile) ---
   const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+
   dropdownToggles.forEach((toggle) => {
     toggle.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -117,6 +124,21 @@ function setupNavigationEventListeners() {
     });
   });
 
+  // ✅ CATEGORY CLICK HANDLER (for dropdown items)
+  document.querySelectorAll(".dropdown-item").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation(); // prevent dropdown from closing before click registers
+      const category = item.getAttribute("data-filter");
+      if (category) {
+        window.location.href = `products.html?category=${encodeURIComponent(
+          category
+        )}`;
+      }
+    });
+  });
+
+  // Close dropdown on outside click
   document.addEventListener("click", () => {
     document
       .querySelectorAll(".dropdown.active")

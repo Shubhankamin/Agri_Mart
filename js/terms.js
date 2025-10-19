@@ -78,6 +78,7 @@ function updateProfileUI() {
 function setupNavigationEventListeners() {
   // --- Dropdown logic (desktop & mobile) ---
   const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+
   dropdownToggles.forEach((toggle) => {
     toggle.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -89,6 +90,21 @@ function setupNavigationEventListeners() {
     });
   });
 
+  // ✅ CATEGORY CLICK HANDLER (for dropdown items)
+  document.querySelectorAll(".dropdown-item").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation(); // prevent dropdown from closing before click registers
+      const category = item.getAttribute("data-filter");
+      if (category) {
+        window.location.href = `products.html?category=${encodeURIComponent(
+          category
+        )}`;
+      }
+    });
+  });
+
+  // Close dropdown on outside click
   document.addEventListener("click", () => {
     document
       .querySelectorAll(".dropdown.active")

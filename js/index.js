@@ -12,24 +12,25 @@ function truncateText(text, maxLength = 55) {
 
 // Add dynamic navbar links
 function setupDynamicLinks() {
-  const container = document.querySelector(".dynamic-links");
-  if (!container) return;
+  const containers = document.querySelectorAll(".dynamic-links");
+  if (containers.length === 0) return;
 
-  container.innerHTML = "";
+  containers.forEach((container) => {
+    container.innerHTML = ""; // Clear existing links
+    const productsLink = document.createElement("a");
+    productsLink.href = "/products.html";
+    productsLink.className = "nav-link";
+    productsLink.textContent = "Products";
+    container.appendChild(productsLink);
 
-  const productsLink = document.createElement("a");
-  productsLink.href = "/products.html";
-  productsLink.className = "nav-link";
-  productsLink.textContent = "Products";
-  container.appendChild(productsLink);
-
-  if (user && user.role === "farmer") {
-    const sellLink = document.createElement("a");
-    sellLink.href = "/sell.html";
-    sellLink.className = "nav-link";
-    sellLink.textContent = "Sell";
-    container.appendChild(sellLink);
-  }
+    if (user && user.role === "farmer") {
+      const sellLink = document.createElement("a");
+      sellLink.href = "/sell.html";
+      sellLink.className = "nav-link";
+      sellLink.textContent = "Sell";
+      container.appendChild(sellLink);
+    }
+  });
 }
 
 // Load Cart
@@ -40,19 +41,68 @@ function loadCart() {
 }
 
 // Update Cart Count
-function updateCartCount() {
-  const cartCountElem = document.getElementById("cartCount");
-  if (!cartCountElem) return;
+function updateNavbarCartCount() {
+  const navCartCount = document.getElementById("cart-count");
+  const mobileCartCount = document.getElementById("mobileCartCount");
 
-  const savedCart = localStorage.getItem("agrimart_cart");
-  const cartData = savedCart ? JSON.parse(savedCart) : [];
-  const totalItems = cartData.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  cartCountElem.textContent = totalItems;
+  if (navCartCount) navCartCount.textContent = totalItems;
+  if (mobileCartCount) mobileCartCount.textContent = totalItems;
 }
 
 function goToProductDetails(id) {
   window.location.href = `/product_details.html?id=${id}`;
+}
+
+function updateProfileUI() {
+  const desktopProfile = document.querySelector(".profile-link img");
+  const mobileUserName = document.getElementById("mobileUserName");
+  const mobileUserEmail = document.getElementById("mobileUserEmail");
+
+  if (user) {
+    // Logged-in user
+    if (desktopProfile) {
+      desktopProfile.src = user.image || "/Images/Profile.png"; // fallback image
+      desktopProfile.alt = user.name || "Profile";
+    }
+    if (mobileUserName) {
+      mobileUserName.textContent = user.name || "User";
+    }
+    if (mobileUserEmail) {
+      mobileUserEmail.textContent = user.email || "No email provided";
+    }
+  } else {
+    // Guest user
+    if (desktopProfile) {
+      desktopProfile.src = "/Images/Profile.png";
+      desktopProfile.alt = "Guest";
+    }
+    if (mobileUserName) {
+      mobileUserName.textContent = "Guest User";
+    }
+    if (mobileUserEmail) {
+      mobileUserEmail.textContent = "Login or Sign Up";
+    }
+  }
+}
+function filterProducts(category, btn) {
+  // Remove 'active' class from all buttons
+  document
+    .querySelectorAll(".filter-btn")
+    .forEach((b) => b.classList.remove("active"));
+
+  // Add 'active' class to clicked button
+  btn.classList.add("active");
+
+  // Render products based on selected category
+  renderProducts(category);
+
+  // Smooth scroll to products section
+  const productsSection = document.getElementById("products");
+  if (productsSection) {
+    productsSection.scrollIntoView({ behavior: "smooth" });
+  }
 }
 
 // Render Products (only on pages with #productsGrid)
@@ -121,48 +171,60 @@ function showNotification() {
 }
 
 // Setup Event Listeners (only elements that exist)
-function setupEventListeners() {
-  const dropdownToggle = document.querySelector(".dropdown-toggle");
-  const dropdown = document.querySelector(".dropdown");
+function setupNavigationEventListeners() {
+  // --- Dropdown logic (desktop & mobile) ---
+  const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
 
-  if (dropdownToggle && dropdown) {
-    dropdownToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      console.log("Dropdown toggle clicked");
-      dropdown.classList.toggle("active");
-    });
-    document.addEventListener("click", () =>
-      dropdown.classList.remove("active")
-    );
-    document.querySelectorAll(".dropdown-item").forEach((item) => {
-      item.addEventListener("click", (e) => {
-        e.preventDefault();
-        const category = item.getAttribute("data-filter");
-        window.location.href = `products.html?category=${category}`;
+  dropdownToggles.forEach((toggle) => {
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const dropdown = toggle.closest(".dropdown");
+      document.querySelectorAll(".dropdown.active").forEach((open) => {
+        if (open !== dropdown) open.classList.remove("active");
       });
-    });
-  }
-
-  document.querySelectorAll(".filter-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      const category = button.getAttribute("data-filter");
-      document
-        .querySelectorAll(".filter-btn")
-        .forEach((b) => b.classList.remove("active"));
-      button.classList.add("active");
-      renderProducts(category);
+      dropdown.classList.toggle("active");
     });
   });
 
-  const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-  if (mobileMenuToggle && navLinks) {
-    mobileMenuToggle.addEventListener("click", () => {
-      // navLinks.classList.toggle("active");
-      const expanded =
-        mobileMenuToggle.getAttribute("aria-expanded") === "true";
-      mobileMenuToggle.setAttribute("aria-expanded", !expanded);
+  // ✅ CATEGORY CLICK HANDLER (for dropdown items)
+  document.querySelectorAll(".dropdown-item").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation(); // prevent dropdown from closing before click registers
+      const category = item.getAttribute("data-filter");
+      if (category) {
+        window.location.href = `products.html?category=${encodeURIComponent(
+          category
+        )}`;
+      }
     });
+  });
+
+  // Close dropdown on outside click
+  document.addEventListener("click", () => {
+    document
+      .querySelectorAll(".dropdown.active")
+      .forEach((dropdown) => dropdown.classList.remove("active"));
+  });
+
+  // --- MOBILE MENU TOGGLE LOGIC ---
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const navLinks = document.getElementById("navLinks");
+  const mobileOverlay = document.getElementById("mobileOverlay");
+
+  if (mobileMenuToggle && navLinks && mobileOverlay) {
+    const toggleMenu = () => {
+      mobileMenuToggle.classList.toggle("active");
+      navLinks.classList.toggle("active");
+      mobileOverlay.classList.toggle("active");
+
+      document.body.style.overflow = navLinks.classList.contains("active")
+        ? "hidden"
+        : "auto";
+    };
+
+    mobileMenuToggle.addEventListener("click", toggleMenu);
+    mobileOverlay.addEventListener("click", toggleMenu);
   }
 }
 
@@ -174,7 +236,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setupDynamicLinks();
   updateCartCount();
   renderProducts("all"); // only renders if #productsGrid exists
-  setupEventListeners();
+  // setupEventListeners();
+  setupNavigationEventListeners();
+  updateProfileUI();
 
   // Contact form setup only if exists
   if (document.getElementById("contactForm")) setupContactForm();

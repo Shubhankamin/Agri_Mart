@@ -447,7 +447,6 @@ body {
 .btn-primary {
   background-color: var(--primary-green);
   color: #fff;
-  width: 80%;
 }
 
 .btn-primary.active {
@@ -489,6 +488,13 @@ body {
   flex-wrap: wrap;
 }
 
+.btn-secondary {
+  background-color: transparent;
+  color: var(--primary-green);
+  border: 2px solid var(--primary-green);
+  width: auto;
+}
+
 /* Adjust filter button size for mobile */
 @media (max-width: 480px) {
   .filter-btn {
@@ -501,7 +507,7 @@ body {
   background-color: transparent;
   color: var(--primary-green);
   border: 2px solid var(--primary-green);
-  width: 80%;
+  /* width: 80%; */
 }
 
 .filter-btn {
@@ -1294,4 +1300,71 @@ body {
 .mobile-overlay.active {
   opacity: 1;
   visibility: visible;
+}
+
+/* Farmer CTA Section - Simple Version */
+.farmer-cta {
+  background: linear-gradient(135deg, #e6f4ea 0%, #d4f0d7 100%);
+  padding: 80px 20px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  color: #2d5016; /* Primary green text */
+}
+
+.farmer-cta h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.farmer-cta p {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto 30px;
+}
+
+.farmer-cta .cta-button {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #2d5016; /* Primary green */
+  border: 2px solid #2d5016;
+  border-radius: 8px;
+  padding: 14px 30px;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.farmer-cta .cta-button:hover {
+  background-color: #1f3a0f;
+  border-color: #1f3a0f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .farmer-cta h2 {
+    font-size: 28px;
+  }
+  .farmer-cta p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .farmer-cta {
+    padding: 60px 16px;
+  }
+  .farmer-cta h2 {
+    font-size: 24px;
+  }
+  .farmer-cta p {
+    font-size: 14px;
+  }
+  .farmer-cta .cta-button {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
 }

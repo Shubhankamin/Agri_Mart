@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="/css/index.css" />
     <link rel="stylesheet" href="/css/privacy.css" />
 
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,6 +23,8 @@
   </head>
   <body>
     <!-- Navigation -->
+    <div id="mobileOverlay" class="mobile-overlay"></div>
+
     <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="container">
         <div class="logo-toggle-wrapper">
@@ -140,9 +141,9 @@
                     d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
                   ></path>
                 </svg>
-                <span class="cart-count" id="cartCount" aria-live="polite"
+                <!-- <span class="cart-count" id="cartCount" aria-live="polite"
                   >0</span
-                >
+                > -->
               </button>
               <a
                 href="/profile.html"
@@ -255,8 +256,8 @@
                   href="#"
                   class="dropdown-item"
                   role="menuitem"
-                  data-filter="cereals"
-                  >Cereals</a
+                  data-filter="grains"
+                  >Grains</a
                 >
               </div>
             </div>
@@ -299,7 +300,6 @@
         </div>
       </div>
     </nav>
-    <div id="mobileOverlay" class="mobile-overlay"></div>
     <!-- description Section -->
     <section class="hero" role="banner">
       <div class="container">
@@ -337,30 +337,30 @@
           <button
             class="filter-btn active"
             data-filter="all"
-            onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})"
+            onclick="filterProducts('all', this)"
           >
             All Products
           </button>
           <button
             class="filter-btn"
             data-filter="fruits"
-            onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})"
+            onclick="filterProducts('fruits', this)"
           >
             Fruits
           </button>
           <button
             class="filter-btn"
             data-filter="vegetables"
-            onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})"
+            onclick="filterProducts('vegetables', this)"
           >
             Vegetables
           </button>
           <button
             class="filter-btn"
-            data-filter="cereals"
-            onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})"
+            data-filter="grains"
+            onclick="filterProducts('grains', this)"
           >
-            Cereals
+            Grains
           </button>
         </div>
       </div>
@@ -458,6 +458,14 @@
         </div>
       </div>
     </section>
+    <section class="farmer-cta">
+      <h2>Are You a Farmer?</h2>
+      <p>
+        Join our platform for free! Sell your products directly to customers
+        without any extra fees and enjoy seamless communication with buyers.
+      </p>
+      <a href="/login.html" class="cta-button">Login to Start Selling</a>
+    </section>
 
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
@@ -523,6 +531,5 @@
     <script src="/data/data.js"></script>
     <script src="/js/index.js"></script>
     <script src="/js/privacy.js"></script>
-
   </body>
 </html>

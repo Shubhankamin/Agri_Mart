@@ -158,16 +158,47 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error saving cart to storage:", e);
     }
   }
-
-  // ⭐ Update navbar cart count
   function updateNavbarCartCount() {
     const navCartCount = document.getElementById("cart-count");
     const mobileCartCount = document.getElementById("mobileCartCount");
 
-    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    // Get cart from localStorage (fallback to empty array)
+    const savedCart = localStorage.getItem("agrimart_cart");
+    const cartData = savedCart ? JSON.parse(savedCart) : [];
 
+    console.log("Full cart array:", cartData);
+
+    // Number of distinct items
+    const totalItems = cartData.length;
+    console.log("Number of distinct items (cartData.length):", totalItems);
+
+    // Total quantity of all items
+    const totalQuantity = cartData.reduce(
+      (sum, item) => sum + item.quantity,
+      0
+    );
+    console.log("Total quantity of all items:", totalQuantity);
+
+    // Store in localStorage
+    localStorage.setItem("agrimart_cart_count_distinct", totalItems);
+    localStorage.setItem("agrimart_cart_count_quantity", totalQuantity);
+
+    // Update both desktop & mobile counts (showing distinct items here)
     if (navCartCount) navCartCount.textContent = totalItems;
     if (mobileCartCount) mobileCartCount.textContent = totalItems;
+
+    console.log(
+      "Navbar updated: navCartCount and mobileCartCount set to:",
+      totalItems
+    );
+    console.log(
+      "LocalStorage -> agrimart_cart_count_distinct:",
+      localStorage.getItem("agrimart_cart_count_distinct")
+    );
+    console.log(
+      "LocalStorage -> agrimart_cart_count_quantity:",
+      localStorage.getItem("agrimart_cart_count_quantity")
+    );
   }
 
   // Render cart items
