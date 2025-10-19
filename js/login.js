@@ -10,28 +10,28 @@ const farmerIdInput = document.getElementById("loginFarmerId");
 let isFarmer = false;
 
 // Theme toggle logic
-const themeToggle = document.getElementById("themeToggle");
+// const themeToggle = document.getElementById("themeToggle");
 
 // Check saved theme in localStorage
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme) {
-  document.documentElement.setAttribute("data-theme", savedTheme);
-  themeToggle.textContent = savedTheme === "dark" ? "☀️" : "🌙";
-}
+// const savedTheme = localStorage.getItem("theme");
+// if (savedTheme) {
+//   document.documentElement.setAttribute("data-theme", savedTheme);
+//   themeToggle.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+// }
 
 // Toggle on button click
-themeToggle.addEventListener("click", () => {
-  const currentTheme = document.documentElement.getAttribute("data-theme");
-  if (currentTheme === "dark") {
-    document.documentElement.setAttribute("data-theme", "light");
-    localStorage.setItem("theme", "light");
-    themeToggle.textContent = "🌙";
-  } else {
-    document.documentElement.setAttribute("data-theme", "dark");
-    localStorage.setItem("theme", "dark");
-    themeToggle.textContent = "☀️";
-  }
-});
+// themeToggle.addEventListener("click", () => {
+//   const currentTheme = document.documentElement.getAttribute("data-theme");
+//   if (currentTheme === "dark") {
+//     document.documentElement.setAttribute("data-theme", "light");
+//     localStorage.setItem("theme", "light");
+//     themeToggle.textContent = "🌙";
+//   } else {
+//     document.documentElement.setAttribute("data-theme", "dark");
+//     localStorage.setItem("theme", "dark");
+//     themeToggle.textContent = "☀️";
+//   }
+// });
 
 // Tab logic
 customerTab.addEventListener("click", () => {
