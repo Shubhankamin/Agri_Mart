@@ -519,7 +519,7 @@ body {
     width: 100%;
     padding: 16px 0;
     font-size: 16px;
-    /* border-bottom: 1px solid var(--border-color); */
+    border-bottom: 1px solid var(--border-color);
   }
   .nav-links .nav-link::after {
     display: none;
@@ -533,7 +533,7 @@ body {
   /* Dropdown inside slide-out */
   .nav-links .dropdown {
     width: 100%;
-    /* border-bottom: 1px solid var(--border-color); */
+    border-bottom: 1px solid var(--border-color);
   }
   .nav-links .dropdown-toggle {
     justify-content: space-between;

@@ -2,8 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Sample saved addresses for delivery
   let savedAddresses = [];
   // Separate array for billing addresses
-  let billingAddresses =
-    JSON.parse(localStorage.getItem("billingAddresses")) || [];
+  let billingAddresses = JSON.parse(localStorage.getItem("billingAddresses")) || [];
 
   // FIX #2: Load cart items from localStorage
   let cartItems = [];
@@ -98,14 +97,12 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("No user logged in.");
   } else {
     const userEmail = currentUser.email || "";
-
+    
     // ✅ FIX: Get user data from users array
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const user = users.find((u) => u.email === currentUser.email);
-
-    const userName = user
-      ? `${user.firstName || ""} ${user.lastName || ""}`.trim()
-      : "";
+    
+    const userName = user ? `${user.firstName || ""} ${user.lastName || ""}`.trim() : "";
     const phone = user ? user.phone || "" : "";
 
     // ✅ FIX: Update mobile user info
@@ -121,25 +118,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ✅ FIX: Load addresses from single source - localStorage "addresses"
     const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
-    savedAddresses = addresses.filter(
-      (addr) => addr.email === currentUser.email
-    );
+    savedAddresses = addresses.filter((addr) => addr.email === currentUser.email);
 
     console.log("Loaded addresses for user:", savedAddresses);
   }
 
   // DOM Elements
   const savedAddressesContainer = document.getElementById("saved-addresses");
-  const billingSavedAddressesContainer = document.getElementById(
-    "billing-saved-addresses"
-  );
-  const billingAddressSelection = document.getElementById(
-    "billing-address-selection"
-  );
+  const billingSavedAddressesContainer = document.getElementById("billing-saved-addresses");
+  const billingAddressSelection = document.getElementById("billing-address-selection");
   const addAddressBtn = document.getElementById("add-address-btn");
-  const addBillingAddressBtn = document.getElementById(
-    "add-billing-address-btn"
-  );
+  const addBillingAddressBtn = document.getElementById("add-billing-address-btn");
   const editAddressModal = document.getElementById("edit-address-modal");
   const billingAddressModal = document.getElementById("billing-address-modal");
   const closeEditModal = document.getElementById("close-edit-modal");
@@ -169,9 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalOrderDate = document.getElementById("modal-order-date");
   const modalOrderTotal = document.getElementById("modal-order-total");
   const modalOrderItems = document.getElementById("modal-order-items");
-  const modalDeliveryAddress = document.getElementById(
-    "modal-delivery-address"
-  );
+  const modalDeliveryAddress = document.getElementById("modal-delivery-address");
   const modalBillingAddress = document.getElementById("modal-billing-address");
   const checkoutCartItems = document.getElementById("checkout-cart-items");
   const summarySubtotal = document.getElementById("summary-subtotal");
@@ -180,9 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const summaryItemCount = document.getElementById("summary-item-count");
   const headerCartCount = document.getElementById("header-cart-count");
   const checkoutStatus = document.getElementById("checkout-status");
-  const selectedDeliveryPreview = document.getElementById(
-    "selected-delivery-preview"
-  );
+  const selectedDeliveryPreview = document.getElementById("selected-delivery-preview");
   const sameAddressDisplay = document.getElementById("same-address-display");
   const paymentAmount = document.getElementById("payment-amount");
   const successMessage = document.getElementById("success-message");
@@ -209,9 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // ✅ FIX: Add function to refresh addresses from localStorage
   function refreshAddresses() {
     const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
-    savedAddresses = addresses.filter(
-      (addr) => addr.email === currentUser.email
-    );
+    savedAddresses = addresses.filter((addr) => addr.email === currentUser.email);
     renderSavedAddresses();
   }
 
@@ -236,10 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     } catch (e) {
       console.error("Error loading cart data:", e);
-      showNotification(
-        "Error loading cart data. Please return to cart.",
-        "error"
-      );
+      showNotification("Error loading cart data. Please return to cart.", "error");
     }
   }
 
@@ -267,8 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Render cart items
   function renderCartItems() {
     if (cartItems.length === 0) {
-      checkoutCartItems.innerHTML =
-        '<p class="no-addresses">No items in cart. Please add items first.</p>';
+      checkoutCartItems.innerHTML = '<p class="no-addresses">No items in cart. Please add items first.</p>';
       payNowBtn.disabled = true;
       return;
     }
@@ -278,12 +257,11 @@ document.addEventListener("DOMContentLoaded", function () {
     cartItems.forEach((item) => {
       const cartItemElement = document.createElement("article");
       cartItemElement.className = "cart-item";
-      const imageSrc =
-        Array.isArray(item.image) && item.image.length > 0
-          ? item.image[0].src
-          : typeof item.image === "string" && item.image.trim() !== ""
-          ? item.image
-          : "assets/default-image.jpg";
+      const imageSrc = Array.isArray(item.image) && item.image.length > 0
+        ? item.image[0].src
+        : typeof item.image === "string" && item.image.trim() !== ""
+        ? item.image
+        : "assets/default-image.jpg";
       cartItemElement.innerHTML = `
                 <div class="item-image">
     <img src="${escapeHtml(imageSrc)}"
@@ -297,9 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <span>Quantity: ${item.quantity}</span>
                     </div>
                 </div>
-                <div class="item-price">₹${(item.price * item.quantity).toFixed(
-                  2
-                )}</div>
+                <div class="item-price">₹${(item.price * item.quantity).toFixed(2)}</div>
             `;
 
       checkoutCartItems.appendChild(cartItemElement);
@@ -331,9 +307,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Refresh addresses from localStorage to get latest changes
     const addresses = JSON.parse(localStorage.getItem("addresses")) || [];
-    savedAddresses = addresses.filter(
-      (addr) => addr.email === currentUser.email
-    );
+    savedAddresses = addresses.filter((addr) => addr.email === currentUser.email);
 
     if (savedAddresses.length === 0) {
       savedAddressesContainer.innerHTML = `<div class="no-addresses" role="status"><p>No saved addresses found. Please add a new address.</p></div>`;
@@ -352,12 +326,9 @@ document.addEventListener("DOMContentLoaded", function () {
       selectShippingAddress(savedAddresses[0]);
     } else if (selectedShippingAddress) {
       // Check if selected address still exists
-      const addressExists = savedAddresses.find(
-        (addr) => addr.id === selectedShippingAddress.id
-      );
+      const addressExists = savedAddresses.find(addr => addr.id === selectedShippingAddress.id);
       if (!addressExists) {
-        selectedShippingAddress =
-          savedAddresses.length > 0 ? savedAddresses[0] : null;
+        selectedShippingAddress = savedAddresses.length > 0 ? savedAddresses[0] : null;
         selectShippingAddress(selectedShippingAddress);
       }
     }
@@ -389,12 +360,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ✅ FIX: Safe fallback for address type
     const addressType = address.type || "home";
-    const typeLabel =
-      addressType === "home"
-        ? "Home Address"
-        : addressType === "work"
-        ? "Work Address"
-        : "Home Address";
+    const typeLabel = addressType === "home" ? "Home Address" : 
+                     addressType === "work" ? "Work Address" : 
+                     "Home Address";
 
     card.innerHTML = `
         <div class="address-card-header">
@@ -405,24 +373,14 @@ document.addEventListener("DOMContentLoaded", function () {
             <p><strong>${escapeHtml(address.name || "User")}</strong></p>
             <p>${escapeHtml(address.phone || "N/A")}</p>
             <p>${escapeHtml(address.address || "")}</p>
-            <p>${escapeHtml(address.city || "")}, ${getStateName(
-      address.state
-    )} - ${escapeHtml(address.pincode || "")}</p>
-            ${
-              address.landmark
-                ? `<p>Landmark: ${escapeHtml(address.landmark)}</p>`
-                : ""
-            }
+            <p>${escapeHtml(address.city || "")}, ${getStateName(address.state)} - ${escapeHtml(address.pincode || "")}</p>
+            ${address.landmark ? `<p>Landmark: ${escapeHtml(address.landmark)}</p>` : ""}
         </div>
         <div class="address-actions">
-            <button class="address-action edit-address" data-id="${
-              address.id
-            }" data-type="${type}" type="button">
+            <button class="address-action edit-address" data-id="${address.id}" data-type="${type}" type="button">
                 <i class="fas fa-edit" aria-hidden="true"></i> <span>Edit</span>
             </button>
-            <button class="address-action delete-address" data-id="${
-              address.id
-            }" data-type="${type}" type="button">
+            <button class="address-action delete-address" data-id="${address.id}" data-type="${type}" type="button">
                 <i class="fas fa-trash" aria-hidden="true"></i> <span>Delete</span>
             </button>
         </div>
@@ -475,9 +433,7 @@ document.addEventListener("DOMContentLoaded", function () {
       updateDeliveryAddressPreview();
     }
 
-    announceToScreenReader(
-      `Delivery address selected: ${address.name}, ${address.city}`
-    );
+    announceToScreenReader(`Delivery address selected: ${address.name}, ${address.city}`);
   }
 
   // Select billing address
@@ -498,42 +454,30 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedCard.setAttribute("tabindex", "0");
     }
 
-    announceToScreenReader(
-      `Billing address selected: ${address.name}, ${address.city}`
-    );
+    announceToScreenReader(`Billing address selected: ${address.name}, ${address.city}`);
   }
 
   // ✅ FIX: Updated delivery address preview with safe fallbacks
   function updateDeliveryAddressPreview() {
     if (!selectedShippingAddress) {
-      selectedDeliveryPreview.innerHTML =
-        '<p class="no-addresses">Please select a delivery address first.</p>';
+      selectedDeliveryPreview.innerHTML = '<p class="no-addresses">Please select a delivery address first.</p>';
       return;
     }
 
     const addr = selectedShippingAddress;
     // ✅ FIX: Safe fallback for type
     const addressType = addr.type || "home";
-    const typeLabel =
-      addressType === "home"
-        ? "Home Address"
-        : addressType === "work"
-        ? "Work Address"
-        : "Home Address";
-
+    const typeLabel = addressType === "home" ? "Home Address" : 
+                     addressType === "work" ? "Work Address" : 
+                     "Home Address";
+    
     selectedDeliveryPreview.innerHTML = `
             <p><strong>${typeLabel}</strong></p>
             <p><strong>${escapeHtml(addr.name || "User")}</strong></p>
             <p>${escapeHtml(addr.phone || "N/A")}</p>
             <p>${escapeHtml(addr.address || "")}</p>
-            <p>${escapeHtml(addr.city || "")}, ${getStateName(
-      addr.state
-    )} - ${escapeHtml(addr.pincode || "")}</p>
-            ${
-              addr.landmark
-                ? `<p>Landmark: ${escapeHtml(addr.landmark)}</p>`
-                : ""
-            }
+            <p>${escapeHtml(addr.city || "")}, ${getStateName(addr.state)} - ${escapeHtml(addr.pincode || "")}</p>
+            ${addr.landmark ? `<p>Landmark: ${escapeHtml(addr.landmark)}</p>` : ""}
         `;
   }
 
@@ -599,11 +543,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // ✅ FIX: Clear selected billing address
         selectedBillingAddress = null;
-
+        
         // ✅ FIX: Show proper message instead of delivery address
-        selectedDeliveryPreview.innerHTML =
-          '<p class="no-addresses">Please select or add a billing address below.</p>';
-
+        selectedDeliveryPreview.innerHTML = '<p class="no-addresses">Please select or add a billing address below.</p>';
+        
         // ✅ FIX: If no billing addresses exist, show message instead of auto-opening modal
         if (billingAddresses.length === 0) {
           billingSavedAddressesContainer.innerHTML = `
@@ -614,9 +557,7 @@ document.addEventListener("DOMContentLoaded", function () {
           `;
         }
 
-        announceToScreenReader(
-          "Use different billing address selected. Please add a billing address if needed."
-        );
+        announceToScreenReader("Use different billing address selected. Please add a billing address if needed.");
       }
     });
 
@@ -682,8 +623,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ✅ FIX: Listen for storage changes to sync addresses in real-time
-    window.addEventListener("storage", function (e) {
-      if (e.key === "addresses") {
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'addresses') {
         refreshAddresses();
       }
     });
@@ -713,8 +654,7 @@ document.addEventListener("DOMContentLoaded", function () {
     editingAddressId = null;
 
     editModalTitle.textContent = "Add New Address";
-    editModalSubmit.innerHTML =
-      '<i class="fas fa-save" aria-hidden="true"></i> Save Address';
+    editModalSubmit.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i> Save Address';
 
     editAddressForm.reset();
     clearFormErrors(editAddressForm);
@@ -728,8 +668,7 @@ document.addEventListener("DOMContentLoaded", function () {
     editingBillingAddressId = null;
 
     billingModalTitle.textContent = "Add Billing Address";
-    billingModalSubmit.innerHTML =
-      '<i class="fas fa-save" aria-hidden="true"></i> Save Billing Address';
+    billingModalSubmit.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i> Save Billing Address';
 
     // ✅ FIX: Clear the form instead of auto-filling
     billingAddressForm.reset();
@@ -743,8 +682,7 @@ document.addEventListener("DOMContentLoaded", function () {
     editingAddressId = address.id;
 
     editModalTitle.textContent = "Edit Address";
-    editModalSubmit.innerHTML =
-      '<i class="fas fa-save" aria-hidden="true"></i> Update Address';
+    editModalSubmit.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i> Update Address';
 
     // Populate form
     document.getElementById("edit-full-name").value = address.name || "";
@@ -767,8 +705,7 @@ document.addEventListener("DOMContentLoaded", function () {
     editingBillingAddressId = address.id;
 
     billingModalTitle.textContent = "Edit Billing Address";
-    billingModalSubmit.innerHTML =
-      '<i class="fas fa-save" aria-hidden="true"></i> Update Billing Address';
+    billingModalSubmit.innerHTML = '<i class="fas fa-save" aria-hidden="true"></i> Update Billing Address';
 
     // Populate form
     document.getElementById("billing-full-name").value = address.name || "";
@@ -779,9 +716,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("billing-pincode").value = address.pincode || "";
     document.getElementById("billing-landmark").value = address.landmark || "";
 
-    const typeRadio = document.getElementById(
-      `billing-${address.type || "home"}`
-    );
+    const typeRadio = document.getElementById(`billing-${address.type || "home"}`);
     if (typeRadio) typeRadio.checked = true;
 
     clearFormErrors(billingAddressForm);
@@ -794,9 +729,7 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.style.display = "flex";
 
     setTimeout(() => {
-      const firstInput = modal.querySelector(
-        'input:not([type="radio"]), select, textarea'
-      );
+      const firstInput = modal.querySelector('input:not([type="radio"]), select, textarea');
       if (firstInput) firstInput.focus();
     }, 100);
 
@@ -867,25 +800,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const nameInput = document.getElementById(`${prefix}-full-name`);
     const nameValue = nameInput.value.trim();
     if (nameValue.length < 2) {
-      showFieldError(
-        nameInput,
-        `${prefix}-name-error`,
-        "Name must be at least 2 characters"
-      );
+      showFieldError(nameInput, `${prefix}-name-error`, "Name must be at least 2 characters");
       isValid = false;
     } else if (nameValue.length > 50) {
-      showFieldError(
-        nameInput,
-        `${prefix}-name-error`,
-        "Name must not exceed 50 characters"
-      );
+      showFieldError(nameInput, `${prefix}-name-error`, "Name must not exceed 50 characters");
       isValid = false;
     } else if (!/^[a-zA-Z\s]+$/.test(nameValue)) {
-      showFieldError(
-        nameInput,
-        `${prefix}-name-error`,
-        "Name should only contain letters"
-      );
+      showFieldError(nameInput, `${prefix}-name-error`, "Name should only contain letters");
       isValid = false;
     }
 
@@ -893,11 +814,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const phoneInput = document.getElementById(`${prefix}-phone`);
     const phoneValue = phoneInput.value.trim();
     if (!/^[0-9]{10}$/.test(phoneValue)) {
-      showFieldError(
-        phoneInput,
-        `${prefix}-phone-error`,
-        "Phone must be exactly 10 digits"
-      );
+      showFieldError(phoneInput, `${prefix}-phone-error`, "Phone must be exactly 10 digits");
       isValid = false;
     }
 
@@ -905,18 +822,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const addressInput = document.getElementById(`${prefix}-address`);
     const addressValue = addressInput.value.trim();
     if (addressValue.length < 10) {
-      showFieldError(
-        addressInput,
-        `${prefix}-address-error`,
-        "Address must be at least 10 characters"
-      );
+      showFieldError(addressInput, `${prefix}-address-error`, "Address must be at least 10 characters");
       isValid = false;
     } else if (addressValue.length > 200) {
-      showFieldError(
-        addressInput,
-        `${prefix}-address-error`,
-        "Address must not exceed 200 characters"
-      );
+      showFieldError(addressInput, `${prefix}-address-error`, "Address must not exceed 200 characters");
       isValid = false;
     }
 
@@ -924,29 +833,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const cityInput = document.getElementById(`${prefix}-city`);
     const cityValue = cityInput.value.trim();
     if (cityValue.length < 2) {
-      showFieldError(
-        cityInput,
-        `${prefix}-city-error`,
-        "City must be at least 2 characters"
-      );
+      showFieldError(cityInput, `${prefix}-city-error`, "City must be at least 2 characters");
       isValid = false;
     } else if (!/^[a-zA-Z\s]+$/.test(cityValue)) {
-      showFieldError(
-        cityInput,
-        `${prefix}-city-error`,
-        "City should only contain letters"
-      );
+      showFieldError(cityInput, `${prefix}-city-error`, "City should only contain letters");
       isValid = false;
     }
 
     // State
     const stateInput = document.getElementById(`${prefix}-state`);
     if (!stateInput.value) {
-      showFieldError(
-        stateInput,
-        `${prefix}-state-error`,
-        "Please select a state"
-      );
+      showFieldError(stateInput, `${prefix}-state-error`, "Please select a state");
       isValid = false;
     }
 
@@ -954,11 +851,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const pincodeInput = document.getElementById(`${prefix}-pincode`);
     const pincodeValue = pincodeInput.value.trim();
     if (!/^[0-9]{6}$/.test(pincodeValue)) {
-      showFieldError(
-        pincodeInput,
-        `${prefix}-pincode-error`,
-        "PIN code must be exactly 6 digits"
-      );
+      showFieldError(pincodeInput, `${prefix}-pincode-error`, "PIN code must be exactly 6 digits");
       isValid = false;
     }
 
@@ -999,57 +892,49 @@ document.addEventListener("DOMContentLoaded", function () {
       state: document.getElementById("edit-state").value,
       pincode: document.getElementById("edit-pincode").value.trim(),
       landmark: document.getElementById("edit-landmark").value.trim(),
-      type: document.querySelector('input[name="edit-address-type"]:checked')
-        .value,
-      email: currentUser.email, // Add user email to link address to user
+      type: document.querySelector('input[name="edit-address-type"]:checked').value,
+      email: currentUser.email // Add user email to link address to user
     };
 
     // ✅ FIX: Always save to central addresses list in localStorage
     const allAddresses = JSON.parse(localStorage.getItem("addresses")) || [];
 
     if (isAddingNewAddress) {
-      const newAddress = {
-        id: Date.now(),
-        ...addressData,
+      const newAddress = { 
+        id: Date.now(), 
+        ...addressData 
       };
       savedAddresses.push(newAddress);
       allAddresses.push(newAddress);
-
+      
       showNotification("Address added successfully!", "success");
     } else {
       const index = savedAddresses.findIndex((a) => a.id == editingAddressId);
       if (index !== -1) {
         savedAddresses[index] = { ...savedAddresses[index], ...addressData };
-
-        const profileIndex = allAddresses.findIndex(
-          (a) => a.id == editingAddressId
-        );
+        
+        const profileIndex = allAddresses.findIndex((a) => a.id == editingAddressId);
         if (profileIndex !== -1) {
-          allAddresses[profileIndex] = {
-            ...allAddresses[profileIndex],
-            ...addressData,
-          };
+          allAddresses[profileIndex] = { ...allAddresses[profileIndex], ...addressData };
         }
-
+        
         showNotification("Address updated successfully!", "success");
       }
     }
 
     // ✅ FIX: Save to central addresses list
     localStorage.setItem("addresses", JSON.stringify(allAddresses));
-
+    
     renderSavedAddresses();
-
+    
     // Select the newly added/edited address
     if (isAddingNewAddress) {
       selectShippingAddress(savedAddresses[savedAddresses.length - 1]);
     } else {
-      const updatedAddress = savedAddresses.find(
-        (a) => a.id == editingAddressId
-      );
+      const updatedAddress = savedAddresses.find(a => a.id == editingAddressId);
       if (updatedAddress) selectShippingAddress(updatedAddress);
     }
-
+    
     closeEditModalFunc();
   }
 
@@ -1069,14 +954,11 @@ document.addEventListener("DOMContentLoaded", function () {
       state: document.getElementById("billing-state").value,
       pincode: document.getElementById("billing-pincode").value.trim(),
       landmark: document.getElementById("billing-landmark").value.trim(),
-      type: document.querySelector('input[name="billing-address-type"]:checked')
-        .value,
+      type: document.querySelector('input[name="billing-address-type"]:checked').value,
     };
 
     if (isEditingBillingAddress) {
-      const index = billingAddresses.findIndex(
-        (a) => a.id == editingBillingAddressId
-      );
+      const index = billingAddresses.findIndex((a) => a.id == editingBillingAddressId);
       if (index !== -1) {
         billingAddresses[index] = {
           ...billingAddresses[index],
@@ -1084,10 +966,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         showNotification("Billing address updated successfully!", "success");
 
-        if (
-          selectedBillingAddress &&
-          selectedBillingAddress.id == editingBillingAddressId
-        ) {
+        if (selectedBillingAddress && selectedBillingAddress.id == editingBillingAddressId) {
           selectedBillingAddress = billingAddresses[index];
         }
       }
@@ -1118,23 +997,19 @@ document.addEventListener("DOMContentLoaded", function () {
       const index = savedAddresses.findIndex((a) => a.id == addressId);
       if (index !== -1) {
         savedAddresses.splice(index, 1);
-
+        
         // ✅ FIX: Also delete from central addresses list
-        const allAddresses =
-          JSON.parse(localStorage.getItem("addresses")) || [];
+        const allAddresses = JSON.parse(localStorage.getItem("addresses")) || [];
         const profileIndex = allAddresses.findIndex((a) => a.id == addressId);
         if (profileIndex !== -1) {
           allAddresses.splice(profileIndex, 1);
           localStorage.setItem("addresses", JSON.stringify(allAddresses));
         }
-
+        
         renderSavedAddresses();
         showNotification("Address deleted successfully!", "success");
 
-        if (
-          selectedShippingAddress &&
-          selectedShippingAddress.id == addressId
-        ) {
+        if (selectedShippingAddress && selectedShippingAddress.id == addressId) {
           selectedShippingAddress = null;
           updateDeliveryAddressPreview();
         }
@@ -1148,10 +1023,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const index = billingAddresses.findIndex((a) => a.id == addressId);
       if (index !== -1) {
         billingAddresses.splice(index, 1);
-        localStorage.setItem(
-          "billingAddresses",
-          JSON.stringify(billingAddresses)
-        );
+        localStorage.setItem("billingAddresses", JSON.stringify(billingAddresses));
         renderBillingAddresses();
         showNotification("Billing address deleted successfully!", "success");
 
@@ -1217,26 +1089,15 @@ document.addEventListener("DOMContentLoaded", function () {
       minute: "2-digit",
     });
 
-    const shippingAddr =
-      selectedShippingAddress ||
-      savedAddresses.find((a) => a.email === currentUser.email) ||
-      null;
-    const billingAddr =
-      selectedBillingAddress ||
-      billingAddresses.find((a) => a.email === currentUser.email) ||
-      shippingAddr;
+    const shippingAddr = selectedShippingAddress || savedAddresses.find((a) => a.email === currentUser.email) || null;
+    const billingAddr = selectedBillingAddress || billingAddresses.find((a) => a.email === currentUser.email) || shippingAddr;
 
     if (!shippingAddr || !billingAddr) {
-      showNotification(
-        "Please select delivery and billing addresses.",
-        "error"
-      );
+      showNotification("Please select delivery and billing addresses.", "error");
       return;
     }
 
-    const farmerEmails = [
-      ...new Set(cartItems.map((item) => item.farmerEmail)),
-    ];
+    const farmerEmails = [...new Set(cartItems.map((item) => item.farmerEmail))];
 
     const order = {
       id: orderId,
@@ -1267,9 +1128,7 @@ document.addEventListener("DOMContentLoaded", function () {
     successOrderDate.textContent = order.date;
 
     if (successMessage) {
-      successMessage.textContent = `Your payment of ₹${order.total.toFixed(
-        2
-      )} has been processed successfully.`;
+      successMessage.textContent = `Your payment of ₹${order.total.toFixed(2)} has been processed successfully.`;
     }
 
     showModal(successModal);
@@ -1299,9 +1158,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <p class="order-item-seller">Sold by: Local Farmer</p>
           <p class="order-item-quantity">Quantity: ${item.quantity}</p>
         </div>
-        <div class="order-item-price">₹${(item.price * item.quantity).toFixed(
-          2
-        )}</div>
+        <div class="order-item-price">₹${(item.price * item.quantity).toFixed(2)}</div>
       </div>
     `;
       })
@@ -1309,50 +1166,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const addr = order.shippingAddress;
     const addressType = addr.type || "home";
-    const typeLabel =
-      addressType === "home"
-        ? "Home Address"
-        : addressType === "work"
-        ? "Work Address"
-        : "Home Address";
-
+    const typeLabel = addressType === "home" ? "Home Address" : 
+                     addressType === "work" ? "Work Address" : 
+                     "Home Address";
+    
     modalDeliveryAddress.innerHTML = `
             <p><strong>${typeLabel}</strong></p>
             <p><strong>${escapeHtml(addr.name || "User")}</strong></p>
             <p>${escapeHtml(addr.phone || "N/A")}</p>
             <p>${escapeHtml(addr.address || "")}</p>
-            <p>${escapeHtml(addr.city || "")}, ${getStateName(
-      addr.state
-    )} - ${escapeHtml(addr.pincode || "")}</p>
-            ${
-              addr.landmark
-                ? `<p>Landmark: ${escapeHtml(addr.landmark)}</p>`
-                : ""
-            }
+            <p>${escapeHtml(addr.city || "")}, ${getStateName(addr.state)} - ${escapeHtml(addr.pincode || "")}</p>
+            ${addr.landmark ? `<p>Landmark: ${escapeHtml(addr.landmark)}</p>` : ""}
         `;
 
     const billingAddr = order.billingAddress;
     const billingAddressType = billingAddr.type || "home";
-    const billingTypeLabel =
-      billingAddressType === "home"
-        ? "Home Address"
-        : billingAddressType === "work"
-        ? "Work Address"
-        : "Home Address";
-
+    const billingTypeLabel = billingAddressType === "home" ? "Home Address" : 
+                           billingAddressType === "work" ? "Work Address" : 
+                           "Home Address";
+    
     modalBillingAddress.innerHTML = `
             <p><strong>${billingTypeLabel}</strong></p>
             <p><strong>${escapeHtml(billingAddr.name || "User")}</strong></p>
             <p>${escapeHtml(billingAddr.phone || "N/A")}</p>
             <p>${escapeHtml(billingAddr.address || "")}</p>
-            <p>${escapeHtml(billingAddr.city || "")}, ${getStateName(
-      billingAddr.state
-    )} - ${escapeHtml(billingAddr.pincode || "")}</p>
-            ${
-              billingAddr.landmark
-                ? `<p>Landmark: ${escapeHtml(billingAddr.landmark)}</p>`
-                : ""
-            }
+            <p>${escapeHtml(billingAddr.city || "")}, ${getStateName(billingAddr.state)} - ${escapeHtml(billingAddr.pincode || "")}</p>
+            ${billingAddr.landmark ? `<p>Landmark: ${escapeHtml(billingAddr.landmark)}</p>` : ""}
         `;
 
     showModal(orderModal);
@@ -1395,17 +1234,4 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 1000);
     }
   }
-  function updateCartCount() {
-    const cartCountElem = document.getElementById("cartCount");
-    const mobileCartCountElem = document.getElementById("mobileCartCount");
-    if (!cartCountElem || !mobileCartCountElem) return;
-
-    const savedCart = localStorage.getItem("agrimart_cart");
-    const cartData = savedCart ? JSON.parse(savedCart) : [];
-    const totalItems = cartData.reduce((sum, item) => sum + item.quantity, 0);
-
-    cartCountElem.textContent = totalItems;
-    mobileCartCountElem.textContent = totalItems;
-  }
-  updateCartCount();
 });

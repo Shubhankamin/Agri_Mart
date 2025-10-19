@@ -102,8 +102,9 @@ function updateProfileUI() {
   }
 }
 
+// Setup Event Listeners for Navigation
 function setupNavigationEventListeners() {
-  // --- Dropdown toggle logic (desktop & mobile) ---
+  // --- Dropdown logic (desktop & mobile) ---
   const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
   dropdownToggles.forEach((toggle) => {
     toggle.addEventListener("click", (event) => {
@@ -116,27 +117,31 @@ function setupNavigationEventListeners() {
     });
   });
 
-  // Close any open dropdown when clicking outside
   document.addEventListener("click", () => {
     document
       .querySelectorAll(".dropdown.active")
       .forEach((dropdown) => dropdown.classList.remove("active"));
   });
 
-  // --- Dropdown item click → navigate to category ---
-  const dropdownItems = document.querySelectorAll(".dropdown-item");
-  dropdownItems.forEach((item) => {
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation(); // prevent dropdown toggle re-trigger
-      const category = item.getAttribute("data-filter");
-      if (!category) return;
-      console.log(`Navigating to category: ${category}`);
-      window.location.href = `products.html?category=${encodeURIComponent(
-        category
-      )}`;
-    });
-  });
+  // --- MOBILE MENU TOGGLE LOGIC ---
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const navLinks = document.getElementById("navLinks");
+  const mobileOverlay = document.getElementById("mobileOverlay");
+
+  if (mobileMenuToggle && navLinks && mobileOverlay) {
+    const toggleMenu = () => {
+      mobileMenuToggle.classList.toggle("active");
+      navLinks.classList.toggle("active");
+      mobileOverlay.classList.toggle("active");
+
+      document.body.style.overflow = navLinks.classList.contains("active")
+        ? "hidden"
+        : "auto";
+    };
+
+    mobileMenuToggle.addEventListener("click", toggleMenu);
+    mobileOverlay.addEventListener("click", toggleMenu);
+  }
 }
 
 // --- MAIN INITIALIZATION SCRIPT ---
