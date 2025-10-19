@@ -577,26 +577,73 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ===== SETUP DYNAMIC LINKS - SAME AS INDEX PAGE =====
   function setupDynamicLinks() {
-    const container = document.querySelector(".dynamic-links");
-    if (!container) return;
+    const containers = document.querySelectorAll(".dynamic-links");
+    if (containers.length === 0) return;
 
-    container.innerHTML = "";
+    containers.forEach((container) => {
+      container.innerHTML = ""; // Clear existing links
+      const productsLink = document.createElement("a");
+      productsLink.href = "/products.html";
+      productsLink.className = "nav-link";
+      productsLink.textContent = "Products";
+      container.appendChild(productsLink);
 
-    const productsLink = document.createElement("a");
-    productsLink.href = "/products.html";
-    productsLink.className = "nav-link";
-    productsLink.textContent = "Products";
-    container.appendChild(productsLink);
-
-    if (user && user.role === "farmer") {
-      const sellLink = document.createElement("a");
-      sellLink.href = "/sell.html";
-      sellLink.className = "nav-link";
-      sellLink.textContent = "Sell";
-      container.appendChild(sellLink);
-    }
+      if (user && user.role === "farmer") {
+        const sellLink = document.createElement("a");
+        sellLink.href = "/sell.html";
+        sellLink.className = "nav-link";
+        sellLink.textContent = "Sell";
+        container.appendChild(sellLink);
+      }
+    });
   }
 
+  // Update Cart Count
+  function updateCartCount() {
+    const cartCountElem = document.getElementById("cartCount");
+    const mobileCartCountElem = document.getElementById("mobileCartCount");
+    if (!cartCountElem || !mobileCartCountElem) return;
+
+    const savedCart = localStorage.getItem("agrimart_cart");
+    const cartData = savedCart ? JSON.parse(savedCart) : [];
+    const totalItems = cartData.reduce((sum, item) => sum + item.quantity, 0);
+
+    cartCountElem.textContent = totalItems;
+    mobileCartCountElem.textContent = totalItems;
+  }
+
+  // --- PROFILE DISPLAY LOGIC ---
+  function updateProfileUI() {
+    const desktopProfile = document.querySelector(".profile-link img");
+    const mobileUserName = document.getElementById("mobileUserName");
+    const mobileUserEmail = document.getElementById("mobileUserEmail");
+
+    if (user) {
+      // Logged-in user
+      if (desktopProfile) {
+        desktopProfile.src = user.image || "/Images/Profile.png"; // fallback image
+        desktopProfile.alt = user.name || "Profile";
+      }
+      if (mobileUserName) {
+        mobileUserName.textContent = user.name || "User";
+      }
+      if (mobileUserEmail) {
+        mobileUserEmail.textContent = user.email || "No email provided";
+      }
+    } else {
+      // Guest user
+      if (desktopProfile) {
+        desktopProfile.src = "/Images/Profile.png";
+        desktopProfile.alt = "Guest";
+      }
+      if (mobileUserName) {
+        mobileUserName.textContent = "Guest User";
+      }
+      if (mobileUserEmail) {
+        mobileUserEmail.textContent = "Login or Sign Up";
+      }
+    }
+  }
   // ===== DROPDOWN FUNCTIONALITY =====
   function setupDropdown() {
     const dropdownToggle = document.querySelector(".dropdown-toggle");
@@ -624,6 +671,43 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       });
     }
+  }
+
+  function setupNavigationEventListeners() {
+    // --- Dropdown toggle logic (desktop & mobile) ---
+    const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+    dropdownToggles.forEach((toggle) => {
+      toggle.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const dropdown = toggle.closest(".dropdown");
+        document.querySelectorAll(".dropdown.active").forEach((open) => {
+          if (open !== dropdown) open.classList.remove("active");
+        });
+        dropdown.classList.toggle("active");
+      });
+    });
+
+    // Close any open dropdown when clicking outside
+    document.addEventListener("click", () => {
+      document
+        .querySelectorAll(".dropdown.active")
+        .forEach((dropdown) => dropdown.classList.remove("active"));
+    });
+
+    // --- Dropdown item click → navigate to category ---
+    const dropdownItems = document.querySelectorAll(".dropdown-item");
+    dropdownItems.forEach((item) => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation(); // prevent dropdown toggle re-trigger
+        const category = item.getAttribute("data-filter");
+        if (!category) return;
+        console.log(`Navigating to category: ${category}`);
+        window.location.href = `products.html?category=${encodeURIComponent(
+          category
+        )}`;
+      });
+    });
   }
 
   // Log for debugging
