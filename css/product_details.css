@@ -266,6 +266,7 @@ h6 {
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
   margin: 10px 0;
+  color: var(--text-secondary);
 }
 
 .feature {
@@ -602,7 +603,7 @@ h6 {
 }
 
 .footer-section p {
-  color: #b0b0b0;
+  color: white;
   margin-bottom: 20px;
 }
 
@@ -615,7 +616,7 @@ h6 {
 }
 
 .footer-section ul li a {
-  color: #b0b0b0;
+  color: white;
   text-decoration: none;
   transition: var(--transition);
 }
@@ -655,7 +656,7 @@ h6 {
   text-align: center;
   padding-top: 20px;
   border-top: 1px solid #333;
-  color: #b0b0b0;
+  color: white;
   font-size: 14px;
 }
 
@@ -738,4 +739,20 @@ h6 {
   #nextBtn {
     margin-left: 8px;
   }
+}
+
+/* Footer text colors */
+.footer-description,
+.footer-contact li,
+.footer-links a {
+  color: white; /* Primary dark green - high contrast */
+}
+
+.footer-links a:hover {
+  color: #1f3a0f; /* Slightly darker on hover */
+}
+
+/* General light text replacement */
+.text-light {
+  color: #4b4b4b; /* Dark grey for good contrast on white */
 }
