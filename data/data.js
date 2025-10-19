@@ -4,7 +4,7 @@ const products = [
     name: "Fresh Mangoes",
     price: 80,
     category: "fruits",
-    img: [{ src: "/images/Bananas.jpeg" }, { src: "/images/tomato.jpeg" }],
+    img: [{ src: "/images/mango.webp" },{ src: "/images/mango1.webp" },{ src: "/images/mango2.webp" }],
     description:
       "Juicy, ripe mangoes sourced fresh from organic farms. Perfect for smoothies and desserts.",
     weight: "1 kg",
@@ -23,7 +23,7 @@ const products = [
     name: "Organic Tomatoes",
     price: 40,
     category: "vegetables",
-    img: [{ src: "/images/tomato.jpeg" }],
+    img: [{ src: "/images/tomato.jpeg" },{ src: "/images/tomato.jpg" },{ src: "/images/Tomato2.jpg" }],
     description:
       "Fresh, juicy, and pesticide-free tomatoes directly from local organic farms.",
     weight: "1 kg",
@@ -42,7 +42,7 @@ const products = [
     name: "Rice",
     price: 60,
     category: "grains",
-    img: [{ src: "/images/lemon.jpeg" }],
+    img: [{ src: "/images/rice1.webp" },{ src: "/images/rice2.webp" },{ src: "/images/rice3.webp" }],
     description:
       "Premium quality white rice with long grains and soft texture after cooking.",
     weight: "5 kg",
@@ -61,7 +61,7 @@ const products = [
     name: "Strawberries",
     price: 150,
     category: "fruits",
-    img: [{ src: "/images/Bananas.jpeg" }],
+    img: [{ src: "/images/strawberry.jpg" },{ src: "/images/strawberry1.webp" },{ src: "/images/strawberry2.webp" }],
     description:
       "Bright red, sweet, and tangy strawberries freshly picked from the hills.",
     weight: "500 g",
@@ -80,7 +80,7 @@ const products = [
     name: "Carrots",
     price: 50,
     category: "vegetables",
-    img: [{ src: "/images/tomato.jpeg" }],
+    img: [{ src: "/images/carrot1.jpg" },{ src: "/images/carot.jpeg" },{ src: "/images/carrot.jpg" }],
     description:
       "Crunchy and sweet organic carrots, rich in vitamin A and great for salads.",
     weight: "1 kg",
@@ -99,7 +99,7 @@ const products = [
     name: "Bananas",
     price: 30,
     category: "fruits",
-    img: [{ src: "/images/lemon.jpeg" }],
+    img: [{ src: "/images/Bananas.jpeg" },{ src: "/images/Bananas1.webp" },{ src: "/images/Bananas2.webp" },],
     description:
       "Fresh Cavendish bananas packed with nutrients and natural sweetness.",
     weight: "1 dozen",
@@ -118,7 +118,7 @@ const products = [
     name: "Broccoli",
     price: 70,
     category: "vegetables",
-    img: [{ src: "/images/blue.jpeg" }],
+    img: [{ src: "/images/broccoli.webp" },{ src: "/images/broccoli1.webp" },{ src: "/images/broccoli3.webp" }],
     description:
       "Green, crisp, and nutrient-rich broccoli perfect for salads and stir-fry dishes.",
     weight: "500 g",
@@ -134,10 +134,10 @@ const products = [
   },
   {
     id: 8,
-    name: "Wheat Flour",
+    name: "Wheat Grains",
     price: 45,
     category: "grains",
-    img: [{ src: "/images/Bananas.jpeg" }],
+    img: [{ src: "/images/wheat2.webp" },{ src: "/images/wheat3.webp" },{ src: "/images/wheat.webp" }],
     description:
       "Stone-ground whole wheat flour with natural fiber and nutrients preserved.",
     weight: "5 kg",
@@ -156,7 +156,7 @@ const products = [
     name: "Blueberries",
     price: 200,
     category: "fruits",
-    img: [{ src: "/images/tomato.jpeg" }],
+    img: [{ src: "/images/blue.jpeg" },{ src: "/images/blue2.webp" },{ src: "/images/blue3.webp" },],
     description:
       "Premium imported blueberries rich in antioxidants and bursting with flavor.",
     weight: "250 g",
@@ -175,7 +175,7 @@ const products = [
     name: "Spinach",
     price: 35,
     category: "vegetables",
-    img: [{ src: "/images/lemon.jpeg" }],
+    img: [{ src: "/images/spinach.webp" },{ src: "/images/spinach1.webp" },{ src: "/images/spinach2.webp" }],
     description:
       "Fresh and tender spinach leaves, perfect for soups, curries, and smoothies.",
     weight: "500 g",
@@ -191,12 +191,12 @@ const products = [
   },
   {
     id: 11,
-    name: "Fresh Mangoes 3",
+    name: "Quinoa",
     price: 90,
-    category: "fruits",
-    img: [{ src: "/images/blue.jpeg" }],
+    category: "grains",
+    img: [{ src: "/images/Quinoa.webp" },{ src: "/images/Quinoa1.webp" },{ src: "/images/Quinoa2.webp" }],
     description:
-      "Juicy, ripe mangoes sourced fresh from organic farms. Perfect for smoothies and desserts.",
+      "Fresh Quinoa with natural fiber and nutrients preserved.",
     weight: "1 kg",
     stock: 25,
     rating: 4.5,
@@ -210,12 +210,12 @@ const products = [
   },
   {
     id: 12,
-    name: "Fresh Mangoes 2",
-    price: 120,
-    category: "fruits",
-    img: [{ src: "/images/Bananas.jpeg" }],
+    name: "Potato",
+    price: 40,
+    category: "vegetables",
+    img: [{ src: "/Images/potato1.jpg" },{ src: "/Images/potato3.jpg" },{ src: "/Images/potato.jpg" }],
     description:
-      "Juicy, ripe mangoes sourced fresh from organic farms. Perfect for smoothies and desserts.",
+      "Fresh from organic farms. Perfect for every dish.",
     weight: "1 kg",
     stock: 25,
     rating: 4.5,
