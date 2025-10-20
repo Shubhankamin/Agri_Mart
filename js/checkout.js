@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function renderCartItems() {
     if (cartItems.length === 0) {
       checkoutCartItems.innerHTML =
-        '<p class="no-addresses">No items in cart. Please add items first.</p>';
+        '<li class="no-addresses">No items in cart. Please add items first.</li>';
       payNowBtn.disabled = true;
       return;
     }
@@ -279,33 +279,37 @@ document.addEventListener("DOMContentLoaded", function () {
     checkoutCartItems.innerHTML = "";
 
     cartItems.forEach((item) => {
+      const li = document.createElement("li");
+      li.className = "cart-item-wrapper"; // optional wrapper class
+
       const cartItemElement = document.createElement("article");
       cartItemElement.className = "cart-item";
+
       const imageSrc =
         Array.isArray(item.image) && item.image.length > 0
           ? item.image[0].src
           : typeof item.image === "string" && item.image.trim() !== ""
           ? item.image
           : "assets/default-image.jpg";
-      cartItemElement.innerHTML = `
-                <div class="item-image">
-    <img src="${escapeHtml(imageSrc)}"
-         alt="${escapeHtml(item.title)}"
-         loading="lazy">
-  </div>
-                <div class="item-details">
-                    <h3>${escapeHtml(item.title)}</h3>
-                    <p class="item-seller">Sold by: Local Farmer</p>
-                    <div class="item-quantity">
-                        <span>Quantity: ${item.quantity}</span>
-                    </div>
-                </div>
-                <div class="item-price">₹${(item.price * item.quantity).toFixed(
-                  2
-                )}</div>
-            `;
 
-      checkoutCartItems.appendChild(cartItemElement);
+      cartItemElement.innerHTML = `
+      <div class="item-image">
+        <img src="${escapeHtml(imageSrc)}"
+             alt="${escapeHtml(item.title)}"
+             loading="lazy">
+      </div>
+      <div class="item-details">
+          <h3>${escapeHtml(item.title)}</h3>
+          <p class="item-seller">Sold by: Local Farmer</p>
+          <div class="item-quantity">
+              <span>Quantity: ${item.quantity}</span>
+          </div>
+      </div>
+      <div class="item-price">₹${(item.price * item.quantity).toFixed(2)}</div>
+    `;
+
+      li.appendChild(cartItemElement);
+      checkoutCartItems.appendChild(li);
     });
 
     summarySubtotal.textContent = `₹${orderSummary.subtotal.toFixed(2)}`;

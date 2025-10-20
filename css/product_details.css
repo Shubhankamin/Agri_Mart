@@ -756,3 +756,6 @@ h6 {
 .text-light {
   color: #4b4b4b; /* Dark grey for good contrast on white */
 }
+.feature span {
+  color: #333333; /* Dark enough for WCAG 2 AA contrast */
+}

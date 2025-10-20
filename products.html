@@ -35,25 +35,18 @@
 
           <div class="nav-right-section">
             <!-- Desktop Navigation Links -->
-            <div
-              class="desktop-nav-links"
-              role="menubar"
-              aria-label="Primary menu"
-            >
-              <a
-                href="/index.html"
-                class="nav-link active"
-                aria-current="page"
-                role="menuitem"
+            <nav class="desktop-nav-links" aria-label="Primary menu">
+              <a href="/index.html" class="nav-link active" aria-current="page"
                 >Home</a
               >
-              <div class="dynamic-links" role="presentation"></div>
-              <div class="dropdown" role="presentation">
+
+              <div class="dynamic-links"></div>
+
+              <div class="dropdown">
                 <button
                   class="nav-link dropdown-toggle"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  role="menuitem"
                   id="categoryDropdown"
                 >
                   Categories
@@ -72,45 +65,29 @@
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </button>
+
                 <div
                   class="dropdown-menu"
-                  role="menu"
                   aria-labelledby="categoryDropdown"
+                  hidden
                 >
-                  <a
-                    href="#"
-                    class="dropdown-item"
-                    role="menuitem"
-                    data-filter="all"
+                  <a href="#" class="dropdown-item" data-filter="all"
                     >All Products</a
                   >
-                  <a
-                    href="#"
-                    class="dropdown-item"
-                    role="menuitem"
-                    data-filter="fruits"
+                  <a href="#" class="dropdown-item" data-filter="fruits"
                     >Fruits</a
                   >
-                  <a
-                    href="#"
-                    class="dropdown-item"
-                    role="menuitem"
-                    data-filter="vegetables"
+                  <a href="#" class="dropdown-item" data-filter="vegetables"
                     >Vegetables</a
                   >
-                  <a
-                    href="#"
-                    class="dropdown-item"
-                    role="menuitem"
-                    data-filter="cereals"
+                  <a href="#" class="dropdown-item" data-filter="cereals"
                     >Cereals</a
                   >
                 </div>
               </div>
-              <a href="contact.html" class="nav-link" role="menuitem"
-                >Contact</a
-              >
-            </div>
+
+              <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
 
             <!-- Desktop Actions -->
             <div class="desktop-actions" role="group" aria-label="User actions">
@@ -136,10 +113,8 @@
                     d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
                   ></path>
                 </svg>
-                <!-- <span class="cart-count" id="cartCount" aria-live="polite"
-                  >0</span
-                > -->
               </button>
+
               <a
                 href="/profile.html"
                 class="profile-link"
@@ -471,8 +446,13 @@
 
         <!-- Sort By -->
         <div class="filter-group">
-          <label class="font-subtitle" for="sortSelect">Sort By</label>
-          <select id="sortSelectMobile" class="custom-select">
+          <label class="font-subtitle" for="sortSelectMobile">Sort By:</label>
+          <select
+            id="sortSelectMobile"
+            name="sort"
+            class="custom-select"
+            aria-label="Sort products"
+          >
             <option value="default">Default</option>
             <option value="lowToHigh">Price: Low to High</option>
             <option value="highToLow">Price: High to Low</option>

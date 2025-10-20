@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="/css/contact.css" />
     <link rel="stylesheet" href="/css/index.css" />
 
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -47,6 +46,7 @@
               role="menubar"
               aria-label="Primary menu"
             >
+              <!-- Home -->
               <a
                 href="/index.html"
                 class="nav-link active"
@@ -54,13 +54,18 @@
                 role="menuitem"
                 >Home</a
               >
+
+              <!-- Dynamic Links -->
               <div class="dynamic-links" role="presentation"></div>
+
+              <!-- Categories Dropdown -->
               <div class="dropdown" role="presentation">
-                <button
+                <a
+                  href="#"
                   class="nav-link dropdown-toggle"
+                  role="menuitem"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  role="menuitem"
                   id="categoryDropdown"
                 >
                   Categories
@@ -78,7 +83,7 @@
                   >
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
-                </button>
+                </a>
                 <div
                   class="dropdown-menu"
                   role="menu"
@@ -114,13 +119,16 @@
                   >
                 </div>
               </div>
+
+              <!-- Contact -->
               <a href="contact.html" class="nav-link" role="menuitem"
                 >Contact</a
               >
             </div>
 
-            <!-- Desktop Actions -->
+            <!-- Desktop Actions (outside menubar) -->
             <div class="desktop-actions" role="group" aria-label="User actions">
+              <!-- Cart Button -->
               <button
                 class="cart-button"
                 onclick="window.location.href='/cart.html'"
@@ -143,10 +151,10 @@
                     d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
                   ></path>
                 </svg>
-                <!-- <span class="cart-count" id="cartCount" aria-live="polite"
-                  >0</span
-                > -->
+                <!-- <span class="cart-count" id="cartCount" aria-live="polite">0</span> -->
               </button>
+
+              <!-- Profile Link -->
               <a
                 href="/profile.html"
                 class="profile-link"
@@ -342,7 +350,11 @@
                   aria-required="true"
                   placeholder="Enter your full name"
                 />
-                <div class="error" id="errorUsername"></div>
+                <div
+                  class="error"
+                  id="errorUsername"
+                  style="color: #d32f2f"
+                ></div>
               </div>
 
               <div class="form-group">
@@ -355,7 +367,7 @@
                   required
                   placeholder="your.email@gmail.com"
                 />
-                <div class="error" role="alert"></div>
+                <div class="error" role="alert" style="color: #d32f2f"></div>
               </div>
 
               <div class="form-group">
@@ -367,7 +379,7 @@
                   class="form-input"
                   placeholder="+91 9876543215"
                 />
-                <span class="error" role="alert"></span>
+                <span class="error" role="alert" style="color: #d32f2f"></span>
               </div>
 
               <div class="form-group">
@@ -386,7 +398,11 @@
                   <option value="feedback">Feedback</option>
                   <option value="other">Other</option>
                 </select>
-                <span class="form-error" role="alert"></span>
+                <span
+                  class="form-error"
+                  role="alert"
+                  style="color: #d32f2f"
+                ></span>
               </div>
 
               <div class="form-group">
@@ -400,7 +416,11 @@
                   rows="6"
                   placeholder="Tell us how we can help you..."
                 ></textarea>
-                <span class="form-error" role="alert"></span>
+                <span
+                  class="form-error"
+                  role="alert"
+                  style="color: #d32f2f"
+                ></span>
               </div>
 
               <button

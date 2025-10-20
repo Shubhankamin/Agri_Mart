@@ -38,26 +38,19 @@
           </a>
 
           <div class="nav-right-section">
-            <!-- Desktop Navigation Links -->
-            <div
-              class="desktop-nav-links"
-              role="menubar"
-              aria-label="Primary menu"
-            >
-              <a
-                href="/index.html"
-                class="nav-link active"
-                aria-current="page"
-                role="menuitem"
-                >Home</a
-              >
-              <div class="dynamic-links" role="presentation"></div>
-              <div class="dropdown" role="presentation">
+            <!-- Desktop Navigation -->
+            <nav class="desktop-nav-links" aria-label="Primary navigation">
+              <a href="/index.html" class="nav-link active" aria-current="page">
+                Home
+              </a>
+
+              <div class="dynamic-links"></div>
+
+              <div class="dropdown">
                 <button
                   class="nav-link dropdown-toggle"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  role="menuitem"
                   id="categoryDropdown"
                 >
                   Categories
@@ -76,45 +69,25 @@
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </button>
-                <div
-                  class="dropdown-menu"
-                  role="menu"
-                  aria-labelledby="categoryDropdown"
-                >
-                  <a
-                    href="#"
-                    class="dropdown-item"
-                    role="menuitem"
-                    data-filter="all"
+
+                <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                  <a href="#" class="dropdown-item" data-filter="all"
                     >All Products</a
                   >
-                  <a
-                    href="#"
-                    class="dropdown-item"
-                    role="menuitem"
-                    data-filter="fruits"
+                  <a href="#" class="dropdown-item" data-filter="fruits"
                     >Fruits</a
                   >
-                  <a
-                    href="#"
-                    class="dropdown-item"
-                    role="menuitem"
-                    data-filter="vegetables"
+                  <a href="#" class="dropdown-item" data-filter="vegetables"
                     >Vegetables</a
                   >
-                  <a
-                    href="#"
-                    class="dropdown-item"
-                    role="menuitem"
-                    data-filter="cereals"
+                  <a href="#" class="dropdown-item" data-filter="cereals"
                     >Cereals</a
                   >
                 </div>
               </div>
-              <a href="contact.html" class="nav-link" role="menuitem"
-                >Contact</a
-              >
-            </div>
+
+              <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
 
             <!-- Desktop Actions -->
             <div class="desktop-actions" role="group" aria-label="User actions">
@@ -140,10 +113,8 @@
                     d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
                   ></path>
                 </svg>
-                <!-- <span class="cart-count" id="cartCount" aria-live="polite"
-                  >0</span
-                > -->
               </button>
+
               <a
                 href="/profile.html"
                 class="profile-link"
@@ -301,7 +272,16 @@
     </nav>
     <main class="main-content">
       <div class="container">
-        <div class="breadcrumb" id="breadcrumb"></div>
+        <div
+          class="breadcrumb"
+          id="breadcrumb"
+          style="
+            color: #333333;
+            background-color: #fafaf8;
+            font-size: 14px;
+            font-weight: normal;
+          "
+        ></div>
 
         <div class="product-detail-container">
           <!-- Left Section: Images -->
@@ -329,10 +309,30 @@
             <div class="price-section">
               <p class="current-price" id="productPrice"></p>
               <p class="old-price" id="oldPrice"></p>
-              <span class="discount" id="discount"></span>
+              <span
+                class="discount"
+                id="discount"
+                style="
+                  color: #ffebee; /* slightly lighter or you can darken for contrast */
+                  background-color: #b71c1c; /* darker red background for better contrast */
+                  font-size: 14px;
+                  font-weight: bold;
+                  padding: 2px 6px;
+                  border-radius: 4px;
+                "
+              ></span>
             </div>
 
-            <p id="productDescription" class="description"></p>
+            <p
+              id="productDescription"
+              style="
+                color: #333333;
+                background-color: #fafaf8;
+                font-size: 16px;
+                font-weight: normal;
+              "
+              class="description"
+            ></p>
 
             <div class="product-features" id="features">
               <!-- Features will be populated by JavaScript -->
@@ -368,7 +368,7 @@
                 <i class="fas fa-shipping-fast"></i>
                 <div>
                   <h4>Free Delivery</h4>
-                  <p>
+                  <p style="color: #333333">
                     Order now and get free delivery within 2-4 business days
                   </p>
                 </div>
@@ -377,7 +377,9 @@
                 <i class="fas fa-undo-alt"></i>
                 <div>
                   <h4>Easy Returns</h4>
-                  <p>Not satisfied? Return within 7 days for a full refund</p>
+                  <p style="color: #333333">
+                    Not satisfied? Return within 7 days for a full refund
+                  </p>
                 </div>
               </div>
             </div>
@@ -401,7 +403,7 @@
               </div>
               <div class="feature-content">
                 <h4>Fast & Reliable Delivery</h4>
-                <p>
+                <p style="color: #333333">
                   Get your order delivered to your doorstep within 2-4 business
                   days.
                 </p>
@@ -414,7 +416,7 @@
               </div>
               <div class="feature-content">
                 <h4>100% Fresh Products</h4>
-                <p>
+                <p style="color: #333333">
                   All products are freshly harvested and carefully packed to
                   ensure quality.
                 </p>
@@ -427,7 +429,7 @@
               </div>
               <div class="feature-content">
                 <h4>Eco-Friendly Packaging</h4>
-                <p>
+                <p style="color: #333333">
                   We use biodegradable and recyclable materials to reduce
                   environmental impact.
                 </p>
@@ -440,7 +442,7 @@
               </div>
               <div class="feature-content">
                 <h4>Easy Returns & Refunds</h4>
-                <p>
+                <p style="color: #333333">
                   Not satisfied with your product? Get hassle-free returns and a
                   full refund within 7 days.
                 </p>
