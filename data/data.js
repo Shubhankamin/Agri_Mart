@@ -41,7 +41,7 @@ const products = [
     id: 3,
     name: "Rice",
     price: 60,
-    category: "grains",
+    category: "cereals",
     img: [{ src: "/images/rice1.webp" },{ src: "/images/rice2.webp" },{ src: "/images/rice3.webp" }],
     description:
       "Premium quality white rice with long grains and soft texture after cooking.",
@@ -136,7 +136,7 @@ const products = [
     id: 8,
     name: "Wheat Grains",
     price: 45,
-    category: "grains",
+    category: "cereals",
     img: [{ src: "/images/wheat2.webp" },{ src: "/images/wheat3.webp" },{ src: "/images/wheat.webp" }],
     description:
       "Stone-ground whole wheat flour with natural fiber and nutrients preserved.",
@@ -193,7 +193,7 @@ const products = [
     id: 11,
     name: "Quinoa",
     price: 90,
-    category: "grains",
+    category: "cereals",
     img: [{ src: "/images/Quinoa.webp" },{ src: "/images/Quinoa1.webp" },{ src: "/images/Quinoa2.webp" }],
     description:
       "Fresh Quinoa with natural fiber and nutrients preserved.",

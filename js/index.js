@@ -147,6 +147,20 @@ function renderProducts(filter = "all") {
     .join("");
 }
 
+// ------------------------
+// Filter Buttons
+// ------------------------
+function filterProducts(category, button) {
+  // Reuse existing renderer
+  renderProducts(category);
+
+  // Update active button state
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.classList.remove("active");
+  });
+  if (button) button.classList.add("active");
+}
+
 function goToProductDetails(id) {
   window.location.href = `/product_details.html?id=${id}`;
 }

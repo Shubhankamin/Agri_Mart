@@ -188,8 +188,14 @@ function displayProductDetails() {
     // Add to Cart
     document.getElementById("addToCart").addEventListener("click", () => {
       showNotification(`${quantity} x ${product.name} added to cart!`);
+
       const cartCount = document.querySelector(".cart-count");
-      cartCount.textContent = parseInt(cartCount.textContent || 0) + quantity;
+      if (cartCount) {
+        const currentCount = parseInt(cartCount.textContent || "0", 10);
+        cartCount.textContent = currentCount + quantity;
+      } else {
+        console.warn("⚠️ .cart-count element not found in DOM");
+      }
 
       // Optional: redirect to cart page
       window.location.href = `cart.html?id=${product.id}&qty=${quantity}`;
@@ -203,8 +209,7 @@ function displayProductDetails() {
 
     // Farmer
     const farmerNameEl = document.getElementById("farmerName");
-    if (farmerNameEl)
-      farmerNameEl.textContent = product.farmerId || "Unknown";
+    if (farmerNameEl) farmerNameEl.textContent = product.farmerId || "Unknown";
 
     // Similar products
     const similarProducts = allProducts.filter(
