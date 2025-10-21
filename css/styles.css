@@ -14,6 +14,12 @@ body {
   padding: 0;
 }
 
+html,
+body {
+  min-width: 320px; /* absolute minimum width */
+  overflow-x: auto; /* allow horizontal scrolling instead of shrinking */
+}
+
 /* ====== FONT CLASSES ====== */
 
 /* Page Headings / Main Titles */

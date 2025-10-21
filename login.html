@@ -41,15 +41,20 @@
               role="menubar"
               aria-label="Primary menu"
             >
-              <a
-                href="/index.html"
-                class="nav-link active"
-                aria-current="page"
-                role="menuitem"
-                >Home</a
-              >
-              <div class="dynamic-links" role="presentation"></div>
-              <div class="dropdown" role="presentation">
+              <div role="none">
+                <a
+                  href="/index.html"
+                  class="nav-link active"
+                  aria-current="page"
+                  role="menuitem"
+                >
+                  Home
+                </a>
+              </div>
+
+              <div class="dynamic-links" role="none"></div>
+
+              <div class="dropdown" role="none">
                 <button
                   class="nav-link dropdown-toggle"
                   aria-haspopup="true"
@@ -73,6 +78,7 @@
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </button>
+
                 <div
                   class="dropdown-menu"
                   role="menu"
@@ -83,34 +89,41 @@
                     class="dropdown-item"
                     role="menuitem"
                     data-filter="all"
-                    >All Products</a
                   >
+                    All Products
+                  </a>
                   <a
                     href="#"
                     class="dropdown-item"
                     role="menuitem"
                     data-filter="fruits"
-                    >Fruits</a
                   >
+                    Fruits
+                  </a>
                   <a
                     href="#"
                     class="dropdown-item"
                     role="menuitem"
                     data-filter="vegetables"
-                    >Vegetables</a
                   >
+                    Vegetables
+                  </a>
                   <a
                     href="#"
                     class="dropdown-item"
                     role="menuitem"
                     data-filter="cereals"
-                    >Cereals</a
                   >
+                    Cereals
+                  </a>
                 </div>
               </div>
-              <a href="contact.html" class="nav-link" role="menuitem"
-                >Contact</a
-              >
+
+              <div role="none">
+                <a href="contact.html" class="nav-link" role="menuitem"
+                  >Contact</a
+                >
+              </div>
             </div>
 
             <!-- Desktop Actions -->
@@ -324,7 +337,13 @@
               placeholder="Enter your email"
               required
             />
-            <span class="error-message" id="emailError"></span>
+            <span
+              class="error-message"
+              id="emailError"
+              style="color: #b00020; background-color: #fff; font-weight: 500"
+            >
+              Enter a valid email address.
+            </span>
           </div>
 
           <div class="form-group">
@@ -335,7 +354,13 @@
               placeholder="Enter your password"
               required
             />
-            <span class="error-message" id="passwordError"></span>
+            <span
+              class="error-message"
+              id="passwordError"
+              style="color: #b00020; background-color: #fff; font-weight: 500"
+            >
+              Password must be at least 8 characters.
+            </span>
           </div>
 
           <!-- Optional Farmer ID for Farmer login -->
@@ -353,7 +378,13 @@
         </form>
 
         <p class="login-text font-small">
-          Don't have an account? <a href="signup.html">Sign up here</a>
+          Don't have an account?
+          <a
+            href="signup.html"
+            style="color: #1a5e1a; text-decoration: underline; font-weight: 500"
+          >
+            Sign up here
+          </a>
         </p>
       </div>
     </div>

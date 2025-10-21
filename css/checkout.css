@@ -54,6 +54,11 @@ body {
   overflow-x: hidden;
 }
 
+html, body {
+  min-width: 320px; /* absolute minimum width */
+  overflow-x: auto;  /* allow horizontal scrolling instead of shrinking */
+}
+
 /* Container */
 .container {
   max-width: 1200px;

@@ -1,4 +1,11 @@
 /* Contact Page Styles */
+
+html,
+body {
+  min-width: 320px; /* absolute minimum width */
+  overflow-x: auto; /* allow horizontal scrolling instead of shrinking */
+}
+
 .contact-hero {
   background: linear-gradient(135deg, var(--light-beige) 0%, var(--beige) 100%);
   padding: 80px 0;
