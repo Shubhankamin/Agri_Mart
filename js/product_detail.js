@@ -56,13 +56,24 @@ function displayProductDetails() {
 
   if (product) {
     const breadcrumbContainer = document.getElementById("breadcrumb");
+    breadcrumbContainer.style.color = "#333333"; // accessible foreground
+    breadcrumbContainer.style.backgroundColor = "#fafaf8"; // background
+    breadcrumbContainer.style.fontSize = "14px";
+    breadcrumbContainer.style.fontWeight = "normal";
+
     breadcrumbContainer.innerHTML = `
-      <a href="index.html">Home</a> /
-      <a href="category.html?category=${encodeURIComponent(product.category)}">
-        ${product.category}
-      </a> /
-      <span>${product.name}</span>
-    `;
+  <a href="index.html">Home</a> /
+  <a href="category.html?category=${encodeURIComponent(product.category)}">
+    ${product.category}
+  </a> /
+  <span>${product.name}</span>
+`;
+
+    // Apply color to all child links
+    breadcrumbContainer.querySelectorAll("a").forEach((link) => {
+      link.style.color = "inherit"; // inherit the container's color
+      link.style.textDecoration = "none"; // optional
+    });
 
     // Basic Info
     document.getElementById("productName").textContent = product.name;
@@ -106,30 +117,42 @@ function displayProductDetails() {
     const halfStar = (product.rating || 0) % 1 >= 0.5;
     const starsContainer = document.createElement("div");
     starsContainer.classList.add("stars");
+    starsContainer.setAttribute(
+      "aria-label",
+      `Rating: ${product.rating || 0} out of 5`
+    );
+    starsContainer.setAttribute("role", "img"); // tells screen readers this is an image/icon
 
     for (let i = 0; i < fullStars; i++) {
       const star = document.createElement("i");
       star.classList.add("fas", "fa-star");
+      star.setAttribute("aria-hidden", "true"); // hide decorative icons
       starsContainer.appendChild(star);
     }
     if (halfStar) {
       const halfStarEl = document.createElement("i");
       halfStarEl.classList.add("fas", "fa-star-half-alt");
+      halfStarEl.setAttribute("aria-hidden", "true");
       starsContainer.appendChild(halfStarEl);
     }
     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
     for (let i = 0; i < emptyStars; i++) {
       const emptyStar = document.createElement("i");
       emptyStar.classList.add("far", "fa-star");
+      emptyStar.setAttribute("aria-hidden", "true");
       starsContainer.appendChild(emptyStar);
     }
 
     const ratingText = document.createElement("span");
     ratingText.classList.add("rating-text");
-    ratingText.textContent = `${product.rating || 0} (${
-      product.reviews || 0
-    } reviews)`;
+    ratingText.textContent = `(${product.reviews || 0} reviews)`;
+    // Fix color contrast for accessibility
+    ratingText.style.color = "#333333"; // dark enough to meet WCAG 2 AA
+    ratingText.style.backgroundColor = "#fafaf8"; // match background if needed
+    ratingText.style.fontSize = "14px";
+    ratingText.style.fontWeight = "normal";
 
+    // Append to container
     const ratingContainer = document.getElementById("productRating");
     ratingContainer.innerHTML = "";
     ratingContainer.appendChild(starsContainer);
@@ -188,8 +211,14 @@ function displayProductDetails() {
     // Add to Cart
     document.getElementById("addToCart").addEventListener("click", () => {
       showNotification(`${quantity} x ${product.name} added to cart!`);
+
       const cartCount = document.querySelector(".cart-count");
-      cartCount.textContent = parseInt(cartCount.textContent || 0) + quantity;
+      if (cartCount) {
+        const currentCount = parseInt(cartCount.textContent || "0", 10);
+        cartCount.textContent = currentCount + quantity;
+      } else {
+        console.warn("⚠️ .cart-count element not found in DOM");
+      }
 
       // Optional: redirect to cart page
       window.location.href = `cart.html?id=${product.id}&qty=${quantity}`;
@@ -203,8 +232,7 @@ function displayProductDetails() {
 
     // Farmer
     const farmerNameEl = document.getElementById("farmerName");
-    if (farmerNameEl)
-      farmerNameEl.textContent = product.farmerId || "Unknown";
+    if (farmerNameEl) farmerNameEl.textContent = product.farmerId || "Unknown";
 
     // Similar products
     const similarProducts = allProducts.filter(

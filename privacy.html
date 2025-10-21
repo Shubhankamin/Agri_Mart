@@ -1,189 +1,446 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Privacy Policy — Agrimart</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <title>Privacy Policy — Agrimart</title>
 
-  <!--External CSS-->
-  <link rel="stylesheet" href="css/privacy.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-      rel="stylesheet"/>
-</head>
-<body>
+    <!--External CSS-->
+    <link rel="stylesheet" href="css/privacy.css" />
+    <!-- <link rel="stylesheet" href="css/mode.css" /> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!-- Mobile Overlay -->
     <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
 
-<!-- Navigation -->
-<nav class="navbar" role="navigation" aria-label="Main navigation">
-  <div class="container">
-    <div class="logo-toggle-wrapper">
-      <a href="/index.html" class="logo" role="link" aria-label="AgriMart Home">
-       <span class="logo-icon" aria-hidden="true">🌾</span>
-       <span class="logo-text">AgriMart</span>
-      </a>
-
-      <div class="nav-right-section">
-        <!-- Desktop Navigation Links -->
-        <div class="desktop-nav-links" role="menubar" aria-label="Primary menu">
-          <a href="/index.html" class="nav-link active" aria-current="page" role="menuitem">Home</a>
-          <div class="dynamic-links" role="presentation"></div>
-          <div class="dropdown" role="presentation">
-            <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" role="menuitem" id="categoryDropdown">
-              Categories
-              <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </button>
-            <div class="dropdown-menu" role="menu" aria-labelledby="categoryDropdown">
-              <a href="#" class="dropdown-item" role="menuitem" data-filter="all">All Products</a>
-              <a href="#" class="dropdown-item" role="menuitem" data-filter="fruits">Fruits</a>
-              <a href="#" class="dropdown-item" role="menuitem" data-filter="vegetables">Vegetables</a>
-              <a href="#" class="dropdown-item" role="menuitem" data-filter="cereals">Cereals</a>
-            </div>
-          </div>
-          <a href="contact.html" class="nav-link" role="menuitem">Contact</a>
-        </div>
-
-        <!-- Desktop Actions -->
-        <div class="desktop-actions" role="group" aria-label="User actions">
-          <button class="cart-button" onclick="window.location.href='/cart.html'" aria-label="Shopping cart">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="9" cy="21" r="1"></circle>
-              <circle cx="20" cy="21" r="1"></circle>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-            <span class="cart-count" id="cartCount" aria-live="polite">0</span>
-          </button>
-          <a href="/profile.html" class="profile-link" aria-label="Profile page">
-            <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="container">
+        <div class="logo-toggle-wrapper">
+          <a
+            href="/index.html"
+            class="logo"
+            role="link"
+            aria-label="AgriMart Home"
+          >
+            <span class="logo-icon" aria-hidden="true">🌾</span>
+            <span class="logo-text">AgriMart</span>
           </a>
-        </div>
-      </div>
 
-      <!-- Mobile Menu Toggle Button -->
-      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-
-      <!-- Mobile Slide-Out Menu Panel -->
-      <div class="nav-links" id="navLinks" role="menu" aria-label="Mobile menu">
-        <div class="mobile-menu-header" role="presentation">
-          <div class="mobile-profile-section" role="group" aria-label="Mobile profile">
-            <a href="/profile.html" class="profile-link-mobile" role="menuitem" aria-label="Mobile profile link">
-              <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
-              <div class="mobile-profile-info">
-                <h3 id="mobileUserName">Guest User</h3>
-                <p id="mobileUserEmail">Login or Sign Up</p>
+          <div class="nav-right-section">
+            <!-- Desktop Navigation Links -->
+            <div
+              class="desktop-nav-links"
+              role="menubar"
+              aria-label="Primary menu"
+            >
+              <a
+                href="/index.html"
+                class="nav-link active"
+                aria-current="page"
+                role="menuitem"
+                >Home</a
+              >
+              <div class="dynamic-links" role="presentation"></div>
+              <div class="dropdown" role="presentation">
+                <button
+                  class="nav-link dropdown-toggle"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  role="menuitem"
+                  id="categoryDropdown"
+                >
+                  Categories
+                  <svg
+                    class="dropdown-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div
+                  class="dropdown-menu"
+                  role="menu"
+                  aria-labelledby="categoryDropdown"
+                >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="all"
+                    >All Products</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="fruits"
+                    >Fruits</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="vegetables"
+                    >Vegetables</a
+                  >
+                  <a
+                    href="#"
+                    class="dropdown-item"
+                    role="menuitem"
+                    data-filter="cereals"
+                    >Cereals</a
+                  >
+                </div>
               </div>
-            </a>
-          </div>
-        </div>
-        
-        <div class="mobile-menu-body" role="presentation">
-          <a href="/index.html" class="nav-link" role="menuitem">Home</a>
-          <div class="dynamic-links" role="presentation"></div>
-          <div class="dropdown" role="presentation">
-            <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" role="menuitem">
-              Categories
-              <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </button>
-            <div class="dropdown-menu" role="menu">
-              <a href="#" class="dropdown-item" role="menuitem" data-filter="all">All Products</a>
-              <a href="#" class="dropdown-item" role="menuitem" data-filter="fruits">Fruits</a>
-              <a href="#" class="dropdown-item" role="menuitem" data-filter="vegetables">Vegetables</a>
-              <a href="#" class="dropdown-item" role="menuitem" data-filter="cereals">Cereals</a>
+              <a href="contact.html" class="nav-link" role="menuitem"
+                >Contact</a
+              >
+            </div>
+
+            <!-- Desktop Actions -->
+            <div class="desktop-actions" role="group" aria-label="User actions">
+              <button
+                class="cart-button"
+                onclick="window.location.href='/cart.html'"
+                aria-label="Shopping cart"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path
+                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                  ></path>
+                </svg>
+                <!-- <span class="cart-count" id="cartCount" aria-live="polite"
+                  >0</span
+                > -->
+              </button>
+              <a
+                href="/profile.html"
+                class="profile-link"
+                aria-label="Profile page"
+              >
+                <img
+                  src="/Images/Profile.png"
+                  alt="Profile"
+                  class="profile-icon"
+                />
+              </a>
+              <!-- <button
+                id="themeToggleBtn"
+                class="theme-toggle-btn"
+                aria-label="Toggle dark/light mode"
+              >
+                🌙
+              </button> -->
             </div>
           </div>
-          <a href="contact.html" class="nav-link" role="menuitem">Contact</a>
-        </div>
 
-        <div class="mobile-cart-section" role="group" aria-label="Mobile cart">
-          <button class="mobile-cart-btn" onclick="window.location.href='/cart.html'" aria-label="View cart">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="9" cy="21" r="1"></circle>
-              <circle cx="20" cy="21" r="1"></circle>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-            View Cart
-            <span class="cart-count" id="mobileCartCount" aria-live="polite">0</span>
+          <!-- Mobile Menu Toggle Button -->
+          <button
+            class="mobile-menu-toggle"
+            id="mobileMenuToggle"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
           </button>
         </div>
+
+        <!-- Mobile Slide-Out Menu Panel -->
+        <div
+          class="nav-links"
+          id="navLinks"
+          role="menu"
+          aria-label="Mobile menu"
+        >
+          <div class="mobile-menu-header" role="presentation">
+            <div
+              class="mobile-profile-section"
+              role="group"
+              aria-label="Mobile profile"
+            >
+              <a
+                href="/profile.html"
+                class="profile-link-mobile"
+                role="menuitem"
+                aria-label="Mobile profile link"
+              >
+                <img
+                  src="/Images/Profile.png"
+                  alt="Profile"
+                  class="profile-icon"
+                />
+                <div class="mobile-profile-info">
+                  <h3 id="mobileUserName">Guest User</h3>
+                  <p id="mobileUserEmail">Login or Sign Up</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="mobile-menu-body" role="presentation">
+            <a href="/index.html" class="nav-link" role="menuitem">Home</a>
+            <div class="dynamic-links" role="presentation"></div>
+            <div class="dropdown" role="presentation">
+              <button
+                class="nav-link dropdown-toggle"
+                aria-haspopup="true"
+                aria-expanded="false"
+                role="menuitem"
+              >
+                Categories
+                <svg
+                  class="dropdown-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="dropdown-menu" role="menu">
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="all"
+                  >All Products</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="fruits"
+                  >Fruits</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="vegetables"
+                  >Vegetables</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="cereals"
+                  >Cereals</a
+                >
+              </div>
+            </div>
+            <a href="contact.html" class="nav-link" role="menuitem">Contact</a>
+          </div>
+          <!-- <button
+            id="themeToggleBtnMobile"
+            class="theme-toggle-btn"
+            aria-label="Toggle dark/light mode"
+          >
+            🌙
+          </button> -->
+
+          <div
+            class="mobile-cart-section"
+            role="group"
+            aria-label="Mobile cart"
+          >
+            <button
+              class="mobile-cart-btn"
+              onclick="window.location.href='/cart.html'"
+              aria-label="View cart"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path
+                  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                ></path>
+              </svg>
+              View Cart
+              <!-- <span class="cart-count" id="mobileCartCount" aria-live="polite">0</span> -->
+            </button>
+          </div>
+        </div>
       </div>
-  </div>
-</nav>
+    </nav>
 
-<header class="header" role="banner">
-  <div class="header-inner">
-    <h1 class="site-title">Agrimart - Privacy Policy</h1>
-    <button id="backToProfile" aria-label="Back to Home">← Back to Home</button>
-  </div>
-</header>
+    <header class="header" role="banner">
+      <div class="header-inner">
+        <h1 class="site-title">Agrimart - Privacy Policy</h1>
+        <button id="backToProfile" aria-label="Back to Home">
+          ← Back to Home
+        </button>
+      </div>
+    </header>
 
-<main class="content" role="main" aria-label="Privacy Policy content">
-  <h2>Privacy Policy</h2>
-  <p>At Agrimart, we respect and value your privacy. This policy explains what information we collect, how we use it, and the choices available to you. By using our website or services, you agree to the terms described below.</p>
+    <main class="content" role="main" aria-label="Privacy Policy content">
+      <h2>Privacy Policy</h2>
+      <p>
+        At Agrimart, we respect and value your privacy. This policy explains
+        what information we collect, how we use it, and the choices available to
+        you. By using our website or services, you agree to the terms described
+        below.
+      </p>
 
-  <h3>1. Information We Collect</h3>
-  <ul>
-    <li><strong>Personal details:</strong> Name, email, phone number, and shipping address to deliver your orders.</li>
-    <li><strong>Order data:</strong> Purchase history, payment details, and invoices to help us manage your transactions.</li>
-    <li><strong>Technical data:</strong> IP address, browser type, and device information to improve site performance.</li>
-    <li><strong>Cookies:</strong> Used to remember your preferences and make your experience smoother.</li>
-  </ul>
-  <p>We may also collect optional details when you sign up for newsletters, promotions, or provide feedback.</p>
+      <h3>1. Information We Collect</h3>
+      <ul>
+        <li>
+          <strong>Personal details:</strong> Name, email, phone number, and
+          shipping address to deliver your orders.
+        </li>
+        <li>
+          <strong>Order data:</strong> Purchase history, payment details, and
+          invoices to help us manage your transactions.
+        </li>
+        <li>
+          <strong>Technical data:</strong> IP address, browser type, and device
+          information to improve site performance.
+        </li>
+        <li>
+          <strong>Cookies:</strong> Used to remember your preferences and make
+          your experience smoother.
+        </li>
+      </ul>
+      <p>
+        We may also collect optional details when you sign up for newsletters,
+        promotions, or provide feedback.
+      </p>
 
-  <h3>2. How We Use Your Information</h3>
-  <ul>
-    <li>To process, pack, and deliver your orders efficiently.</li>
-    <li>To personalize your shopping experience by recommending relevant products.</li>
-    <li>To improve our website design, speed, and usability.</li>
-    <li>To provide customer support and respond to your queries quickly.</li>
-    <li>To send important updates such as order confirmations, delivery status, or policy changes.</li>
-  </ul>
-  <p>Marketing emails are sent only if you have opted in, and you can unsubscribe at any time.</p>
+      <h3>2. How We Use Your Information</h3>
+      <ul>
+        <li>To process, pack, and deliver your orders efficiently.</li>
+        <li>
+          To personalize your shopping experience by recommending relevant
+          products.
+        </li>
+        <li>To improve our website design, speed, and usability.</li>
+        <li>
+          To provide customer support and respond to your queries quickly.
+        </li>
+        <li>
+          To send important updates such as order confirmations, delivery
+          status, or policy changes.
+        </li>
+      </ul>
+      <p>
+        Marketing emails are sent only if you have opted in, and you can
+        unsubscribe at any time.
+      </p>
 
-  <h3>3. Sharing Your Data</h3>
-  <p>We do not sell your personal data. We may share it only in limited cases such as:</p>
-  <ul>
-    <li>With trusted partners who provide payment processing, shipping, and IT support.</li>
-    <li>When required by law, regulation, or legal proceedings.</li>
-    <li>In the event of a company merger, acquisition, or restructuring.</li>
-  </ul>
-  <p>All partners are required to use your data responsibly and protect it according to legal standards.</p>
+      <h3>3. Sharing Your Data</h3>
+      <p>
+        We do not sell your personal data. We may share it only in limited cases
+        such as:
+      </p>
+      <ul>
+        <li>
+          With trusted partners who provide payment processing, shipping, and IT
+          support.
+        </li>
+        <li>When required by law, regulation, or legal proceedings.</li>
+        <li>
+          In the event of a company merger, acquisition, or restructuring.
+        </li>
+      </ul>
+      <p>
+        All partners are required to use your data responsibly and protect it
+        according to legal standards.
+      </p>
 
-  <h3>4. Data Retention & Security</h3>
-  <p>Your data is stored only for as long as necessary to provide services, comply with legal obligations, or resolve disputes. Sensitive information such as payment details is encrypted. While we follow industry-standard safeguards, no method of storage or transfer is 100% secure.</p>
-  <p>We also review our systems regularly to identify and fix vulnerabilities.</p>
+      <h3>4. Data Retention & Security</h3>
+      <p>
+        Your data is stored only for as long as necessary to provide services,
+        comply with legal obligations, or resolve disputes. Sensitive
+        information such as payment details is encrypted. While we follow
+        industry-standard safeguards, no method of storage or transfer is 100%
+        secure.
+      </p>
+      <p>
+        We also review our systems regularly to identify and fix
+        vulnerabilities.
+      </p>
 
-  <h3>5. Your Rights</h3>
-  <ul>
-    <li>Request access to the personal data we hold about you.</li>
-    <li>Update or correct your information at any time.</li>
-    <li>Request deletion of your account or data, where legally possible.</li>
-    <li>Opt-out of promotional messages without affecting service use.</li>
-    <li>Withdraw previously given consent for data processing.</li>
-  </ul>
-  <p>To exercise these rights, simply contact us via email or phone, and we will respond promptly.</p>
+      <h3>5. Your Rights</h3>
+      <ul>
+        <li>Request access to the personal data we hold about you.</li>
+        <li>Update or correct your information at any time.</li>
+        <li>
+          Request deletion of your account or data, where legally possible.
+        </li>
+        <li>Opt-out of promotional messages without affecting service use.</li>
+        <li>Withdraw previously given consent for data processing.</li>
+      </ul>
+      <p>
+        To exercise these rights, simply contact us via email or phone, and we
+        will respond promptly.
+      </p>
 
-  <h3>6. Contact Us</h3>
-  <p>If you have any questions or concerns regarding this Privacy Policy or how your information is handled, please contact us:</p>
-  <p>
-    Email: <a href="mailto:privacy@agrimart.com">privacy@agrimart.com</a><br>
-    Phone: +91-XXXXXXXXXX<br>
-    Address: Agrimart HQ, Kochi, Kerala, India
-  </p>
-  <p>We take your concerns seriously and aim to resolve all requests within 7 working days.</p>
-</main>
+      <h3>6. Contact Us</h3>
+      <p>
+        If you have any questions or concerns regarding this Privacy Policy or
+        how your information is handled, please contact us:
+      </p>
+      <p>
+        Email: <a href="mailto:privacy@agrimart.com">privacy@agrimart.com</a
+        ><br />
+        Phone: +91-XXXXXXXXXX<br />
+        Address: Agrimart HQ, Kochi, Kerala, India
+      </p>
+      <p>
+        We take your concerns seriously and aim to resolve all requests within 7
+        working days.
+      </p>
+    </main>
 
-<!-- Footer -->
+    <!-- Footer -->
     <footer class="footer" role="contentinfo">
       <div class="container">
         <div class="footer-content">
@@ -201,13 +458,12 @@
               <li><a href="index.html">Home</a></li>
               <li><a href="products.html">Products</a></li>
               <li><a href="contact.html">Contact Us</a></li>
-              
             </ul>
           </div>
           <div class="footer-section">
             <h4 class="footer-heading">About AgriMart</h4>
             <ul class="footer-links">
-             <li><a href="about_us.html">About Us</a></li>
+              <li><a href="about_us.html">About Us</a></li>
               <li><a href="blogs.html">Blog</a></li>
               <li><a href="terms_conditions.html">Terms & Conditions</a></li>
               <li><a href="privacy.html">Privacy Policy</a></li>
@@ -228,6 +484,7 @@
       </div>
     </footer>
 
-<script src="js/privacy.js"></script>
-</body>
+    <script src="js/privacy.js"></script>
+    <!-- <script src="js/mode.js"></script> -->
+  </body>
 </html>

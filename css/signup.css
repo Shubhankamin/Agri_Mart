@@ -7,14 +7,14 @@
   --bg-color: #f8f8f8;
   --card-bg: #fff;
   --text-color: #333;
-  --header-bg: #66bb6a;
+  --header-bg: #2d5016;
   --header-text: #fff;
-  --btn-bg: #66bb6a;
+  --btn-bg: #2d5016;
   --btn-text: #fff;
   --input-bg: #fff;
   --input-border: #ccc;
-  --input-focus-border: #66bb6a;
-  --snackbar-bg-success: #66bb6a;
+  --input-focus-border: #2d5016;
+  --snackbar-bg-success: #2d5016;
   --snackbar-bg-error: #e74c3c;
 }
 
@@ -29,8 +29,8 @@
   --btn-text: #fff;
   --input-bg: #3a3a3a;
   --input-border: #555;
-  --input-focus-border: #66bb6a;
-  --snackbar-bg-success: #66bb6a;
+  --input-focus-border: #2d5016;
+  --snackbar-bg-success: #2d5016;
   --snackbar-bg-error: #e74c3c;
 }
 
@@ -38,12 +38,19 @@
 /* ==== GLOBAL STYLES ======= */
 /* ========================== */
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  margin: 0;
-  padding: 0;
-  transition: all 0.3s ease;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  line-height: 1.6;
+  color: #2d2d2d;
+  background-color: #fafaf8;
+  /* overflow-x: hidden; is kept to prevent horizontal scroll issues */
+  overflow-x: hidden;
+}
+
+html,
+body {
+  min-width: 320px; /* absolute minimum width */
+  overflow-x: auto; /* allow horizontal scrolling instead of shrinking */
 }
 
 .tog {
@@ -251,21 +258,46 @@ body {
 }
 .gender-options {
   display: flex;
-  gap: 20px; /* space between options */
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping if needed on small screens */
 }
 
-/* Each label acts as a flex container */
 .gender-options label {
   display: flex;
   align-items: center;
-  gap: 6px; /* space between radio button and text */
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+/* Make radio buttons slightly larger and vertically centered */
+.gender-options input[type="radio"] {
+  accent-color: var(--btn-bg); /* modern browsers support */
+  transform: scale(1.2);
   cursor: pointer;
 }
 
-/* Stack vertically on mobile */
+/* Responsive: stack vertically on small screens */
 @media (max-width: 480px) {
   .gender-options {
     flex-direction: column;
-    gap: 10px;
+    align-items: flex-start;
+    gap: 12px;
   }
+
+  .gender-options label {
+    font-size: 15px;
+  }
+
+  .gender-options input[type="radio"] {
+    transform: scale(1.3);
+  }
+}
+.error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  display: block;
 }

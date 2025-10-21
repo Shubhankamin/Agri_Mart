@@ -1,97 +1,41 @@
-
-// Cart state
+// ------------------------
+// Global State
+// ------------------------
 let cart = [];
-
-// Get current user from localStorage
 const currentUser = localStorage.getItem("currentUser");
 const user = currentUser ? JSON.parse(currentUser) : null;
-// common.js
+
+// ------------------------
+// Helpers
+// ------------------------
 function truncateText(text, maxLength = 55) {
   if (!text) return "";
   return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 }
 
-// Add dynamic navbar links
-function setupDynamicLinks() {
-  const container = document.querySelector(".dynamic-links");
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  const productsLink = document.createElement("a");
-  productsLink.href = "/products.html";
-  productsLink.className = "nav-link";
-  productsLink.textContent = "Products";
-  container.appendChild(productsLink);
-
-  if (user && user.role === "farmer") {
-    const sellLink = document.createElement("a");
-    sellLink.href = "/sell.html";
-    sellLink.className = "nav-link";
-    sellLink.textContent = "Sell";
-    container.appendChild(sellLink);
-  }
-}
-
-// Load Cart
+// ------------------------
+// Cart Functions
+// ------------------------
 function loadCart() {
   const savedCart = localStorage.getItem("agrimart_cart");
   if (savedCart) cart = JSON.parse(savedCart);
-  updateCartCount();
+  updateNavbarCartCount();
 }
 
-// Update Cart Count
-function updateCartCount() {
-  const cartCountElem = document.getElementById("cartCount");
-  if (!cartCountElem) return;
+function updateNavbarCartCount() {
+  const navCartCount = document.getElementById("cart-count");
+  const mobileCartCount = document.getElementById("mobileCartCount");
 
-  const savedCart = localStorage.getItem("agrimart_cart");
-  const cartData = savedCart ? JSON.parse(savedCart) : [];
-  const totalItems = cartData.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  cartCountElem.textContent = totalItems;
+  if (navCartCount) navCartCount.textContent = totalItems;
+  if (mobileCartCount) mobileCartCount.textContent = totalItems;
 }
 
-// Render Products (only on pages with #productsGrid)
-function renderProducts(filter = "all") {
-  const productsGrid = document.getElementById("productsGrid");
-  if (!productsGrid) return; // skip if no products grid
-
-  const filteredProducts =
-    filter === "all" ? products : products.filter((p) => p.category === filter);
-
-  productsGrid.innerHTML = filteredProducts
-    .map(
-      (product) => `
-      <article class="product-card" data-product-id="${product.id}">
-    <img src="${product.img[0].src}" alt="${
-        product.name
-      }" class="product-image" loading="lazy">
-
-        <div class="product-info">
-          <span class="product-category">${product.category}</span>
-          <h3 class="product-name">${product.name}</h3>
- <p class="product-description">${truncateText(product.description)}</p>          <div class="product-footer">
-            <span class="product-price">₹${product.price.toFixed(2)}</span>
-            <button class="add-to-cart-btn" onclick="addToCart(${
-              product.id
-            })" aria-label="Add ${product.name} to cart">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      </article>
-    `
-    )
-    .join("");
+function saveCart() {
+  localStorage.setItem("agrimart_cart", JSON.stringify(cart));
 }
 
-// Add to Cart
 function addToCart(productId) {
   const product = products.find((p) => p.id === productId);
   if (!product) return;
@@ -101,12 +45,8 @@ function addToCart(productId) {
   else cart.push({ ...product, quantity: 1 });
 
   saveCart();
-  updateCartCount();
+  updateNavbarCartCount();
   showNotification();
-}
-
-function saveCart() {
-  localStorage.setItem("agrimart_cart", JSON.stringify(cart));
 }
 
 function showNotification() {
@@ -117,62 +57,180 @@ function showNotification() {
   setTimeout(() => notification.classList.remove("show"), 2000);
 }
 
-// Setup Event Listeners (only elements that exist)
-function setupEventListeners() {
-  const dropdownToggle = document.querySelector(".dropdown-toggle");
-  const dropdown = document.querySelector(".dropdown");
+// ------------------------
+// User/Profile UI
+// ------------------------
+function updateProfileUI() {
+  const desktopProfile = document.querySelector(".profile-link img");
+  const mobileUserName = document.getElementById("mobileUserName");
+  const mobileUserEmail = document.getElementById("mobileUserEmail");
 
-  if (dropdownToggle && dropdown) {
-    dropdownToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      console.log("Dropdown toggle clicked");
-      dropdown.classList.toggle("active");
-    });
-    document.addEventListener("click", () =>
-      dropdown.classList.remove("active")
-    );
-    document.querySelectorAll(".dropdown-item").forEach((item) => {
-      item.addEventListener("click", (e) => {
-        e.preventDefault();
-        const category = item.getAttribute("data-filter");
-        window.location.href = `products.html?category=${category}`;
-      });
-    });
-  }
-
-  document.querySelectorAll(".filter-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      const category = button.getAttribute("data-filter");
-      document
-        .querySelectorAll(".filter-btn")
-        .forEach((b) => b.classList.remove("active"));
-      button.classList.add("active");
-      renderProducts(category);
-    });
-  });
-
-  const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-  if (mobileMenuToggle && navLinks) {
-    mobileMenuToggle.addEventListener("click", () => {
-      // navLinks.classList.toggle("active");
-      const expanded =
-        mobileMenuToggle.getAttribute("aria-expanded") === "true";
-      mobileMenuToggle.setAttribute("aria-expanded", !expanded);
-    });
+  if (user) {
+    if (desktopProfile) {
+      desktopProfile.src = user.image || "/Images/Profile.png";
+      desktopProfile.alt = user.name || "Profile";
+    }
+    if (mobileUserName) mobileUserName.textContent = user.name || "User";
+    if (mobileUserEmail)
+      mobileUserEmail.textContent = user.email || "No email provided";
+  } else {
+    if (desktopProfile) {
+      desktopProfile.src = "/Images/Profile.png";
+      desktopProfile.alt = "Guest";
+    }
+    if (mobileUserName) mobileUserName.textContent = "Guest User";
+    if (mobileUserEmail) mobileUserEmail.textContent = "Login or Sign Up";
   }
 }
 
 // ------------------------
-// Initialize all JS safely
+// Dynamic Navbar Links
+// ------------------------
+function setupDynamicLinks() {
+  const containers = document.querySelectorAll(".dynamic-links");
+  if (!containers.length) return;
+
+  containers.forEach((container) => {
+    container.innerHTML = ""; // clear existing links
+
+    const productsLink = document.createElement("a");
+    productsLink.href = "/products.html";
+    productsLink.className = "nav-link";
+    productsLink.textContent = "Products";
+    container.appendChild(productsLink);
+
+    if (user && user.role === "farmer") {
+      const sellLink = document.createElement("a");
+      sellLink.href = "/sell.html";
+      sellLink.className = "nav-link";
+      sellLink.textContent = "Sell";
+      container.appendChild(sellLink);
+    }
+  });
+}
+
+// ------------------------
+// Product Rendering
+// ------------------------
+function renderProducts(filter = "all") {
+  const productsGrid = document.getElementById("productsGrid");
+  if (!productsGrid || !products) return;
+
+  const filteredProducts =
+    filter === "all" ? products : products.filter((p) => p.category === filter);
+
+  productsGrid.innerHTML = filteredProducts
+    .map(
+      (product) => `
+    <article class="product-card" data-product-id="${
+      product.id
+    }" onclick="goToProductDetails(${product.id})">
+      <img src="${product.img[0].src}" alt="${
+        product.name
+      }" class="product-image" loading="lazy">
+      <div class="product-info">
+        <span class="product-category">${product.category}</span>
+        <h3 class="product-name">${product.name}</h3>
+        <p class="product-description">${truncateText(product.description)}</p>
+        <div class="product-footer">
+          <span class="product-price">₹${product.price.toFixed(2)}</span>
+          <button class="add-to-cart-btn" onclick="goToProductDetails(${
+            product.id
+          })" aria-label="View ${product.name}">
+            View Product
+          </button>
+        </div>
+      </div>
+    </article>
+  `
+    )
+    .join("");
+}
+
+// ------------------------
+// Filter Buttons
+// ------------------------
+function filterProducts(category, button) {
+  // Reuse existing renderer
+  renderProducts(category);
+
+  // Update active button state
+  document.querySelectorAll(".filter-btn").forEach((btn) => {
+    btn.classList.remove("active");
+  });
+  if (button) button.classList.add("active");
+}
+
+function goToProductDetails(id) {
+  window.location.href = `/product_details.html?id=${id}`;
+}
+
+// ------------------------
+// Mobile Menu & Dropdowns
+// ------------------------
+function setupNavigationEventListeners() {
+  // Dropdown toggles
+  document.querySelectorAll(".dropdown-toggle").forEach((toggle) => {
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const dropdown = toggle.closest(".dropdown");
+      document.querySelectorAll(".dropdown.active").forEach((open) => {
+        if (open !== dropdown) open.classList.remove("active");
+      });
+      dropdown.classList.toggle("active");
+    });
+  });
+
+  // Dropdown items
+  document.querySelectorAll(".dropdown-item").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const category = item.getAttribute("data-filter");
+      if (category) {
+        window.location.href = `products.html?category=${encodeURIComponent(
+          category
+        )}`;
+      }
+    });
+  });
+
+  // Close dropdown on outside click
+  document.addEventListener("click", () => {
+    document
+      .querySelectorAll(".dropdown.active")
+      .forEach((dropdown) => dropdown.classList.remove("active"));
+  });
+
+  // Mobile menu toggle
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const navLinks = document.getElementById("navLinks");
+  const mobileOverlay = document.getElementById("mobileOverlay");
+
+  if (mobileMenuToggle && navLinks && mobileOverlay) {
+    const toggleMenu = () => {
+      mobileMenuToggle.classList.toggle("active");
+      navLinks.classList.toggle("active");
+      mobileOverlay.classList.toggle("active");
+
+      document.body.style.overflow = navLinks.classList.contains("active")
+        ? "hidden"
+        : "auto";
+    };
+
+    mobileMenuToggle.addEventListener("click", toggleMenu);
+    mobileOverlay.addEventListener("click", toggleMenu);
+  }
+}
+
+// ------------------------
+// Initialize
 // ------------------------
 document.addEventListener("DOMContentLoaded", () => {
   loadCart();
   setupDynamicLinks();
-  updateCartCount();
-  renderProducts("all"); // only renders if #productsGrid exists
-  setupEventListeners();
-
-  // Contact form setup only if exists
-  if (document.getElementById("contactForm")) setupContactForm();
+  updateNavbarCartCount();
+  renderProducts("all"); // only if #productsGrid exists
+  setupNavigationEventListeners();
+  updateProfileUI();
 });

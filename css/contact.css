@@ -1,5 +1,11 @@
-
 /* Contact Page Styles */
+
+html,
+body {
+  min-width: 320px; /* absolute minimum width */
+  overflow-x: auto; /* allow horizontal scrolling instead of shrinking */
+}
+
 .contact-hero {
   background: linear-gradient(135deg, var(--light-beige) 0%, var(--beige) 100%);
   padding: 80px 0;
@@ -235,9 +241,9 @@
 
 /* Responsive Design */
 @media (max-width: 968px) {
-  .nav-links {
+  /* .nav-links {
     display: none;
-  }
+  } */
 
   .mobile-menu-toggle {
     display: flex;
@@ -380,4 +386,58 @@ select:focus-visible {
 .close-drawer:hover {
   color: #000;
   transform: rotate(90deg);
+}
+/* Base button styling */
+/* Green Themed Primary Button */
+.btn-primary1 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* spacing between text & icon */
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--primary-green); /* theme green */
+  border: 2px solid var(--primary-green);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+.btn-primary1 svg {
+  stroke: #fff;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+/* Hover state */
+.btn-primary1:hover:not(:disabled) {
+  background-color: #3e8e41; /* slightly darker green */
+  border-color: #3e8e41;
+}
+
+.btn-primary1:hover svg:not(:disabled) {
+  transform: translateX(2px);
+}
+
+/* Focus state */
+.btn-primary1:focus {
+  outline: 3px solid rgba(62, 142, 65, 0.5); /* matching green outline */
+  outline-offset: 2px;
+}
+
+/* Disabled state */
+.btn-primary1:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--primary-green);
+  border-color: var(--primary-green);
+}
+
+/* Full-width variant */
+.btn-full {
+  width: 100%;
 }

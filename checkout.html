@@ -2,9 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
     <title>Checkout - AgriMart | Fresh Organic Produce</title>
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
       rel="stylesheet"
     />
-    
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -23,23 +26,25 @@
     <!-- Skip to main content link for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Mobile Overlay -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
-    <!-- ✅ FIXED: Removed redundant role="navigation" -->
-    <nav class="navbar" aria-label="Main navigation">
+    <!-- Navigation - EXACTLY SAME AS INDEX PAGE -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
       <div class="container">
         <div class="nav-content">
           <a href="/index.html" class="logo" aria-label="AgriMart Home">
-            <span class="logo-icon" aria-hidden="true">🌾</span>
+            <span class="logo-icon">🌾</span>
             <span class="logo-text">AgriMart</span>
           </a>
 
           <div class="nav-links" id="navLinks">
-            <!-- Mobile Profile Section -->
+            <!-- Mobile Profile Section - CLICKABLE -->
             <div class="mobile-profile-section">
-              <!-- ✅ FIXED: Better alt text with dynamic user name -->
-              <img src="/Images/Profile.png" alt="" class="profile-icon" role="presentation" />
+              <img
+                src="/Images/Profile.png"
+                alt="Profile"
+                class="profile-icon"
+              />
               <div class="mobile-profile-info">
                 <h3 id="mobileUserName">Guest User</h3>
                 <p id="mobileUserEmail">guest@agrimart.com</p>
@@ -47,10 +52,9 @@
             </div>
 
             <a href="/index.html" class="nav-link">Home</a>
-            
+
             <div class="dynamic-links"></div>
 
-            <!-- ✅ FIXED: Removed role="menu" - this is navigation, not application menu -->
             <div class="dropdown">
               <button
                 class="nav-link dropdown-toggle"
@@ -69,42 +73,85 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  aria-hidden="true"
                 >
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </button>
-              <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                <a href="#" class="dropdown-item" data-filter="all">All Products</a>
-                <a href="#" class="dropdown-item" data-filter="fruits">Fruits</a>
-                <a href="#" class="dropdown-item" data-filter="vegetables">Vegetables</a>
-                <a href="#" class="dropdown-item" data-filter="cereals">Cereals</a>
+              <div
+                class="dropdown-menu"
+                role="menu"
+                aria-labelledby="categoryDropdown"
+              >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="all"
+                  >All Products</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="fruits"
+                  >Fruits</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="vegetables"
+                  >Vegetables</a
+                >
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  role="menuitem"
+                  data-filter="cereals"
+                  >Cereals</a
+                >
               </div>
             </div>
 
             <a href="contact.html" class="nav-link">Contact</a>
 
             <!-- Mobile Cart Section -->
-            <div class="mobile-cart-section">
-              <button class="mobile-cart-btn" onclick="window.location.href='/cart.html'">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <div class="mobile-cart-section mobile-menu-footer">
+              <button
+                class="mobile-cart-btn"
+                onclick="window.location.href='/cart.html'"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
                   <circle cx="9" cy="21" r="1"></circle>
                   <circle cx="20" cy="21" r="1"></circle>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                  <path
+                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                  ></path>
                 </svg>
                 View Cart
-                <span class="cart-count" id="mobileCartCount">0</span>
+                <!-- <span class="cart-count" id="mobileCartCount">0</span> -->
               </button>
             </div>
 
             <!-- Mobile Menu Footer -->
-            <div class="mobile-menu-footer">
-              <p>&copy; 2025 AgriMart. All rights reserved.</p>
-            </div>
+            <!-- <div class="mobile-menu-footer">
+              <p>© 2025 AgriMart. All rights reserved.</p>
+            </div> -->
           </div>
 
           <!-- Desktop Cart & Profile -->
-          <button class="cart-button" aria-label="Shopping cart with 0 items" onclick="window.location.href='/cart.html'">
+          <button
+            class="cart-button"
+            aria-label="Shopping cart"
+            onclick="window.location.href='/cart.html'"
+          >
             <svg
               width="24"
               height="24"
@@ -114,17 +161,22 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              aria-hidden="true"
             >
               <circle cx="9" cy="21" r="1"></circle>
               <circle cx="20" cy="21" r="1"></circle>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              <path
+                d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+              ></path>
             </svg>
-            <span class="cart-count" id="cartCount" aria-hidden="true">0</span>
+            <span class="cart-count" id="cart-count">0</span>
           </button>
 
-          <a href="/profile.html" class="profile-link" aria-label="View your profile">
-            <img src="/Images/Profile.png" alt="" class="profile-icon" role="presentation" />
+          <a
+            href="/profile.html"
+            class="profile-link"
+            aria-label="Profile page"
+          >
+            <img src="/Images/Profile.png" alt="Profile" class="profile-icon" />
           </a>
 
           <button
@@ -140,7 +192,6 @@
         </div>
       </div>
     </nav>
-
     <!-- Main Content -->
     <main class="checkout-container" id="main-content">
       <!-- ✅ FIXED: Added H1 heading -->
@@ -172,7 +223,9 @@
 
               <!-- ✅ FIXED: Native fieldset with radio buttons instead of ARIA role="radiogroup" -->
               <fieldset class="saved-addresses" id="saved-addresses">
-                <legend class="visually-hidden">Delivery address options</legend>
+                <legend class="visually-hidden">
+                  Delivery address options
+                </legend>
                 <!-- Address cards will be populated by JavaScript with native radio buttons -->
               </fieldset>
 
@@ -219,7 +272,9 @@
                     name="billing-option"
                     value="different"
                   />
-                  <label for="different-billing">Use a different billing address</label>
+                  <label for="different-billing"
+                    >Use a different billing address</label
+                  >
                 </div>
               </fieldset>
 
@@ -243,7 +298,9 @@
               >
                 <!-- ✅ FIXED: Native fieldset for billing addresses -->
                 <fieldset class="saved-addresses" id="billing-saved-addresses">
-                  <legend class="visually-hidden">Select billing address</legend>
+                  <legend class="visually-hidden">
+                    Select billing address
+                  </legend>
                   <!-- Billing address cards will be populated by JavaScript -->
                 </fieldset>
 
@@ -287,7 +344,9 @@
 
             <div class="price-breakdown">
               <div class="price-line">
-                <span>Subtotal (<span id="summary-item-count">0</span> items)</span>
+                <span
+                  >Subtotal (<span id="summary-item-count">0</span> items)</span
+                >
                 <span id="summary-subtotal">₹0.00</span>
               </div>
               <div class="price-line">
@@ -964,9 +1023,23 @@
           <nav class="footer-section" aria-label="Product categories">
             <h4 class="footer-heading">Categories</h4>
             <ul class="footer-links">
-              <li><a href="products.html?category=fruits" data-category="fruits">Fruits</a></li>
-              <li><a href="products.html?category=vegetables" data-category="vegetables">Vegetables</a></li>
-              <li><a href="products.html?category=cereals" data-category="cereals">Cereals</a></li>
+              <li>
+                <a href="products.html?category=fruits" data-category="fruits"
+                  >Fruits</a
+                >
+              </li>
+              <li>
+                <a
+                  href="products.html?category=vegetables"
+                  data-category="vegetables"
+                  >Vegetables</a
+                >
+              </li>
+              <li>
+                <a href="products.html?category=cereals" data-category="cereals"
+                  >Cereals</a
+                >
+              </li>
             </ul>
           </nav>
 
@@ -995,7 +1068,7 @@
     </footer>
 
     <script src="/data/data.js"></script>
-    <script src="/js/index.js"></script>
+    <!-- <script src="/js/index.js"></script> -->
     <script src="/js/checkout.js"></script>
   </body>
 </html>
